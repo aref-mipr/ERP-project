@@ -1,0 +1,156 @@
+﻿@page
+@model ERP.Presentation.Pages.Product.DetailsModel
+@{
+    int counter = 1;
+}
+
+<div class="container my-5" dir="rtl">
+    @if (TempData["Message"] != null)
+    {
+        <div id="message" class="alert alert-success">
+            @TempData["Message"]
+        </div>
+    }
+
+    <div class="card shadow-sm border-0 rounded-4 mb-4">
+
+        <div class="card-header bg-white border-0 p-4 d-flex justify-content-between align-items-center">
+            <h4 class="fw-bold mb-0">جزئیات محصول</h4>
+            <a asp-page="Edit" asp-route-id="@Model.Product.Id" class="btn btn-primary">
+                ویرایش
+            </a>
+        </div>
+
+        <div class="card-body p-4">
+
+            <div class="row g-3">
+
+                <div class="col-md-4">
+                    <div class="border rounded-3 p-3 h-100 bg-light">
+                        <small class="text-muted">کد محصول</small>
+                        <div class="fs-4 fw-bold text-primary">
+                            #@Model.Product.ProductCriterias.ProductCode
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="border rounded-3 p-3 h-100 bg-light">
+                        <small class="text-muted">نام</small>
+                        <div class="fw-semibold fs-5">
+                            @Model.Product.ProductCriterias.Name
+                        </div>
+                        <small class="text-secondary">
+                            دسته بندی: @Model.Product.ProductCategory
+                        </small>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="border rounded-3 p-3 h-100 bg-light">
+                        <small class="text-muted">تاریخ ثبت</small>
+                        <div class="fw-semibold fs-5">
+                            @Model.Product.CreationTime
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="border rounded-3 p-3 h-100">
+                        <small class="text-muted">قیمت تمام شده</small>
+                        <div class="fs-4 fw-bold">
+                            @Model.Product.ProductCriterias.CostPrice.ToString("N0")
+                        </div>
+                        <small class="text-secondary">ریال</small>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="border rounded-3 p-3 h-100">
+                        <small class="text-muted">
+                            تعداد آیتم ثبت شده
+                        </small>
+
+                        <div class="display-6 fs-4 fw-bold">
+                            @Model.Product.ProductCriterias.StockQuantity
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="rounded-3 p-3 h-100 bg-success bg-opacity-10 border border-success">
+                        <small class="text-success">
+                            تعداد آیتم آماده فروش
+                        </small>
+
+                        <div class="display-6 fw-bold text-success">
+                            @TempData["NumberItemsInStock"]
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="mt-4">
+                <label class="form-label fw-semibold">
+                    توضیحات سفارش
+                </label>
+                @if (Model.Product.ProductCriterias.Description != null)
+                {
+                    <div class="border rounded-3 p-3 bg-light text-secondary">@Model.Product.ProductCriterias.Description</div>
+                }
+                else
+                {
+                    <div class="border rounded-3 p-3 bg-light text-secondary">توضیحاتی برای این محصول ثبت نشده</div>
+                }
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="container my-5">
+    <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
+        <div class="card-header bg-white border-0 px-4 py-3">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 fw-bold">آیتم‌های محصول</h5>
+                <span class="badge bg-primary-subtle text-primary border border-primary-subtle">آیتم @TempData["NumberItems"]</span>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table dir="rtl" class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th class="ps-5">ردیف</th>
+                        <th>کد آیتم</th>
+                        <th>قیمت</th>
+                        <th>وضعیت</th>
+                        <th class="text-end pe-4">عملیات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.ProductItems)
+                    {
+                        <tr>
+                            <td class="ps-4 fw-semibold">@counter</td>
+                            <td class="text-muted">@item.ProductItemCriterias.ProductItemCode</td>
+                            <td class="text-success fw-bold">@item.ProductItemCriterias.Price.ToString("N0") ریال</td>
+                            <td>
+                                @item.ProductItemStatus
+                            </td>
+                            <td class="text-end pe-1">
+                                <a asp-page="/ProductItem/Details" asp-route-id = "@item.Id" class="btn btn-sm btn-outline-primary me-2">جزئیات</a>
+                                <a asp-page="/ProductItem/Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">ویرایش</a>
+                            </td>
+                        </tr>
+                        counter++;
+                    }
+                </tbody>
+            </table>          
+        </div>
+    </div>
+</div>

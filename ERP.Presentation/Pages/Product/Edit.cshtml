@@ -1,0 +1,62 @@
+﻿@page
+@model ERP.Presentation.Pages.Product.EditModel
+@{
+    int value = 0;
+}
+
+<div class="container my-5" dir="rtl">
+    @if (TempData["Message"] != null)
+    {
+        <div id="message" class="alert alert-danger">
+            @TempData["Message"]
+        </div>
+    }
+    <div class="row justify-content-center">
+        <div class="col-lg-7 col-md-9">
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-header bg-white border-0 p-4">
+                    <h4 class="fw-bold mb-0">ویرایش محصول</h4>
+                </div>
+
+                <div class="card-body p-4">
+
+                    <form method="post">
+                            <div class="row g-3 mb-3">
+                                <div class="col-md-6">
+                                    <label asp-for="@Model.Command.ProductCriterias.Name">نام</label>
+                                    <input type="text" asp-for="@Model.Command.ProductCriterias.Name" class="form-control" />
+                                    <span asp-validation-for="@Model.Command.ProductCriterias.Name" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label asp-for="Command.ProductCriterias.ProductCategoryId">دسته بندی</label>
+                                    <select name="Command.ProductCriterias.ProductCategoryId" asp-items="Model.CategoriesList" class="form-control">
+                                        <option value="@value">دسته بندی را انتخاب کنید</option>
+                                    </select>
+                                    <span asp-validation-for="Command.ProductCriterias.ProductCategoryId" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label asp-for="@Model.Command.ProductCriterias.CostPrice">قیمت خرید</label>
+                                <input type="text" asp-for="@Model.Command.ProductCriterias.CostPrice" class="form-control" />
+                                <span asp-validation-for="@Model.Command.ProductCriterias.CostPrice" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label asp-for="@Model.Command.ProductCriterias.Description">توضیحات</label>
+                                <textarea asp-for="@Model.Command.ProductCriterias.Description" class="form-control"></textarea>
+                            </div>
+
+                            <input type="hidden" asp-for="Command.Id" />
+
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-success mt-3">ویرایش</button>
+                            </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

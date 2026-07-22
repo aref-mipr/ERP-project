@@ -1,0 +1,103 @@
+﻿@page
+@model ERP.Presentation.Pages.ProductItem.DetailsModel
+@{
+}
+
+<div class="container my-5" dir="rtl">
+    @if (TempData["Message"] != null)
+    {
+        <div id="message" class="alert alert-success">
+            @TempData["Message"]
+        </div>
+    }
+
+    <div class="card shadow-sm border-0 rounded-4 mb-4">
+
+        <div class="card-header bg-white border-0 p-4 d-flex justify-content-between align-items-center">
+            <h4 class="fw-bold mb-0">جزئیات آیتم</h4>
+            <a asp-page="Edit" asp-route-id="@Model.ProductItem.Id" class="btn btn-primary">
+                ویرایش
+            </a>
+        </div>
+
+        <div class="card-body p-4">
+
+            <div class="row g-3">
+
+                <div class="col-md-4">
+                    <div class="border rounded-3 p-3 h-100 bg-light">
+                        <small class="text-muted">کد آیتم</small>
+                        <div class="fs-4 fw-bold text-primary">
+                            #@Model.ProductItem.ProductItemCriterias.ProductItemCode
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="border rounded-3 p-3 h-100 bg-light">
+                        <small class="text-muted">نام</small>
+                        <div class="fw-semibold fs-5">
+                            @Model.ProductItem.Name
+                        </div>
+                        <small class="text-secondary">
+                            دسته بندی: @Model.ProductItem.Category
+                        </small>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="border rounded-3 p-3 h-100 bg-light">
+                        <small class="text-muted">تاریخ ثبت</small>
+                        <div class="fw-semibold fs-5">
+                            @Model.ProductItem.CreationTime
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="border rounded-3 p-3 h-100">
+                        <small class="text-muted">قیمت</small>
+                        <div class="fs-4 fw-bold">
+                            @Model.ProductItem.ProductItemCriterias.Price.ToString("N0")
+                        </div>
+                        <small class="text-secondary">ریال</small>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="border rounded-3 p-3 h-100">
+                        <small class="text-muted">
+                            وضعیت
+                        </small>
+
+                        <div class="display-6 fs-4 fw-bold">
+                            <span class="badge @TempData["StatusStyle"] fs-6">
+                                @Model.ProductItem.ProductItemStatus
+                            </span>
+                            
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="mt-4">
+                <label class="form-label fw-semibold">
+                    توضیحات سفارش
+                </label>
+                @if (Model.ProductItem.ProductItemCriterias.Description != null)
+                {
+                    <div class="border rounded-3 p-3 bg-light text-secondary">@Model.ProductItem.ProductItemCriterias.Description</div>
+                }
+                else
+                {
+                    <div class="border rounded-3 p-3 bg-light text-secondary">توضیحاتی برای این محصول ثبت نشده</div>
+                }
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

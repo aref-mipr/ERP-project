@@ -1,0 +1,70 @@
+﻿@page
+@model ERP.Presentation.Pages.Customer.IndexModel
+@{
+    int counter = 1;
+}
+<div class="container my-5">
+    @if (TempData["Message"] != null)
+    {
+        <div id="message" class="alert alert-success">
+            @TempData["Message"]
+        </div>
+    }
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <a asp-page="Create" class="btn btn-primary shadow-sm">
+            <i class="bi bi-plus-lg"></i> ثبت مشتری جدید
+        </a>
+        <h4 class="fw-bold mb-0">لیست مشتریان</h4>
+    </div>
+    <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
+        <div class="card-header bg-white border-0 px-4 py-3">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 fw-bold">مشتریان</h5>
+                <span class="badge bg-primary-subtle text-primary border border-primary-subtle">آیتم @TempData["NumberItems"]</span>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table dir="rtl" class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th class="ps-5">ردیف</th>
+                        <th>کد مشتری</th>
+                        <th>نام و نام خانوادگی</th>
+                        <th>شماره همراه</th>
+                        <th>ایمیل</th>
+                        <th>تاریخ ثبت</th>
+                        <th class="text-end pe-4">عملیات</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @foreach (var item in Model.Customers)
+                    {
+                        <tr>
+                            <td class="ps-4 fw-semibold">@counter</td>
+                            <td>@item.CustomerCriterias.SubscriptionCode</td>
+                            <td>@item.FullName</td>
+                            <td>@item.CustomerCriterias.Phone</td>
+                            <td>
+                                @if(item.CustomerCriterias.Email == null)
+                                {
+                                    <p class="text-muted">فاقد ایمیل ثبت شده</p>
+                                }
+                                @item.CustomerCriterias.Email
+                            </td>
+                            <td>@item.CreationTime</td>
+                            <td class="text-end pe-1">
+                                <a asp-page="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary me-2">جزئیات</a>
+                                <a asp-page="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">ویرایش</a>
+                            </td>
+                        </tr>
+                        counter++;
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

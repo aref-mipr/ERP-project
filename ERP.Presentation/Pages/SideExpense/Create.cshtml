@@ -1,0 +1,50 @@
+﻿@page
+@model ERP.Presentation.Pages.SideExpense.CreateModel
+@{
+}
+
+@if (TempData["Message"] != null)
+{
+    <div id="message" class="alert alert-danger">
+        @TempData["Message"]
+    </div>
+}
+<div class="container my-5" dir="rtl">
+    <div class="row justify-content-center">
+        <div class="col-lg-7 col-md-9">
+
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-header bg-white border-0 p-4">
+                    <h4 class="fw-bold mb-0">ثبت هزینه جانبی جدید</h4>
+                </div>
+
+                <div class="card-body p-4">
+                    <form method="post">
+                        <div class="col-md-6">
+                            <label asp-for="Command.SideExpensesCriteria.Title" class="form-label fw-semibold">عنوان</label>
+                            <input asp-for="Command.SideExpensesCriteria.Title" type="text" class="form-control" placeholder="مثلا اجاره ماهیانه">
+                            <span asp-validation-for="Command.SideExpensesCriteria.Title" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="Command.SideExpensesCriteria.Amount" class="form-label fw-semibold">مبلغ (ریال)</label>
+                        <input asp-for="Command.SideExpensesCriteria.Amount" type="number" class="form-control" placeholder="مثلا 1000000000">
+                        <span asp-validation-for="Command.SideExpensesCriteria.Amount" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Command.SideExpensesCriteria.Description" class="form-label fw-semibold">توضیحات</label>
+                            <textarea asp-for="Command.SideExpensesCriteria.Description" class="form-control" rows="3" placeholder="می توانید توضیحاتی مرتبط با این هزینه بنویسید"></textarea>
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-2">
+                            <button type="submit" class="btn btn-primary px-4">ثبت</button>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<script src="~/js/timeout_for_alert.js"></script>

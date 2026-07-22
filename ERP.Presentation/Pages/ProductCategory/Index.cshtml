@@ -1,0 +1,76 @@
+﻿@page
+@model ERP.Presentation.Pages.ProductCategory.IndexModel
+@{
+    int counter = 1;
+}
+<div class="container my-5">
+    @if (TempData["Message"] != null)
+    {
+        <div id="message" class="alert alert-success">
+            @TempData["Message"]
+        </div>
+    }
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <a asp-page="Create" class="btn btn-primary shadow-sm">
+            <i class="bi bi-plus-lg"></i> ایجاد دسته بندی جدید
+        </a>
+        <h4 class="fw-bold mb-0">لیست دسته بندی ها</h4>
+    </div>
+    <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
+        <div class="card-header bg-white border-0 px-4 py-3">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 fw-bold">دسته بندی ها</h5>
+                <span class="badge bg-primary-subtle text-primary border border-primary-subtle">آیتم @TempData["NumberItems"]</span>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table dir="rtl" class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th class="ps-5">ردیف</th>
+                        <th>کد دسته بندی</th>
+                        <th>نام</th>
+                        <th>تاریخ ایحاد</th>
+                        <th>لیست محصولات</th>
+                        <th class="text-end pe-4">عملیات</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @foreach (var item in Model.ProductCategories)
+                    {
+                        <tr>
+                            <td class="ps-4 fw-semibold">@counter</td>
+                            <td class="text-muted">@item.ProductCategoryCriterias.ProductCategoryCode</td>
+                            <td>@item.ProductCategoryCriterias.Name</td>
+                            <td>@item.CreationTime</td>
+                            <td>
+                                <select class="form-select sub-selector" data-parent-id="@item.Id">
+                                    <option value="">-- انتخاب محصول --</option>
+                                </select>
+                            </td>
+                            <td class="text-end pe-1">
+                                <a asp-page="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">ویرایش</a>
+
+                                @if (item.IsActive == true)
+                                {
+                                    <a asp-page="Index" asp-page-handler="Remove" asp-route-id="@item.Id" class="btn btn-sm btn-danger">غیرفعال کردن</a>
+                                }
+                                else
+                                {
+                                    <a asp-page="Index" asp-page-handler="Restore" asp-route-id="@item.Id" class="btn btn-sm btn-success">فعال کردن</a>
+                                }
+                            </td>
+                        </tr>
+                        counter++;
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script src="~/js/timeout_for_alert.js"></script>
+<script src="~/js/product_dropdown.js"></script>

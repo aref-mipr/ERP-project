@@ -1,0 +1,71 @@
+﻿@page
+@model ERP.Presentation.Pages.Product.CreateModel
+@{
+}
+
+<div class="container my-5" dir="rtl">
+    @if (TempData["Message"] != null)
+    {
+        <div id="message" class="alert alert-danger">
+            @TempData["Message"]
+        </div>
+    }
+    <div class="row justify-content-center">
+        <div class="col-lg-7 col-md-9">
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-header bg-white border-0 p-4">
+                    <h4 class="fw-bold mb-0">ثبت محصول جدید</h4>
+                </div>
+            
+                <div class="card-body p-4">
+
+                    <form method="post">
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label asp-for="Command.ProductCriterias.Name" class="form-label fw-semibold">نام محصول</label>
+                                <input asp-for="Command.ProductCriterias.Name" type="text" class="form-control" placeholder="مثلا Asus">
+                                <span asp-validation-for="Command.ProductCriterias.Name" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Command.ProductCriterias.ProductCategoryId" class="form-label fw-semibold">دسته بندی</label>
+                                <select name="Command.ProductCriterias.ProductCategoryId" asp-items="Model.CategoriesList" class="form-control">
+                                    <option value="0">دسته بندی را انتخاب کنید</option>
+                                </select>
+                                <span asp-validation-for="Command.ProductCriterias.ProductCategoryId" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label asp-for="Command.ProductCriterias.CostPrice" class="form-label fw-semibold">قیمت خرید (ریال)</label>
+                                <input asp-for="Command.ProductCriterias.CostPrice" type="number" class="form-control" placeholder="مثلا 500000000">
+                                <span asp-validation-for="Command.ProductCriterias.CostPrice" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Command.ProductCriterias.SellPrice" class="form-label fw-semibold">قیمت فروش (ریال)</label>
+                                <input asp-for="Command.ProductCriterias.SellPrice" type="number" class="form-control" placeholder="مثلا 600000000">
+                                <span asp-validation-for="Command.ProductCriterias.SellPrice" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label asp-for="Command.ProductCriterias.StockQuantity" class="form-label fw-semibold">تعداد خرید</label>
+                                <input asp-for="Command.ProductCriterias.StockQuantity" type="number" class="form-control" placeholder="مثلا 5">
+                                <span asp-validation-for="Command.ProductCriterias.StockQuantity" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Command.ProductCriterias.Description" class="form-label fw-semibold">توضیحات</label>
+                            <textarea asp-for="Command.ProductCriterias.Description" class="form-control" rows="3" placeholder="می توانید توضیحاتی مرتبط با این محصول بنویسید"></textarea>
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-2">
+                            <button type="submit" class="btn btn-primary px-4">ثبت</button>
+                        </div>
+
+                    </form>
+                
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

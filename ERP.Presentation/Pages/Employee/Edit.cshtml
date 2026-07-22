@@ -1,0 +1,73 @@
+﻿@page
+@model ERP.Presentation.Pages.Employee.EditModel
+@{
+}
+
+
+@if (TempData["Message"] != null)
+{
+    <div id="message" class="alert alert-danger">
+        @TempData["Message"]
+    </div>
+}
+<div class="container my-5" dir="rtl">
+    <div class="row justify-content-center">
+        <div class="col-lg-7 col-md-9">
+
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-header bg-white border-0 p-4">
+                    <h4 class="fw-bold mb-0">ویرایش کارمند</h4>
+                </div>
+
+                <div class="card-body p-4">
+                    <form method="post">
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label asp-for="Command.EmployeesCriteria.FirstName" class="form-label fw-semibold">نام</label>
+                                <input asp-for="Command.EmployeesCriteria.FirstName" type="text" class="form-control">
+                                <span asp-validation-for="Command.EmployeesCriteria.FirstName" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Command.EmployeesCriteria.LastName" class="form-label fw-semibold">نام خانوادگی</label>
+                                <input asp-for="Command.EmployeesCriteria.LastName" type="text" class="form-control" >
+                                <span asp-validation-for="Command.EmployeesCriteria.LastName" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label asp-for="Command.EmployeesCriteria.Phone" class="form-label fw-semibold">شماره تماس</label>
+                                <input asp-for="Command.EmployeesCriteria.Phone" type="number" class="form-control" >
+                                <span asp-validation-for="Command.EmployeesCriteria.Phone" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Command.EmployeesCriteria.Position" class="form-label fw-semibold">سمت</label>
+                                <input asp-for="Command.EmployeesCriteria.Position" type="text" class="form-control" >
+                                <span asp-validation-for="Command.EmployeesCriteria.Position" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label asp-for="Command.EmployeesCriteria.SalaryMonthly" class="form-label fw-semibold">دستمزد ماهیانه (ریال)</label>
+                                <input asp-for="Command.EmployeesCriteria.SalaryMonthly" type="number" class="form-control" >
+                                <span asp-validation-for="Command.EmployeesCriteria.SalaryMonthly" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Command.EmployeesCriteria.Description" class="form-label fw-semibold">توضیحات</label>
+                            <textarea asp-for="Command.EmployeesCriteria.Description" class="form-control" rows="3" ></textarea>
+                        </div>
+
+                        <input type="hidden" asp-for="Command.Id" />
+
+                        <div class="d-flex justify-content-end gap-2">
+                            <button type="submit" class="btn btn-primary px-4">ثبت</button>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

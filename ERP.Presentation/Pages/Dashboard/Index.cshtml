@@ -1,0 +1,16 @@
+﻿@page
+@model ERP.Presentation.Pages.Dashboard.IndexModel
+@{
+}
+<div class="container align-items-center">
+    @if (!Model.InitialCapital)
+    {
+        <div class="row">
+            <h5>برای شروع فعالیت، ابتدا یک سرمایه اولیه ثبت کنید</h5>
+
+            <a asp-page="/Budget/Create" class="btn btn-primary">
+                ثبت سرمایه اولیه
+            </a>
+        </div>
+    }
+</div>

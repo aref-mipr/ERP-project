@@ -1,0 +1,50 @@
+﻿@page
+@model ERP.Presentation.Pages.FinancialTransaction.RegisterDescriptionModel
+@{
+}
+@if (TempData["Message"] != null)
+{
+    <div id="message" class="alert alert-danger">
+        @TempData["Message"]
+    </div>
+}
+<div class="container my-5" dir="rtl">
+    <div class="row justify-content-center">
+        <div class="col-lg-7 col-md-9">
+
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-header bg-white border-0 p-4">
+                    @if(Model.Description == null)
+                    {
+                        <h4 class="fw-bold mb-0">ثبت توضیحات تراکنش</h4>
+                    }
+                    else
+                    {
+                        <h4 class="fw-bold mb-0">ویرایش توضیحات تراکنش</h4>
+                    }
+                </div>
+
+                <div class="card-body p-4">
+                    <form method="post" asp-route-id="Id">
+
+                        <div class="mb-3">
+                            <label asp-for="Description" class="form-label fw-semibold">توضیحات</label>
+                            <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+
+                        <input type="hidden" asp-for="Id" />
+
+                        <div class="d-flex justify-content-end gap-2">
+                            <button type="submit" class="btn btn-primary px-4">ثبت</button>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<script src="~/js/timeout_for_alert.js"></script>

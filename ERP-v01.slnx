@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="ERP.Application/ERP.Application.csproj" />
+  <Project Path="ERP.Domain/ERP.Domain.csproj" Id="6585705d-b7bc-42d5-8064-a2ec9c29d51e" />
+  <Project Path="ERP.Infrastructure/ERP.Infrastructure.csproj" />
+  <Project Path="ERP.Presentation/ERP.Presentation.csproj" />
+</Solution>

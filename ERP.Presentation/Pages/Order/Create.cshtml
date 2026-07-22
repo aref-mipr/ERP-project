@@ -1,0 +1,133 @@
+﻿@page
+@model ERP.Presentation.Pages.Order.CreateModel
+@{
+}
+@if (TempData["Message"] != null)
+{
+    <div id="message" class="alert alert-danger">
+        @TempData["Message"]
+    </div>
+}
+<div class="container my-5" dir="rtl">
+    <div class="row justify-content-center">
+        <div class="col-lg-9">
+
+            <div class="card shadow-sm border-0 rounded-4">
+
+                <div class="card-header bg-white border-0 p-4">
+                    <h4 class="fw-bold mb-0">ثبت سفارش</h4>
+                </div>
+
+                <div class="card-body p-4">
+
+                    <form method="post">
+                        @foreach (var id in Model.Command.ProductItemIds)
+                        {
+                            <input type="hidden"
+                                   name="Command.ProductItemIds"
+                                   value="@id" />
+                        }
+
+                        <input type="hidden"
+                               asp-for="Command.OrdersCriteria.CustomerId" />
+
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold">مشتری</label>
+
+                            <div class="border rounded-3 p-3 bg-light">
+                                <div class="text-muted small">
+                                    کد مشتری:
+                                    <span class="fw-semibold text-dark">@Model.Customer.CustomerCriterias.SubscriptionCode</span>
+                                </div>
+
+                                <div class="fw-semibold fs-5 mt-1">
+                                    @Model.Customer.FullName
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold">آیتم‌های سفارش</label>
+
+                            <div class="list-group">
+                                @foreach (var item in Model.ProductItems)
+                                {
+                                    <div class="list-group-item rounded-3">
+                                        <div class="d-flex justify-content-between">
+                                            <span class="fw-semibold">@item.Name</span>
+                                            <span class="text-muted">کد: @item.ProductItemCriterias.ProductItemCode</span>
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-4">
+
+                            <div class="col-md-3">
+                                <label class="form-label fw-semibold">مبلغ اولیه</label>
+                                <input type="number"
+                                       id="InitialPrice"
+                                       asp-for="Command.OrdersCriteria.InitialAmount"
+                                       class="form-control"
+                                       readonly>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label fw-semibold">مبلغ تخفیف</label>
+                                <input type="number"
+                                       id="DiscountAmount"
+                                       asp-for="Command.OrdersCriteria.DiscountAmount"
+                                       class="form-control"
+                                       min="0">
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label fw-semibold">درصد تخفیف</label>
+
+                                <div class="input-group">
+                                    <input type="number"
+                                           id="DiscountPercent"
+                                           class="form-control"
+                                           value="0"
+                                           min="0"
+                                           max="100"
+                                           step="0.01">
+                                    <span class="input-group-text">%</span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label fw-semibold">مبلغ نهایی</label>
+                                <input type="number"
+                                       id="FinalPrice"
+                                       asp-for="Command.OrdersCriteria.FinalAmount"
+                                       class="form-control fw-bold"
+                                       readonly>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label fw-semibold">توضیحات</label>
+                                <textarea asp-for="Command.OrdersCriteria.Description" class="form-control" rows="3" placeholder="توضیحات سفارش"></textarea>
+                            </div>
+
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-2">
+
+                            <button type="submit" class="btn btn-primary px-4">
+                                ثبت سفارش
+                            </button>
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<script src="~/js/calculate_final_amount.js"></script>

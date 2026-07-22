@@ -1,0 +1,57 @@
+﻿@page
+
+@model ERP.Presentation.Pages.ProductItem.EditModel
+@{
+}
+
+@if (TempData["Message"] != null)
+{
+    <div id="message" class="alert alert-danger">
+        @TempData["Message"]
+    </div>
+}
+<div class="container my-5" dir="rtl">
+    <div class="row justify-content-center">
+        <div class="col-lg-7 col-md-9">
+
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-header bg-white border-0 p-4">
+                    <h4 class="fw-bold mb-0">ویرایش محصول</h4>
+                </div>
+
+                <div class="card-body p-4">
+                    <form method="post">
+                        @if (TempData["Actived"] != null)
+                        {
+                            <div class="mb-3">
+                                <label asp-for="Command.ProductItemCriterias.ProductItemStatus" class="form-label fw-semibold">تعیین وضعیت محصول</label>
+                                <select asp-for="Command.ProductItemCriterias.ProductItemStatus" class="form-control" asp-items="Model.StatusesList">
+                                    <option value="">انتخاب وضعیت</option>
+                                </select>
+                                <span asp-validation-for="Command.ProductItemCriterias.ProductItemStatus" class="text-danger"></span>
+                            </div>
+                        }
+                        <div class="mb-3">
+                            <label asp-for="Command.ProductItemCriterias.Description" class="form-label fw-semibold">توضیحات</label>
+                            <textarea asp-for="Command.ProductItemCriterias.Description" class="form-control" rows="3" placeholder="توضیحات محصول"></textarea>
+                        </div>
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label asp-for="Command.ProductItemCriterias.Price" class="form-label fw-semibold">قیمت</label>
+                                <input asp-for="Command.ProductItemCriterias.Price" type="number" class="form-control" placeholder="به ریال وارد کنید">
+                                <span asp-validation-for="Command.ProductItemCriterias.Price" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <input type="hidden" asp-for="Command.Id" />
+                        <div class="d-flex justify-content-end gap-2">
+                            <button type="submit" class="btn btn-primary px-4">ویرایش محصول</button>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

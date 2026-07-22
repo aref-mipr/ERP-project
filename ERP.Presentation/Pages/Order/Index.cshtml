@@ -1,0 +1,86 @@
+﻿@page
+@model ERP.Presentation.Pages.Order.IndexModel
+@{
+    int counter = 1;
+}
+<div class="container my-5">
+    @if (TempData["Message"] != null)
+    {
+        <div id="message" class="alert alert-success">
+            @TempData["Message"]
+        </div>
+    }
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <a asp-page="/Order/SelectProductItem" class="btn btn-primary shadow-sm">
+            <i class="bi bi-plus-lg"></i> ثبت سفارش جدید
+        </a>
+        <h4 class="fw-bold mb-0">لیست سفارش ها</h4>
+    </div>
+    <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
+        <div class="card-header bg-white border-0 px-4 py-3">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 fw-bold">مشتریان</h5>
+                <span class="badge bg-primary-subtle text-primary border border-primary-subtle">آیتم @TempData["NumberItems"]</span>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table dir="rtl" class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th class="ps-5">ردیف</th>
+                        <th>کد سفارش</th>
+                        <th>نام سفارش دهنده</th>
+                        <th>تاریخ ثبت</th>
+                        <th>وضعیت</th>
+                        <th>تغییر وضعیت</th>
+                        <th>آیتم ها</th>
+                        <th class="text-end pe-4">عملیات</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @foreach (var item in Model.Orders)
+                    {
+                        <tr>
+                            <td class="ps-4 fw-semibold">@counter</td>
+                            <td>@item.OrdersCriteria.OrderCode</td>
+                            <td>@item.CustomerFullName</td>
+                            <td>@item.CreationTime</td>
+                            <td>@item.OrderStatus</td>
+                            <td>
+                                @if (item.OrderStatus == TempData["PendingStatus"])
+                                {
+                                    <form method="post" asp-route-id="@item.Id">
+                                        <select asp-for="Status" class="form-control" asp-items="Model.StatusesList" onchange="this.form.submit()">
+                                            <option value="">انتخاب وضعیت</option>
+                                        </select>
+                                    </form>                                  
+                                }
+                                else
+                                {
+                                    <select class="form-control" disabled>
+                                        <option selected>@item.OrderStatus</option>
+                                    </select>
+                                }
+                            </td>
+                            <td>
+                                <select class="form-select sub-selector" data-parent-id="@item.Id">
+                                    <option value="">-- انتخاب محصول --</option>
+                                </select>
+                            </td>
+                            <td class="text-end pe-1">
+                                <a asp-page="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary me-2">جزئیات</a>
+                            </td>
+                        </tr>
+                        counter++;
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/order_item_dropdown.js"></script>

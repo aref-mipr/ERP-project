@@ -1,0 +1,74 @@
+﻿@page
+@model ERP.Presentation.Pages.Order.SelectCustomerModel
+@{
+}
+@if (TempData["Message"] != null)
+{
+    <div id="message" class="alert alert-danger">
+        @TempData["Message"]
+    </div>
+}
+
+<div class="container my-5" dir="rtl">
+    <div class="row justify-content-center">
+        <div class="col-lg-7 col-md-9">
+
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-header bg-white border-0 p-4">
+                    <h4 class="fw-bold mb-0">انتخاب مشتری</h4>
+                </div>
+
+                <div class="card-body p-4">
+
+                    <form method="post">
+
+                        <div class="list-group">
+
+                                @foreach (var customer in Model.Customers)
+                                {
+                                    <label class="list-group-item rounded-3 mb-3 border">
+                                        <div class="d-flex justify-content-between align-items-center">
+
+                                            <div>
+                                                <div class="text-muted small">
+                                                    کد مشتری:
+                                                    <span class="fw-semibold text-dark">@customer.CustomerCriterias.SubscriptionCode</span>
+                                                </div>
+
+                                                <div class="fw-semibold fs-5 mt-1">
+                                                    @customer.FullName
+                                                </div>
+                                            </div>
+
+                                            <div class="form-check">
+                                            <input type="radio" asp-for="CustomerId" value="@customer.Id" />
+                                            </div>
+
+                                        </div>
+                                    </label>
+                                }
+
+                        </div>
+
+                        <div class="d-flex justify-content-end mt-4 gap-2">
+
+                            @foreach (var id in Model.ProductItemIds)
+                            {
+                                <input type="hidden"
+                                       name="ProductItemIds"
+                                       value="@id" />
+                            }
+
+                            <button type="submit" class="btn btn-primary px-4">
+                                ادامه
+                            </button>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

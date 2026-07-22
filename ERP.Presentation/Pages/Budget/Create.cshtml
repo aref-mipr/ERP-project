@@ -1,0 +1,40 @@
+﻿@page
+@model ERP.Presentation.Pages.Budget.CreateModel
+@{
+}
+
+<div class="container my-5" dir="rtl">
+    @if (TempData["Message"] != null)
+    {
+        <div id="message" class="alert alert-success">
+            @TempData["Message"]
+        </div>
+    }
+    <div class="row justify-content-center">
+        <div class="col-lg-7 col-md-9">
+
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-header bg-white border-0 p-4">
+                    <h4 class="fw-bold mb-0">@TempData["RegisterBudgetText"]</h4>
+                </div>
+
+                <div class="card-body p-4">
+                    <form method="post">
+                        <div class="mb-3">
+                            <label asp-for="Amount" class="form-label fw-semibold">مبلغ سرمایه (ریال)</label>
+                            <input asp-for="Amount" type="number" class="form-control" placeholder="مثلا 10000000000">
+                            <span asp-validation-for="Amount"></span>
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-2">
+                            <button type="submit" class="btn btn-primary px-4">ثبت</button>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

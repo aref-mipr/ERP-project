@@ -1,0 +1,232 @@
+﻿@page
+@model ERP.Presentation.Pages.Order.DetailsModel
+@{
+    int counter = 1;
+    decimal discountPercent = Model.Order.DiscountAmount / Model.Order.FinalAmount * 100;
+}
+<div class="container my-5" dir="rtl">
+    @if (TempData["Message"] != null)
+    {
+        <div id="message" class="alert alert-success">
+            @TempData["Message"]
+        </div>
+    }
+
+    <div class="card shadow-sm border-0 rounded-4 mb-4">
+
+        <div class="card-header bg-white border-0 p-4 d-flex justify-content-between align-items-center">
+            <h4 class="fw-bold mb-0">جزئیات سفارش</h4>
+            <a asp-page="Edit" asp-route-id="@Model.Order.Id" class="btn btn-primary">
+                ویرایش
+            </a>
+        </div>
+
+        <div class="card-body p-4">
+
+            <div class="row g-3">
+
+                <div class="col-md-4">
+                    <div class="border rounded-3 p-3 h-100 bg-light">
+                        <small class="text-muted">کد سفارش</small>
+                        <div class="fs-4 fw-bold text-primary">
+                            #@Model.Order.OrdersCriteria.OrderCode
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="border rounded-3 p-3 h-100 bg-light">
+                        <small class="text-muted">مشتری</small>
+                        <div class="fw-semibold fs-5">
+                            @Model.Order.CustomerFullName
+                        </div>
+                        <small class="text-secondary">
+                            کد: @Model.Order.CustomerCode
+                        </small>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="border rounded-3 p-3 h-100 bg-light">
+                        <small class="text-muted">تاریخ ثبت</small>
+                        <div class="fw-semibold fs-5">
+                            @Model.Order.CreationTime
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="border rounded-3 p-3 h-100">
+                        <small class="text-muted">مبلغ اولیه</small>
+                        <div class="fs-4 fw-bold">
+                            @Model.Order.InitialAmount.ToString("N0")
+                        </div>
+                        <small class="text-secondary">ریال</small>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="border rounded-3 p-3 h-100">
+                        <small class="text-muted">تخفیف</small>
+                        <div class="fs-4 fw-bold text-danger">
+                            @Model.Order.DiscountAmount.ToString("N0")
+                        </div>
+                        <small class="text-danger">
+                            @discountPercent.ToString("N2") %
+                        </small>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="rounded-3 p-3 h-100 bg-success bg-opacity-10 border border-success">
+                        <small class="text-success">
+                            مبلغ قابل پرداخت
+                        </small>
+
+                        <div class="display-6 fw-bold text-success">
+                            @Model.Order.FinalAmount.ToString("N0")
+                        </div>
+
+                        <small class="text-success">
+                            ریال
+                        </small>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="mt-4">
+                <label class="form-label fw-semibold">
+                    توضیحات سفارش
+                </label>
+
+                <div class="border rounded-3 p-3 bg-light text-secondary">@Model.Order.OrdersCriteria.Description</div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card shadow-sm border-0 rounded-4">
+
+        <div class="card-header bg-white border-0 p-4 d-flex justify-content-between align-items-center">
+            <span class="badge bg-primary-subtle text-primary border border-primary-subtle">آیتم @TempData["NumberItems"]</span>
+            <h4 class="fw-bold mb-0">آیتم‌های سفارش</h4>
+
+        </div>
+
+        <div class="card-body p-0">
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle mb-0">
+
+                    <thead class="table-light">
+                        <tr>
+                            <th style="width:80px;">ردیف</th>
+                            <th>کد آیتم</th>
+                            <th>نام آیتم</th>
+                            <th>قیمت</th>
+                            @if (TempData["Approved"] != null)
+                            {
+                                <th>وضعیت مرجوعی</th>
+                            }
+                            <th style="width:180px;">عملیات</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @if (TempData["Approved"] != null)
+                        {
+                            @foreach (var item in Model.OrderItems)
+                            {
+                                if (item.Returned == false)
+                                {
+                                    <tr>
+                                        <td>@counter</td>
+                                        <td>@item.ProductItemCode</td>
+                                        <td>@item.ProductName</td>
+                                        <td>@item.Price ریال</td>
+
+                                        <td>
+                                            <span class="badge bg-success">
+                                                تحویل شده
+                                            </span>
+                                        </td>
+
+                                        
+
+                                        <td>
+                                            <a asp-page-handler="Returned" asp-route-id="@item.Id" asp-route-orderId="@Model.Order.Id" class="btn btn-sm btn-outline-warning">
+                                                مرجوعی کالا
+                                            </a>
+
+                                            <a asp-page="/ProductItem/Details" asp-route-id="@item.ProductItemId" class="btn btn-sm btn-outline-primary">
+                                                مشاهده
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    <tr class="table-light">
+
+                                        <td>@counter</td>
+                                        <td>@item.ProductItemCode</td>
+                                        <td class="text-decoration-line-through text-muted">
+                                            @item.ProductName
+                                        </td>
+                                        <td class="text-decoration-line-through text-muted">
+                                            @item.Price
+                                        </td>
+
+                                        <td>
+                                            <span class="badge bg-danger">
+                                                مرجوع شده
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <a class="btn btn-sm btn-outline-secondary" disabled>
+                                                مرجوع شده
+                                            </a>
+
+                                            <a asp-page="/ProductItem/Details" asp-route-id="@item.ProductItemId" class="btn btn-sm btn-outline-primary">
+                                                مشاهده
+                                            </a>
+                                        </td>
+
+                                    </tr>
+                                }
+                            }
+
+                        }
+                        else
+                        {
+                            @foreach (var item in Model.OrderItems)
+                            {
+                                <tr>
+                                    <td>@counter</td>
+                                    <td>@item.ProductItemCode</td>
+                                    <td>@item.ProductName</td>
+                                    <td>@item.Price ریال</td>
+
+                                    <td>
+                                        <a asp-page="/ProductItem/Details" asp-route-id="@item.ProductItemId" class="btn btn-sm btn-outline-primary">
+                                            مشاهده
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

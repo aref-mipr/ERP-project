@@ -1,0 +1,124 @@
+﻿@page
+@model ERP.Presentation.Pages.FinancialTransaction.DetailsModel
+@{
+}
+@if (TempData["Message"] != null)
+{
+    <div id="message" class="alert alert-success">
+        @TempData["Message"]
+    </div>
+}
+<div class="card shadow-sm border-0 rounded-4 mb-4" dir="rtl">
+
+    <div class="card-header bg-white border-0 p-4 d-flex justify-content-between align-items-center">
+        <h4 class="fw-bold mb-0">جزئیات تراکنش</h4>
+    </div>
+
+    <div class="card-body p-4">
+
+        <div class="row g-3">
+
+            <div class="col-lg-8">
+                <div class="border rounded-3 p-3 h-100 bg-light">
+
+                    <small class="text-muted">
+                        عنوان
+                    </small>
+
+                    <div class="fw-semibold fs-4 mt-2">
+                        @Model.Transaction.TransactionType
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                @if (Model.Transaction.FinancialTransactionsCriteria.Mount >= 0)
+                {
+                    <div class="rounded-3 p-3 h-100 bg-success bg-opacity-10 border border-success">
+
+                        <small class="text-success">
+                            مبلغ تراکنش
+                        </small>
+                        <div class="display-6 fw-bold text-success mt-2">
+                            @Model.Transaction.FinancialTransactionsCriteria.Mount.ToString("N0")
+                        </div>
+
+                        <small class="text-success">
+                            ریال
+                        </small>
+
+                    </div>
+                }
+                else
+                {
+                    <div class="rounded-3 p-3 h-100 bg-danger bg-opacity-10 border border-danger">
+
+                        <small class="text-danger">
+                            مبلغ تراکنش
+                        </small>
+                        <div class="display-6 fw-bold text-danger mt-2">
+                            @Model.Transaction.FinancialTransactionsCriteria.Mount.ToString("N0")
+                        </div>
+
+                        <small class="text-danger">
+                            ریال
+                        </small>
+
+                    </div>
+                }
+            </div>
+
+            <div class="col-12">
+                <div class="border rounded-3 p-3">
+
+                    <small class="text-muted">
+                        تاریخ ثبت تراکنش
+                    </small>
+
+                    <div class="fw-semibold fs-5 mt-2">
+                        @Model.Transaction.TransactionTime
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="mt-4">
+
+            <label class="form-label fw-semibold">
+                توضیحات
+            </label>
+            @if (Model.Transaction.FinancialTransactionsCriteria.Description != null)
+            {
+                <div class="border rounded-3 bg-light p-3 text-secondary lh-lg">
+
+                    @Model.Transaction.FinancialTransactionsCriteria.Description
+                    <br />
+                    <br />
+                    <a asp-page="RegisterDescription" asp-route-id="@Model.Transaction.Id" style="text-decoration: none">
+                        <small>برای ویرایش توضیحات تراکنش کلیک کنید</small>
+                    </a>
+
+                </div>
+               
+            }
+            else
+            {
+                <div class="border rounded-3 bg-light p-3 text-secondary lh-lg">
+                    <a asp-page="RegisterDescription" asp-route-id="@Model.Transaction.Id" style="text-decoration: none">
+                        <div class="border rounded-3 bg-light p-3 text-secondary lh-lg">
+                    
+                            برای ثبت توضیحات تراکنش کلیک کنید
+                    
+                        </div>
+                    </a>
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+</div>
