@@ -5,6 +5,7 @@ namespace ERP.Domain.Interface.Repository
     public interface IRepositoryOrderItem
     {
         void Create(OrderItemModel order);
+        void Remove(OrderItemModel orderItem);
         OrderItemModel GetBy(long id);
         List<OrderItemModel> GetAll();
         List<OrderItemModel> GetAllBy(int orderId);

@@ -1,6 +1,5 @@
+using ERP.Application.Contract.OrderItemAgg;
 using ERP.Application.Contract.ProductItemAgg;
-using ERP.Domain.Entity;
-using ERP.Domain.Interface.Repository;
 using ERP.Domain.Interface.Utility;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -10,11 +9,14 @@ namespace ERP.Presentation.Pages.Order
     public class SelectProductItemModel : PageModel
     {
         private readonly IApplicationProductItem _applicationProductItem;
+        private readonly IApplicationOrderItem _applicationOrderItem;
         private readonly IResultMessage _resultMessage;
 
-        public SelectProductItemModel(IApplicationProductItem applicationProductItem, IResultMessage resultMessage)
+        public SelectProductItemModel(IApplicationProductItem applicationProductItem,
+            IApplicationOrderItem applicationOrderItem, IResultMessage resultMessage)
         {
             _applicationProductItem = applicationProductItem;
+            _applicationOrderItem = applicationOrderItem;
             _resultMessage = resultMessage;
         }
 
@@ -23,12 +25,23 @@ namespace ERP.Presentation.Pages.Order
         [BindProperty]
         public List<long> ProductItemIds { get; set; }
 
-        public void OnGet()
+        [BindProperty]
+        public int Id { get; set; }
+
+        public void OnGet(int id)
         {
             ProductItems = _applicationProductItem.GetAllReadyToSell();
+            Id = id;
+            var orderItems = _applicationOrderItem.GetAllBy(id);
+            List<ProductItemViewModel> editProductItems = new List<ProductItemViewModel>();
+            foreach (var orderItem in orderItems)
+            {
+                editProductItems.Add(_applicationProductItem.GetBy(orderItem.ProductItemId));
+            }
+            ProductItems.AddRange(editProductItems);
         }
 
-        public IActionResult OnPost()
+        public IActionResult OnPost(int id)
         {
             if (!ProductItemIds.Any())
             {
@@ -38,9 +51,7 @@ namespace ERP.Presentation.Pages.Order
             return RedirectToPage(
                 "/Order/SelectCustomer",
                 new
-                {
-                    ProductItemIds
-                });
+                {ProductItemIds, id});
         }
     }
 }

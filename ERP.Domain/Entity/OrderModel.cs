@@ -38,6 +38,15 @@ namespace ERP.Domain.Entity
             FinancialTransactions = new List<FinancialTransactionModel>();
         }
 
+        public void Edit(OrderCriteria orderCriteria)
+        {
+            CustomerId = orderCriteria.CustomerId;
+            Description = orderCriteria.Description;
+            InitialAmount = orderCriteria.InitialAmount;
+            DiscountAmount = orderCriteria.DiscountAmount;
+            FinalAmount = orderCriteria.FinalAmount;
+        }
+
         public void ChangeStatus(OrderStatuses status)
         {
             OrderStatus = status;

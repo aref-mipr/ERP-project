@@ -21,9 +21,12 @@ namespace ERP.Presentation.Pages.SideExpense
 
         [BindProperty]
         public EditSideExpenseDto Command { get; set; }
+        [BindProperty]
+        public decimal LastAmount { get; set; }
         public void OnGet(int id)
         {
             Command = _applicationSideExpense.GetForEdit(id);
+            LastAmount = Command.SideExpensesCriteria.Amount;
         }
 
         public IActionResult OnPost()
@@ -34,7 +37,7 @@ namespace ERP.Presentation.Pages.SideExpense
                 return Page();
             }
 
-            if (Command.SideExpensesCriteria.Amount > _repositoryBudget.GetLast().TotalBudget)
+            if (_repositoryBudget.GetLast().TotalBudget < (Command.SideExpensesCriteria.Amount - LastAmount))
             {
                 TempData["Message"] = _resultMessage.Error("عدم بودجه کافی");
                 return Page();

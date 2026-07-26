@@ -54,17 +54,25 @@ namespace ERP.Presentation.Pages.Employee
 
         public RedirectToPageResult OnPost(int id)
         {
-            _applicationEmployee.ChangeStatus(id, Status);
             var employee = _applicationEmployee.GetBy(id);
+            if (Status != EmployeeStatuses.ReEmployment)
+            {
+                if(_repositoryEmployee.GetBy(id).AmountOwed != 0)
+                {
+                    TempData["ErrorMessage"] = _resultMessage.Error($"ابتدا بدهی معوقه ی {employee.FullName} را پرداخت کنید ");
+                    return RedirectToPage();
+                }
+            }
+            _applicationEmployee.ChangeStatus(id, Status);
             TempData["Message"] = _resultMessage.Success($"جایگاه {employee.FullName} با موفقیت ویرایش شد");
             return RedirectToPage();
         }
 
         public RedirectToPageResult OnGetPayed(int id)
         {
-            if(_repositoryEmployee.GetBy(id).SalaryMonthly > _repositoryBudget.GetLast().TotalBudget)
+            if(_repositoryEmployee.GetBy(id).AmountOwed > _repositoryBudget.GetLast().TotalBudget)
             {
-                TempData["Message"] = _resultMessage.Error("عدم بودجه کافی");
+                TempData["ErrorMessage"] = _resultMessage.Error("عدم بودجه کافی");
                 return RedirectToPage();
             }
             _applicationEmployee.PaySalary(id);

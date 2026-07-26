@@ -30,7 +30,7 @@ namespace ERP.Presentation.Pages.Customer
                 return Page();
             }
             _applicationCustomer.Edit(Command);
-            TempData["Message"] = _resultMessage.Success("این مشتری با موفقیت افزوده شد");
+            TempData["Message"] = _resultMessage.Success("این مشتری با موفقیت ویرایش شد");
             return RedirectToPage("Index");
         }
     }

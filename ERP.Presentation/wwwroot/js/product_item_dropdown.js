@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
             data.forEach(function (productItem) {
                 const option = document.createElement("option");
                 option.value = productItem.id;
-                option.textContent = productItem.productItemCriterias.productItemCode;
+                option.textContent = productItem.productItemCode;
                 selector.appendChild(option);
             });
         }).catch(error => {

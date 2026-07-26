@@ -5,7 +5,6 @@ namespace ERP.Application.Contract.ProductCategoryAgg
 {
     public class CreateProductCategoryDto
     {
-        public int Id { get; set; }
         public ProductCategoryCriteria ProductCategoryCriterias { get; set; }
         
     }

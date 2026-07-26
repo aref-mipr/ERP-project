@@ -11,13 +11,13 @@ namespace ERP.Domain.Entity
         public string Position { get; private set; }
         public string? Description { get; private set; }
         public decimal SalaryMonthly { get; private set; }
+        public decimal AmountOwed { get; private set; }
         public int SalaryPaymentDay { get; private set; }
         public int EmployeeCode { get; private set; }
         public bool SalaryPayed { get; private set; }
         public DateTime CreationTime { get; private set; }
         public DateTime LastSalaryPaymentDate { get; private set; }
         public EmployeeStatuses EmployeeStatus { get; private set; }
-        public AdminModel? Admin { get; private set; }
         public ICollection<FinancialTransactionModel> FinancialTransactions { get; private set; }
 
         public enum EmployeeStatuses
@@ -40,6 +40,7 @@ namespace ERP.Domain.Entity
             Description = employeeCriteria.Description;
             SalaryMonthly = employeeCriteria.SalaryMonthly;
             EmployeeCode = employeeCriteria.EmployeeCode;
+            AmountOwed = 0;
             EmployeeStatus = EmployeeStatuses.Active;
             SalaryPayed = true;
             SalaryPaymentDay = DateTime.Now.Day;
@@ -61,11 +62,17 @@ namespace ERP.Domain.Entity
         public void PaySalary()
         {
             SalaryPayed = true;
+            AmountOwed = 0;
             LastSalaryPaymentDate = DateTime.Now;
         }
         public void SalaryDue()
         {
             SalaryPayed = false;
+        }
+
+        public void CalculateAmountOwed(decimal salaryMonthly, int MonthNumber)
+        {
+            AmountOwed = salaryMonthly * MonthNumber;
         }
 
         public void ChangeStatuses(EmployeeStatuses status)

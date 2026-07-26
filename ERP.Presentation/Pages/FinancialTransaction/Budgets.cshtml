@@ -6,7 +6,7 @@
 <div class="container my-5">
     @if (TempData["Message"] != null)
     {
-        <div id="message" class="alert alert-success">
+        <div id="message" dir="rtl" class="alert alert-success">
             @TempData["Message"]
         </div>
     }
@@ -54,7 +54,7 @@
                         <tr>
                             <td class="ps-4 fw-semibold">@counter</td>
                             <td class="text-muted">@item.TransactionType</td>
-                            <td class="text-success fw-bold">@item.FinancialTransactionsCriteria.Mount.ToString("N0")</td>
+                            <td class="text-success fw-bold">@item.Amount.ToString("N0")</td>
                             <td >@item.TransactionTime</td>
                             <td>
                                 <a asp-page="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary me-2">جزئیات</a>

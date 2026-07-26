@@ -10,3 +10,4 @@ D:\projects\ERP-v01\ERP.Domain\obj\Debug\net9.0\ERP.Domain.dll
 D:\projects\ERP-v01\ERP.Domain\obj\Debug\net9.0\refint\ERP.Domain.dll
 D:\projects\ERP-v01\ERP.Domain\obj\Debug\net9.0\ERP.Domain.pdb
 D:\projects\ERP-v01\ERP.Domain\obj\Debug\net9.0\ref\ERP.Domain.dll
+D:\projects\ERP-v01\ERP.Domain\obj\Debug\net9.0\ERP.Domain.sourcelink.json

@@ -7,7 +7,6 @@ namespace ERP.Domain.Interface.Repository
         void Create(ProductModel product);
         ProductModel GetBy(int id);
         List<ProductModel> GetAll();
-        public List<string> GetProductItemsName();
         int CalculateCode(int categoryCode, int baseCode);
         bool IsExist(int id);
         void SaveChange();

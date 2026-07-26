@@ -4,7 +4,7 @@
 }
 @if (TempData["Message"] != null)
 {
-    <div id="message" class="alert alert-danger">
+    <div id="message" dir="rtl" class="alert alert-danger">
         @TempData["Message"]
     </div>
 }
@@ -20,7 +20,7 @@
 
                 <div class="card-body p-4">
 
-                    <form method="post">
+                    <form method="post" asp-route-id="@Model.Id">
 
                         <div class="list-group">
 
@@ -32,7 +32,7 @@
                                             <div>
                                                 <div class="text-muted small">
                                                     کد مشتری:
-                                                    <span class="fw-semibold text-dark">@customer.CustomerCriterias.SubscriptionCode</span>
+                                                <span class="fw-semibold text-dark">@customer.SubscriptionCode</span>
                                                 </div>
 
                                                 <div class="fw-semibold fs-5 mt-1">

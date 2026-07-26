@@ -16,6 +16,7 @@ namespace ERP.Infrastructure.Mapping
             builder.Property(x => x.Position);
             builder.Property(x => x.Description);
             builder.Property(x => x.SalaryMonthly);
+            builder.Property(x => x.AmountOwed);
             builder.Property(x => x.SalaryPaymentDay);
             builder.Property(x => x.EmployeeCode);
             builder.Property(x => x.SalaryPayed);

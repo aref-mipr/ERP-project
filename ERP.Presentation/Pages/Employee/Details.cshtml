@@ -20,7 +20,7 @@
                     <small class="text-muted">کد پرسنلی</small>
 
                     <div class="fs-4 fw-bold text-primary">
-                        #@Model.Employee.EmployeesCriteria.EmployeeCode
+                        #@Model.Employee.EmployeeCode
                     </div>
                 </div>
             </div>
@@ -40,7 +40,7 @@
                     <small class="text-muted">سمت</small>
 
                     <div class="fw-semibold fs-5">
-                        @Model.Employee.EmployeesCriteria.Position
+                        @Model.Employee.Position
                     </div>
                 </div>
             </div>
@@ -50,7 +50,7 @@
                     <small class="text-muted">شماره تماس</small>
 
                     <div class="fs-5">
-                        @Model.Employee.EmployeesCriteria.Phone
+                        @Model.Employee.Phone
                     </div>
                 </div>
             </div>
@@ -60,7 +60,7 @@
                     <small class="text-muted">حقوق ماهانه</small>
 
                     <div class="fs-4 fw-bold">
-                        @Model.Employee.EmployeesCriteria.SalaryMonthly.ToString("N0")
+                        @Model.Employee.SalaryMonthly.ToString("N0")
                     </div>
 
                     <small class="text-secondary">
@@ -85,7 +85,7 @@
                 </div>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="border rounded-3 p-3 h-100">
 
                     <small class="text-muted">
@@ -99,7 +99,7 @@
                 </div>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="border rounded-3 p-3 h-100">
 
                     <small class="text-muted">
@@ -108,6 +108,19 @@
 
                     <div class="fw-semibold fs-5">
                         @Model.Employee.LastSalaryPaymentTime
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="border rounded-3 p-3 h-100">
+                    <small class="text-muted">
+                        بدهی معوقه
+                    </small>
+
+                    <div class="fs-4 fw-bold">
+                        @Model.Employee.AmountOwed.ToString("N0")
                     </div>
 
                 </div>
@@ -123,7 +136,7 @@
 
             <div class="border rounded-3 p-3 bg-light text-secondary">
 
-                @Model.Employee.EmployeesCriteria.Description
+                @Model.Employee.Description
 
             </div>
 

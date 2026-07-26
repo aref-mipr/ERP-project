@@ -1,13 +1,10 @@
-﻿using ERP.Application.Contract.ProductItemAgg;
-using ERP.Domain.Criteria;
-using ERP.Domain.Interface.Repository;
+﻿using ERP.Domain.Criteria;
 using FluentValidation;
 
 namespace ERP.Application.Contract.ProductAgg
 {
     public class CreateProductDto
     {
-        public int Id { get; set; }
         public ProductCriteria ProductCriterias { get; set; }
         public ProductItemCriteria ProductItemCriterias { get; set; }
     }

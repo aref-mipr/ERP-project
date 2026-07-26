@@ -3,8 +3,10 @@ using FluentValidation;
 
 namespace ERP.Application.Contract.ProductItemAgg
 {
-    public class EditProductItemDto: CreateProductItemDto
+    public class EditProductItemDto
     {
+        public long Id { get; set; }
+        public ProductItemCriteria ProductItemCriterias { get; set; }
     }
     public class EditProductValidator : AbstractValidator<EditProductItemDto>
     {

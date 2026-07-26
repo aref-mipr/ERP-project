@@ -21,8 +21,9 @@
                 <div class="card-body p-4">
                     <form method="post">
                         <div class="mb-3">
-                            <label asp-for="Amount" class="form-label fw-semibold">مبلغ برداشت (ریال)</label>
+                            <label class="form-label fw-semibold">مبلغ برداشت (ریال)</label>
                             <input asp-for="Amount" type="number" class="form-control" placeholder="مثلا 1000000000">
+                            <span asp-validation-for="Amount" class="text-danger"></span>
                         </div>
 
                         <div class="d-flex justify-content-end gap-2">

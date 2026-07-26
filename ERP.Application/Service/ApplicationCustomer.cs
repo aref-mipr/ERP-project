@@ -15,11 +15,8 @@ namespace ERP.Application.Service
 
         public void Create(CreateCustomerDto command)
         {
-            if (_repositoryCustomer.IsExist(command.Id))
-                throw new NullReferenceException();
-
-            command.CustomerCriterias.SubscriptionCode = _repositoryCustomer.GetAll().Count() + 1;
-            var customer = new CustomerModel(command.CustomerCriterias);
+            command.CustomersCriteria.SubscriptionCode = _repositoryCustomer.GetAll().Count() + 1;
+            var customer = new CustomerModel(command.CustomersCriteria);
             _repositoryCustomer.Create(customer);
             _repositoryCustomer.SaveChange();
         }
@@ -30,7 +27,7 @@ namespace ERP.Application.Service
             if (quary == null)
                 throw new NullReferenceException();
 
-            quary.Edit(command.CustomerCriterias);
+            quary.Edit(command.CustomersCriteria);
             _repositoryCustomer.SaveChange();
         }
 
@@ -45,12 +42,9 @@ namespace ERP.Application.Service
                 Id = customer.Id,
                 CreationTime = customer.CreationTime.ToString("mm : HH , yyyy/MM/dd"),
                 FullName = $"{customer.FirstName} {customer.LastName}",
-                CustomerCriterias = new CustomerCriteria
-                {
-                    Phone = customer.Phone,
-                    Email = customer.Email,
-                    SubscriptionCode = customer.SubscriptionCode,
-                }
+                Phone = customer.Phone,
+                Email = customer.Email,
+                SubscriptionCode = customer.SubscriptionCode,
             };
         }
 
@@ -63,7 +57,7 @@ namespace ERP.Application.Service
             return new EditCustomerDto
             {
                 Id = customer.Id,
-                CustomerCriterias = new CustomerCriteria
+                CustomersCriteria = new CustomerCriteria
                 {
                     FirstName = customer.FirstName,
                     LastName = customer.LastName,
@@ -79,13 +73,10 @@ namespace ERP.Application.Service
                 Id = x.Id,
                 CreationTime = x.CreationTime.ToString("mm : HH , yyyy/MM/dd"),
                 FullName = $"{x.FirstName} {x.LastName}",
-                CustomerCriterias = new CustomerCriteria
-                {
-                    Phone = x.Phone,
-                    Email = x.Email,
-                    SubscriptionCode = x.SubscriptionCode,
-                }
-            }).OrderBy(x => x.CustomerCriterias.SubscriptionCode).ToList();
+                Phone = x.Phone,
+                Email = x.Email,
+                SubscriptionCode = x.SubscriptionCode,
+            }).OrderBy(x => x.SubscriptionCode).ToList();
         }
     }
 }

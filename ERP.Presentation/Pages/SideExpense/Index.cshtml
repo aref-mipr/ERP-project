@@ -6,7 +6,7 @@
 <div class="container my-5">
     @if (TempData["Message"] != null)
     {
-        <div id="message" class="alert alert-success">
+        <div id="message" dir="rtl" class="alert alert-success">
             @TempData["Message"]
         </div>
     }
@@ -41,8 +41,8 @@
                     {
                         <tr>
                             <td class="ps-4 fw-semibold">@counter</td>
-                            <td>@item.SideExpensesCriteria.Title</td>
-                            <td class="text-success fw-bold">@item.SideExpensesCriteria.Amount</td>
+                            <td>@item.Title</td>
+                            <td class="text-success fw-bold">@item.Amount</td>
                             <td>@item.ExpenseRecordingTime</td>
                             <td class="text-end pe-1">
 

@@ -26,16 +26,6 @@ namespace ERP.Application.Service
             _applicationFinancialTransaction = applicationFinancialTransaction;
             _applicationBudget = applicationBudget;
         }
-        public List<OrderItemViewModel> GetAll()
-        {
-            return _repositoryOrderItem.GetAll().Select(x => new OrderItemViewModel
-            {
-                ProductItemCode = x.ProductItem.ProductItemCode,
-                ProductName = x.ProductItem.Product.Name,
-                Price = x.ProductItem.Price,
-                Returned = x.Returned,
-            }).OrderBy(x => x.ProductItemCode).ToList();
-        }
 
         public List<OrderItemViewModel> GetAllBy(int orderId)
         {
@@ -69,10 +59,10 @@ namespace ERP.Application.Service
                 {
                     OrderItemId = id,
                     TransactionType = TransactionTypes.ReturnedOrderItem,
-                    Mount = -quary.Price,
+                    Amount = -quary.Price,
                 }
             };
-            _applicationBudget.Register(commandTransaction.FinancialTransactionsCriteria.Mount);
+            _applicationBudget.Register(commandTransaction.FinancialTransactionsCriteria.Amount);
             _applicationFinancialTransaction.Create(commandTransaction);
             _repositoryOrderItem.SaveChange();
         }

@@ -6,8 +6,14 @@
 <div class="container my-5">
     @if (TempData["Message"] != null)
     {
-        <div id="message" class="alert alert-success">
+        <div id="message" dir="rtl" class="alert alert-success">
             @TempData["Message"]
+        </div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div id="message" dir="rtl" class="alert alert-danger">
+            @TempData["ErrorMessage"]
         </div>
     }
 
@@ -21,7 +27,7 @@
         <div class="card-header bg-white border-0 px-4 py-3">
             <div class="d-flex justify-content-between align-items-center">
                 <h5 class="mb-0 fw-bold">مشتریان</h5>
-                <span class="badge bg-primary-subtle text-primary border border-primary-subtle">آیتم @TempData["NumberItems"]</span>
+                <span class="badge bg-primary-subtle text-primary border border-primary-subtle">تعداد: @TempData["NumberItems"]</span>
             </div>
         </div>
         <div class="table-responsive">
@@ -45,7 +51,7 @@
                     {
                         <tr>
                             <td class="ps-4 fw-semibold">@counter</td>
-                            <td>@item.OrdersCriteria.OrderCode</td>
+                            <td>@item.OrderCode</td>
                             <td>@item.CustomerFullName</td>
                             <td>@item.CreationTime</td>
                             <td>@item.OrderStatus</td>

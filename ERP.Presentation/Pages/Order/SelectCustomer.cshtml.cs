@@ -24,12 +24,16 @@ namespace ERP.Presentation.Pages.Order
         [BindProperty(SupportsGet = true)]
         public List<long> ProductItemIds { get; set; }
 
-        public void OnGet()
+        [BindProperty]
+        public int Id { get; set; }
+
+        public void OnGet(int id)
         {
             Customers = _applicationCustomer.GetAll();
+            Id = id;
         }
 
-        public IActionResult OnPost()
+        public IActionResult OnPost(int id)
         {
             if(CustomerId == 0)
             {
@@ -38,7 +42,7 @@ namespace ERP.Presentation.Pages.Order
             }
             return RedirectToPage(
                 "/Order/Create",
-                new {CustomerId, ProductItemIds });
+                new {CustomerId, ProductItemIds, id });
         }
     }
 }

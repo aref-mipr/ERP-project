@@ -3,7 +3,6 @@ using ERP.Application.Contract.ProductCategoryAgg;
 using ERP.Domain.Interface.Utility;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ERP.Presentation.Pages.ProductCategory
 {

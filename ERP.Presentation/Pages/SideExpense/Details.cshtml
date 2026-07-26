@@ -23,7 +23,7 @@
                     </small>
 
                     <div class="fw-semibold fs-4 mt-2">
-                        @Model.SideExpense.SideExpensesCriteria.Title
+                        @Model.SideExpense.Title
                     </div>
 
                 </div>
@@ -37,7 +37,7 @@
                     </small>
 
                     <div class="display-6 fw-bold text-danger mt-2">
-                        @Model.SideExpense.SideExpensesCriteria.Amount.ToString("N0")
+                        @Model.SideExpense.Amount.ToString("N0")
                     </div>
 
                     <small class="text-danger">
@@ -68,7 +68,7 @@
             <label class="form-label fw-semibold">
                 توضیحات
             </label>
-            @if (Model.SideExpense.SideExpensesCriteria.Description == null)
+            @if (Model.SideExpense.Description == null)
             {
                 <div class="border rounded-3 bg-light p-3 text-secondary lh-lg">
 
@@ -80,7 +80,7 @@
             {
                 <div class="border rounded-3 bg-light p-3 text-secondary lh-lg">
 
-                    @Model.SideExpense.SideExpensesCriteria.Description
+                    @Model.SideExpense.Description
 
                 </div>
             }

@@ -2,13 +2,13 @@
 @model ERP.Presentation.Pages.FinancialTransaction.DetailsModel
 @{
 }
+<div class="card shadow-sm border-0 rounded-4 mb-4" dir="rtl">
 @if (TempData["Message"] != null)
 {
     <div id="message" class="alert alert-success">
         @TempData["Message"]
     </div>
 }
-<div class="card shadow-sm border-0 rounded-4 mb-4" dir="rtl">
 
     <div class="card-header bg-white border-0 p-4 d-flex justify-content-between align-items-center">
         <h4 class="fw-bold mb-0">جزئیات تراکنش</h4>
@@ -33,7 +33,7 @@
             </div>
 
             <div class="col-lg-4">
-                @if (Model.Transaction.FinancialTransactionsCriteria.Mount >= 0)
+                @if (Model.Transaction.Amount >= 0)
                 {
                     <div class="rounded-3 p-3 h-100 bg-success bg-opacity-10 border border-success">
 
@@ -41,7 +41,7 @@
                             مبلغ تراکنش
                         </small>
                         <div class="display-6 fw-bold text-success mt-2">
-                            @Model.Transaction.FinancialTransactionsCriteria.Mount.ToString("N0")
+                            @Model.Transaction.Amount.ToString("N0")
                         </div>
 
                         <small class="text-success">
@@ -58,7 +58,7 @@
                             مبلغ تراکنش
                         </small>
                         <div class="display-6 fw-bold text-danger mt-2">
-                            @Model.Transaction.FinancialTransactionsCriteria.Mount.ToString("N0")
+                            @Model.Transaction.Amount.ToString("N0")
                         </div>
 
                         <small class="text-danger">
@@ -90,11 +90,11 @@
             <label class="form-label fw-semibold">
                 توضیحات
             </label>
-            @if (Model.Transaction.FinancialTransactionsCriteria.Description != null)
+            @if (Model.Transaction.Description != null)
             {
                 <div class="border rounded-3 bg-light p-3 text-secondary lh-lg">
 
-                    @Model.Transaction.FinancialTransactionsCriteria.Description
+                    @Model.Transaction.Description
                     <br />
                     <br />
                     <a asp-page="RegisterDescription" asp-route-id="@Model.Transaction.Id" style="text-decoration: none">

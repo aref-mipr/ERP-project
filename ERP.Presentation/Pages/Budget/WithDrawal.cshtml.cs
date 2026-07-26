@@ -3,6 +3,7 @@ using ERP.Domain.Interface.Repository;
 using ERP.Domain.Interface.Utility;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.ComponentModel.DataAnnotations;
 
 namespace ERP.Presentation.Pages.Budget
 {
@@ -19,6 +20,8 @@ namespace ERP.Presentation.Pages.Budget
         }
 
         [BindProperty]
+        [Required(ErrorMessage = "مقدار برداشت از سرمایه را وارد کنید")]
+        [Range(1, int.MaxValue, ErrorMessage = "مبلغ برداشت از سرمایه باید بیشتر از 0 باشد")]
         public decimal Amount { get; set; }
 
         public void OnGet()
@@ -38,6 +41,7 @@ namespace ERP.Presentation.Pages.Budget
                 return RedirectToPage();
             }
             _applicationBudget.WithDrawal(Amount);
+            TempData["Message"] = _resultMessage.Success("برداشت از سرمایه با موفقیت انجام شد");
             return RedirectToPage("/Budget/Index");
         }
     }

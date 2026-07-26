@@ -4,7 +4,7 @@
 }
 @if (TempData["Message"] != null)
 {
-    <div id="message" class="alert alert-danger">
+    <div id="message" dir="rtl" class="alert alert-danger">
         @TempData["Message"]
     </div>
 }
@@ -20,7 +20,7 @@
 
                 <div class="card-body p-4">
 
-                    <form method="post">
+                    <form method="post" asp-route-id="@Model.Id">
                         @foreach (var id in Model.Command.ProductItemIds)
                         {
                             <input type="hidden"
@@ -37,7 +37,7 @@
                             <div class="border rounded-3 p-3 bg-light">
                                 <div class="text-muted small">
                                     کد مشتری:
-                                    <span class="fw-semibold text-dark">@Model.Customer.CustomerCriterias.SubscriptionCode</span>
+                                    <span class="fw-semibold text-dark">@Model.Customer.SubscriptionCode</span>
                                 </div>
 
                                 <div class="fw-semibold fs-5 mt-1">
@@ -55,7 +55,7 @@
                                     <div class="list-group-item rounded-3">
                                         <div class="d-flex justify-content-between">
                                             <span class="fw-semibold">@item.Name</span>
-                                            <span class="text-muted">کد: @item.ProductItemCriterias.ProductItemCode</span>
+                                            <span class="text-muted">کد: @item.ProductItemCode</span>
                                         </div>
                                     </div>
                                 }
@@ -113,6 +113,8 @@
                             </div>
 
                         </div>
+
+                        <input type="hidden" asp-for="Command.Id" />
 
                         <div class="d-flex justify-content-end gap-2">
 

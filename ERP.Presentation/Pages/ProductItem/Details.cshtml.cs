@@ -1,10 +1,8 @@
-using ERP.Application.Contract.ProductAgg;
 using ERP.Application.Contract.ProductItemAgg;
 using ERP.Domain.Interface.Utility;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using static ERP.Domain.Entity.ProductItemModel;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace ERP.Presentation.Pages.ProductItem
 {
@@ -20,7 +18,7 @@ namespace ERP.Presentation.Pages.ProductItem
 
         public ProductItemViewModel ProductItem { get; set; }
 
-        public void OnGet(int id)
+        public void OnGet(long id)
         {
             ProductItem = _applicationProductItem.GetBy(id);
 
@@ -38,10 +36,9 @@ namespace ERP.Presentation.Pages.ProductItem
                 TempData["StatusStyle"] = "bg-secondary";
         }
 
-        public RedirectToPageResult OnGetRedirectToProduct()
+        public RedirectToPageResult OnGetRedirectToProduct(int id)
         {
-            long productId = _applicationProductItem.GetBy(ProductItem.Id).ProductItemCriterias.ProductId;
-            return RedirectToPage("/Product/Details", new { id = productId });
+            return RedirectToPage("/Product/Details", new { id });
         }
     }
 }

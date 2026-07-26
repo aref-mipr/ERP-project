@@ -1,6 +1,4 @@
-﻿using static ERP.Domain.Entity.EmployeeModel;
-
-namespace ERP.Domain.Criteria
+﻿namespace ERP.Domain.Criteria
 {
     public class EmployeeCriteria
     {
@@ -10,6 +8,6 @@ namespace ERP.Domain.Criteria
         public string Position { get; set; }
         public string? Description { get; set; }
         public decimal SalaryMonthly { get; set; }
-        public int EmployeeCode { get; set; }
+        public int EmployeeCode { get; set; } 
     }
 }

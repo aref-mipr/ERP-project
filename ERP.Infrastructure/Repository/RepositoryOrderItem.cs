@@ -16,6 +16,10 @@ namespace ERP.Infrastructure.Repository
         {
             _context.OrderItems.Add(order);
         }
+        public void Remove(OrderItemModel orderItem)
+        {
+            _context.OrderItems.Remove(orderItem);
+        }
         public OrderItemModel GetBy(long id)
         {
             return _context.OrderItems.FirstOrDefault(x => x.Id == id);

@@ -4,7 +4,6 @@ using ERP.Domain.Criteria;
 using ERP.Domain.Entity;
 using ERP.Domain.Interface.Repository;
 using static ERP.Domain.Entity.FinancialTransactionModel;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace ERP.Application.Service
 {
@@ -24,7 +23,7 @@ namespace ERP.Application.Service
                 FinancialTransactionsCriteria = new FinancialTransactionCriteria
                 {
                     TransactionType = !_repositoryBudget.HasInitialCapital() ? TransactionTypes.OpeningBalance : TransactionTypes.IncreaseBudget,
-                    Mount =  Amount,
+                    Amount =  Amount,
                 }
             };
             var lastBudget = _repositoryBudget.GetLast();
@@ -56,10 +55,10 @@ namespace ERP.Application.Service
                 FinancialTransactionsCriteria = new FinancialTransactionCriteria
                 {
                     TransactionType = TransactionTypes.OnerWithdrawal,
-                    Mount = -amount,
+                    Amount = -amount,
                 }
             };
-            Register(commandTransaction.FinancialTransactionsCriteria.Mount);
+            Register(commandTransaction.FinancialTransactionsCriteria.Amount);
             _applicationFinancialTransaction.Create(commandTransaction);
             _repositoryBudget.SaveChange();
         }

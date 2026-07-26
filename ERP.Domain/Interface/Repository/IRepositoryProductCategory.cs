@@ -7,8 +7,6 @@ namespace ERP.Domain.Interface.Repository
         void Create(ProductCategoryModel category);
         ProductCategoryModel GetBy(int id);
         List<ProductCategoryModel> GetAll();
-        List<string> GetProductsName();
-        bool IsExist(int id);
         void SaveChange();
     }
 }

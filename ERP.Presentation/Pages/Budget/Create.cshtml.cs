@@ -1,10 +1,9 @@
 using ERP.Application.Contract.BudgetAgg;
-using ERP.Application.Contract.FinancialTransactionAgg;
 using ERP.Domain.Interface.Repository;
 using ERP.Domain.Interface.Utility;
-using ERP.Infrastructure.Utility;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.ComponentModel.DataAnnotations;
 
 namespace ERP.Presentation.Pages.Budget
 {
@@ -21,6 +20,8 @@ namespace ERP.Presentation.Pages.Budget
         }
 
         [BindProperty]
+        [Required(ErrorMessage = "مقدار سرمایه را وارد کنید")]
+        [Range(1, int.MaxValue, ErrorMessage = "مبلغ سرمایه باید بیشتر از 0 باشد")]
         public decimal Amount { get; set; }
 
         public void OnGet()

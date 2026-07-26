@@ -1,6 +1,7 @@
 ﻿@page
 @model ERP.Presentation.Pages.Customer.DetailsModel
 @{
+    int counter = 1;
 }
 
 <div class="container my-5" dir="rtl">
@@ -26,14 +27,14 @@
                 <div class="col-md-4">
                     <div class="border rounded-3 p-3 bg-light">
                         <small class="text-muted">شماره تماس</small>
-                        <div class="fw-semibold">@Model.Customer.CustomerCriterias.Phone</div>
+                        <div class="fw-semibold">@Model.Customer.Phone</div>
                     </div>
                 </div>
             
                 <div class="col-md-4">
                     <div class="border rounded-3 p-3 bg-light">
                         <small class="text-muted">ایمیل</small>
-                        <div class="fw-semibold">@Model.Customer.CustomerCriterias.Email</div>
+                        <div class="fw-semibold">@Model.Customer.Email</div>
                     </div>
                 </div>
             
@@ -49,59 +50,55 @@
     </div>
 </div>
 
-    <!-- Orders List Card -->
-    <!--
-    <div class="card shadow-sm border-0 rounded-4">
-        <div class="card-header bg-white border-0 px-4 py-3 d-flex justify-content-between align-items-center">
-            <h5 class="mb-0 fw-bold">لیست سفارش‌ها</h5>
-            <a href="/orders/create?customerId=1" class="btn btn-primary btn-sm">
-                ثبت سفارش جدید
-            </a>
-        </div>
+<div class="container my-5">
+    <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
+        <div class="card-header bg-white border-0 p-4 d-flex justify-content-between align-items-center">
 
+
+        </div>
+        <div class="card-header bg-white border-0 px-4 py-3">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 fw-bold">سفارش های این مشتری</h5>
+                <span class="badge bg-primary-subtle text-primary border border-primary-subtle">تعداد: @TempData["NumberItems"]</span>
+            </div>
+        </div>
         <div class="table-responsive">
-            <table class="table table-hover align-middle mb-0">
+            <table dir="rtl" class="table table-hover align-middle mb-0">
                 <thead class="table-light">
                     <tr>
-                        <th class="ps-4">کد سفارش</th>
-                        <th>نام سفارش‌دهنده</th>
-                        <th>وضعیت</th>
-                        <th>مبلغ نهایی</th>
-                        <th>آخرین بروزرسانی</th>
-                        <th class="text-end pe-4">عملیات</th>
-                    </tr>
+                        <tr>
+                            <th class="ps-5">ردیف</th>
+                            <th>کد سفارش</th>
+                            <th>مبلغ سفارش</th>
+                            <th>تاریخ ثبت</th>
+                            <th>وضعیت</th>
+                            <th>آیتم ها</th>
+                            <th class="text-end pe-4">عملیات</th>
+                        </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td class="ps-4">1001</td>
-                        <td>علی محمدی</td>
-                        <td>
-                            <span class="badge bg-warning text-dark">در انتظار</span>
-                        </td>
-                        <td>1,250,000 تومان</td>
-                        <td>1403/10/15 14:30</td>
-                        <td class="text-end pe-4">
-                            <a href="/orders/details/1001" class="btn btn-sm btn-outline-info">جزئیات</a>
-                            <a href="/orders/edit/1001" class="btn btn-sm btn-outline-primary">ویرایش</a>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="ps-4">1002</td>
-                        <td>علی محمدی</td>
-                        <td>
-                            <span class="badge bg-success">تکمیل شده</span>
-                        </td>
-                        <td>890,000 تومان</td>
-                        <td>1403/10/16 09:45</td>
-                        <td class="text-end pe-4">
-                            <a href="/orders/details/1002" class="btn btn-sm btn-outline-info">جزئیات</a>
-                            <a href="/orders/edit/1002" class="btn btn-sm btn-outline-primary">ویرایش</a>
-                        </td>
-                    </tr>
+                    @foreach (var item in Model.Orders)
+                    {
+                        <tr>
+                            <td class="ps-4 fw-semibold">@counter</td>
+                            <td>@item.OrderCode</td>
+                                <td class="text-success fw-bold">@item.FinalAmount</td>
+                            <td>@item.CreationTime</td>
+                            <td>@item.OrderStatus</td>
+                            <td>
+                                <select class="form-select sub-selector" data-parent-id="@item.Id">
+                                    <option value="">-- انتخاب محصول --</option>
+                                </select>
+                            </td>
+                            <td class="text-end pe-1">
+                                <a asp-page="/Order/Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary me-2">جزئیات</a>
+                            </td>
+                        </tr>
+                        counter++;
+                    }
                 </tbody>
             </table>
         </div>
     </div>
 </div>
--->
+    <script src="~/js/order_item_dropdown.js"></script>

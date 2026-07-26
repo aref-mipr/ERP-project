@@ -14,9 +14,6 @@ namespace ERP.Application.Service
         }
         public void Create(CreateProductCategoryDto command)
         {
-            if (_repositoryProductCategory.IsExist(command.Id))
-                throw new NullReferenceException();
-
             command.ProductCategoryCriterias.ProductCategoryCode = _repositoryProductCategory.GetAll().Count() + 10;
             var productCategory = new ProductCategoryModel(command.ProductCategoryCriterias);
             _repositoryProductCategory.Create(productCategory);
@@ -40,13 +37,9 @@ namespace ERP.Application.Service
                 Id = x.Id,
                 IsActive = x.IsActive,
                 CreationTime = x.CreationTime.ToString("mm : HH , yyyy/MM/dd"),
-                ProductsName = _repositoryProductCategory.GetProductsName(),
-                ProductCategoryCriterias = new ProductCategoryCriteria
-                {
-                    Name = x.Name,
-                    ProductCategoryCode = x.ProductCategoryCode,
-                }
-            }).OrderBy(x => x.ProductCategoryCriterias.ProductCategoryCode).ToList();
+                Name = x.Name,
+                ProductCategoryCode = x.ProductCategoryCode,
+            }).OrderBy(x => x.ProductCategoryCode).ToList();
         }
 
         public EditProductCategoryDto GetForEdit(int id)

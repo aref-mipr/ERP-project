@@ -33,11 +33,23 @@ namespace ERP.Application.Service
         public void Create(CreateProductItemDto command)
         {
             var product = _repositoryProduct.GetBy(command.ProductItemCriterias.ProductId);
-            command.ProductItemCriterias.Price = product.SellPrice;
-            int baseProductItemCode = _repositoryProductItem.GetAll().Where(x => x.ProductId == command.ProductItemCriterias.ProductId).Count();
+            int baseProductItemCode = _repositoryProductItem.GetAll().Where(x => x.ProductId == command.ProductItemCriterias.ProductId).Count()+1;
             command.ProductItemCriterias.ProductItemCode = _repositoryProductItem.CalculateCode(product.ProductCode, baseProductItemCode);
             var productItem = new ProductItemModel(command.ProductItemCriterias);
             _repositoryProductItem.Create(productItem);
+            _repositoryProductItem.SaveChange();
+
+            var commandTransaction = new CreateFinancialTransactionDto
+            {
+                FinancialTransactionsCriteria = new FinancialTransactionCriteria
+                {
+                    ProductItemId = productItem.Id,
+                    Amount = -productItem.Product.CostPrice,
+                    TransactionType = TransactionTypes.Purchase,
+                }
+            };
+            _applicationBudget.Register(commandTransaction.FinancialTransactionsCriteria.Amount);
+            _applicationFinancialTransaction.Create(commandTransaction);
             _repositoryProductItem.SaveChange();
         }
         public void Edit(EditProductItemDto command)
@@ -55,10 +67,10 @@ namespace ERP.Application.Service
                     {
                         ProductItemId = command.Id,
                         TransactionType = TransactionTypes.ReturnedProduct,
-                        Mount = quary.Product.CostPrice,
+                        Amount = quary.Product.CostPrice,
                     }
                 };
-                _applicationBudget.Register(commandTransaction.FinancialTransactionsCriteria.Mount);
+                _applicationBudget.Register(commandTransaction.FinancialTransactionsCriteria.Amount);
                 _applicationFinancialTransaction.Create(commandTransaction);
             }
             _repositoryProductItem.SaveChange();
@@ -67,76 +79,87 @@ namespace ERP.Application.Service
         public ProductItemViewModel GetBy(long id)
         {
             var quary = _repositoryProductItem.GetBy(id);
-            var productItem = new ProductItemViewModel
+            return new ProductItemViewModel
             {
                 Id = quary.Id,
                 Name = quary.Product.Name,
                 Category = quary.Product.ProductCateory.Name,
                 CreationTime = quary.Product.CreationTime.ToString("mm : HH , yyyy/MM/dd"),
                 ProductItemStatus = _enumExtension.ItemStatusesToPersianString(quary.ProductItemStatus),
+                ProductId = quary.ProductId,
+                ProductItemCode = quary.ProductItemCode,
+                Price = quary.Price,
+                Description = quary.Description,
+            };
+        }
+
+        public CreateProductItemDto GetBy(int productId)
+        {
+            var product = _repositoryProduct.GetBy(productId);
+            
+            return new CreateProductItemDto
+            {
                 ProductItemCriterias = new ProductItemCriteria
                 {
-                    ProductId = quary.ProductId,
-                    ProductItemCode = quary.ProductItemCode,
-                    Price = quary.Price,
-                    Description = quary.Description,
+                    ProductId = product.Id,
                 }
             };
-
-            return productItem;
         }
+
         public List<ProductItemViewModel> GetAll()
         {
             return _repositoryProductItem.GetAll()
                 .Select(x => new ProductItemViewModel{
                     Id = x.Id,
+                    ProductId = x.ProductId,
                     Name = x.Product.Name,
-                    CreationTime = x.Product.CreationTime.ToString("mm : HH , yyyy/MM/dd"),
                     ProductItemStatus = _enumExtension.ItemStatusesToPersianString(x.ProductItemStatus),
-                    ProductItemCriterias = new ProductItemCriteria
-                    {
-                        ProductId = x.ProductId,
-                        ProductItemCode = x.ProductItemCode,
-                        Price = x.Price,
-                        Description = x.Description,
-                    }
-            }).OrderBy(x => x.ProductItemCriterias.ProductItemCode).ToList();
+                    ProductItemCode = x.ProductItemCode,
+                    Price = x.Price,
+            }).OrderBy(x => x.ProductItemCode).ToList();
         }
 
         public List<ProductItemViewModel> GetAllReadyToSell()
         {
-            return _repositoryProductItem.GetAllReadyToSell()
-                .Select(x => new ProductItemViewModel{
-                    Id = x.Id,
-                    Name = x.Product.Name,
-                    CreationTime = x.Product.CreationTime.ToString("mm : HH , yyyy/MM/dd"),
-                    ProductItemStatus = _enumExtension.ItemStatusesToPersianString(x.ProductItemStatus),
-                    ProductItemCriterias = new ProductItemCriteria
-                    {
-                        ProductId = x.ProductId,
-                        ProductItemCode = x.ProductItemCode,
-                        Price = x.Price,
-                        Description = x.Description,
-                    }
-            }).OrderBy(x => x.ProductItemCriterias.ProductItemCode).ToList();
+            var quary = _repositoryProductItem.GetAll()
+                .Where(x => x.ProductItemStatus == ProductItemStatuses.Approved);
+
+            return quary.Select(x => new ProductItemViewModel
+            {
+                Id = x.Id,
+                Name = x.Product.Name,
+                ProductItemCode = x.ProductItemCode,
+            }).OrderBy(x => x.ProductItemCode).ToList();
         }
 
         public List<ProductItemViewModel> GetAllBy(int productId)
         {
-            return _repositoryProductItem.GetAllBy(productId)
-                .Select(x => new ProductItemViewModel
-                {
-                    Id = x.Id,
-                    Name = x.Product.Name,
-                    ProductItemStatus = _enumExtension.ItemStatusesToPersianString(x.ProductItemStatus),
-                    ProductItemCriterias = new ProductItemCriteria
-                    {
-                        ProductId = x.ProductId,
-                        ProductItemCode = x.ProductItemCode,
-                        Price = x.Price,
-                    }
-                }).OrderBy(x => x.ProductItemCriterias.ProductItemCode).ToList();
-           
+            var quary = _repositoryProductItem.GetAll().Where(x => x.ProductId == productId);
+            return quary.Select(x => new ProductItemViewModel
+            {
+                Id = x.Id,
+                ProductItemCode = x.ProductItemCode,
+                Price = x.Price,
+            }).OrderBy(x => x.ProductItemCode).ToList();
+        }
+
+        public List<ProductItemViewModel> GetIAlltemsInWarehouse()
+        {
+            var quary = _repositoryProductItem.GetAll()
+                .Where(x => x.ProductItemStatus == ProductItemStatuses.Testing
+                    || x.ProductItemStatus == ProductItemStatuses.Approved
+                    || x.ProductItemStatus == ProductItemStatuses.Unsellable
+                    || x.ProductItemStatus == ProductItemStatuses.WaitingOrder);
+
+            return quary.Select(x => new ProductItemViewModel
+            {
+                Id = x.Id,
+                Name = x.Product.Name,
+                ProductItemStatus = _enumExtension.ItemStatusesToPersianString(x.ProductItemStatus),
+                ProductId = x.ProductId,
+                ProductItemCode = x.ProductItemCode,
+                Price = x.Price,
+            }).OrderBy(x => x.ProductItemCode).ToList();
         }
 
         public EditProductItemDto GetForEdit(long id)

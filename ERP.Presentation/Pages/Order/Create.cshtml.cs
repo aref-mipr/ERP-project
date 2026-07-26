@@ -1,10 +1,7 @@
 using ERP.Application.Contract.CustomerAgg;
 using ERP.Application.Contract.OrderAgg;
 using ERP.Application.Contract.ProductItemAgg;
-using ERP.Application.Service;
 using ERP.Domain.Criteria;
-using ERP.Domain.Entity;
-using ERP.Domain.Interface.Repository;
 using ERP.Domain.Interface.Utility;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -35,30 +32,41 @@ namespace ERP.Presentation.Pages.Order
         [BindProperty]
         public CreateOrderDto Command { get; set; }
 
+        [BindProperty]
+        public int Id { get; set; }
+
         public void OnGet(
             int customerId,
-            List<long> productItemIds)
+            List<long> productItemIds,
+            int id)
         {
-            ProductItems = _applicationProductItem.GetAllReadyToSell()
+            ProductItems = _applicationProductItem.GetAll()
                 .Where(x => productItemIds.Contains(x.Id)).ToList();
 
             Customer = _applicationCustomer.GetBy(customerId);
+            Id = id;
 
             Command = new CreateOrderDto();
+            Command.Id = id;
             Command.ProductItemIds = productItemIds;
             Command.OrdersCriteria = new OrderCriteria();
             Command.OrdersCriteria.CustomerId = customerId;
-            Command.OrdersCriteria.InitialAmount = ProductItems.Sum(x => x.ProductItemCriterias.Price);
+            Command.OrdersCriteria.InitialAmount = ProductItems.Sum(x => x.Price);
         }
 
-        public IActionResult OnPost()
+        public IActionResult OnPost(int id)
         {
             if (!ModelState.IsValid)
             {
                 TempData["Message"] = _resultMessage.Error("سفارش ثبت نشد");
                 return Page();
             }
-            _applicationOrder.Create(Command);
+
+            if (id == 0)
+                _applicationOrder.Create(Command);
+            else
+                _applicationOrder.Edit(Command);
+
             TempData["Message"] = _resultMessage.Success("سفارش با موفقیت ثبت شد");
             return RedirectToPage("Index");
         }

@@ -32,7 +32,7 @@ namespace ERP.Presentation.Pages.FinancialTransaction
         {
             Id = id;
             if(_repositorynFinancialTransaction.GetBy(id).Description != null)
-                Description = _applicationFinancialTransaction.GetBy(id).FinancialTransactionsCriteria.Description;
+                Description = _applicationFinancialTransaction.GetBy(id).Description;
         }
 
         public IActionResult OnPost(long id)

@@ -1,9 +1,12 @@
-﻿using FluentValidation;
+﻿using ERP.Domain.Criteria;
+using FluentValidation;
 
 namespace ERP.Application.Contract.EmployeeAgg
 {
-    public class EditEmployeeDto: CreateEmployeeDto
+    public class EditEmployeeDto
     {
+        public int Id { get; set; }
+        public EmployeeCriteria EmployeesCriteria { get; set; }
     }
     public class EditEmployeeValidator : AbstractValidator<EditEmployeeDto>
     {

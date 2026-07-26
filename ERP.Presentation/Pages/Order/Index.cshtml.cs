@@ -13,11 +13,14 @@ namespace ERP.Presentation.Pages.Order
         private readonly IApplicationOrder _applicationOrder;
         private readonly IApplicationOrderItem _applicationOrderItem;
         private readonly IEnumExtension _enumExtension;
-        public IndexModel(IApplicationOrder applicationOrder, IApplicationOrderItem applicationOrderItem, IEnumExtension enumExtension)
+        private readonly IResultMessage _resultMessage;
+        public IndexModel(IApplicationOrder applicationOrder, IApplicationOrderItem applicationOrderItem,
+            IEnumExtension enumExtension, IResultMessage resultMessage)
         {
             _applicationOrder = applicationOrder;
             _applicationOrderItem = applicationOrderItem;
             _enumExtension = enumExtension;
+            _resultMessage = resultMessage;
         }
 
         public List<OrderViewModel> Orders { get; set; }
@@ -39,6 +42,7 @@ namespace ERP.Presentation.Pages.Order
         public RedirectToPageResult OnPost(int id)
         {
             _applicationOrder.ChangeStatus(id, Status);
+            TempData["Message"] = _resultMessage.Success("وضعیت سفارش با موفقیت تغییر کرد");
             return RedirectToPage();
         }
 

@@ -1,6 +1,5 @@
 using ERP.Application.Contract.OrderAgg;
 using ERP.Application.Contract.OrderItemAgg;
-using ERP.Application.Contract.ProductItemAgg;
 using ERP.Domain.Interface.Repository;
 using ERP.Domain.Interface.Utility;
 using Microsoft.AspNetCore.Mvc;
@@ -37,9 +36,13 @@ namespace ERP.Presentation.Pages.Order
             Order = _applicationOrder.GetBy(id);
             OrderItems = _applicationOrderItem.GetAllBy(id);
             TempData["NumberItems"] = OrderItems.Count();
+            TempData["DiscountPercent"] = "Model.Order.DiscountAmount / Model.Order.FinalAmount * 100";
             var orderStatus = _repositoryOrder.GetBy(id).OrderStatus;
             if(orderStatus == OrderStatuses.Approved)
                 TempData["Approved"] = true;
+
+            if (orderStatus == OrderStatuses.Pending)
+                TempData["Pending"] = true;
         }
 
         public IActionResult OnGetReturned(long id, int orderId)
@@ -52,6 +55,16 @@ namespace ERP.Presentation.Pages.Order
             _applicationOrderItem.Return(id);
             TempData["Message"] = _resultMessage.Success("آیتم با موفقیت مرجوع شد");
             return RedirectToPage(new { id = orderId });
+        }
+
+        public IActionResult OnGetEdit(int id)
+        {
+            if(_repositoryOrder.GetBy(id).OrderStatus != OrderStatuses.Pending)
+            {
+                TempData["ErrorMessage"] = _resultMessage.Error("سفارش تایید یا رد شده را نمی توانید ویرایش کنید");
+                return RedirectToPage("Index");
+            }
+            return RedirectToPage("SelectProductItem", new {id});
         }
     }
 }

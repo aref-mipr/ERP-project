@@ -16,7 +16,7 @@ namespace ERP.Infrastructure.Mapping
             builder.Property(x => x.OrderItemId);
             builder.Property(x => x.EmployeeId);
             builder.Property(x => x.SideExpenseId);
-            builder.Property(x => x.Mount);
+            builder.Property(x => x.Amount);
             builder.Property(x => x.Description);
             builder.Property(x => x.TransactionTime);
             builder.Property(x => x.TransactionType);

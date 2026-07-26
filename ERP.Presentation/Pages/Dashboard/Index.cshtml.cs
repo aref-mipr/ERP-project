@@ -1,5 +1,4 @@
 using ERP.Domain.Interface.Repository;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ERP.Presentation.Pages.Dashboard

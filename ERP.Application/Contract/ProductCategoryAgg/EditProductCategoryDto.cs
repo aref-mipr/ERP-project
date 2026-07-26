@@ -1,9 +1,12 @@
-﻿using FluentValidation;
+﻿using ERP.Domain.Criteria;
+using FluentValidation;
 
 namespace ERP.Application.Contract.ProductCategoryAgg
 {
-    public class EditProductCategoryDto: CreateProductCategoryDto
+    public class EditProductCategoryDto
     {
+        public int Id { get; set; }
+        public ProductCategoryCriteria ProductCategoryCriterias { get; set; }
     }
     public class EditProductCategoryDtoValidator : AbstractValidator<EditProductCategoryDto>
     {

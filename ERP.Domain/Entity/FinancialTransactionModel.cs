@@ -11,7 +11,7 @@ namespace ERP.Domain.Entity
         public long? OrderItemId { get; private set; }
         public int? EmployeeId { get; private set; }
         public int? SideExpenseId { get; private set; }
-        public decimal Mount { get; private set; }
+        public decimal Amount { get; private set; }
         public string? Description { get; private set; }
         public DateTime TransactionTime { get; private set; }
         public TransactionTypes TransactionType { get; private set; }
@@ -46,7 +46,7 @@ namespace ERP.Domain.Entity
             OrderItemId = finalTransactionCriteria.OrderItemId;
             EmployeeId = finalTransactionCriteria.EmployeeId;
             SideExpenseId = finalTransactionCriteria.SideExpenseId;
-            Mount = finalTransactionCriteria.Mount;
+            Amount = finalTransactionCriteria.Amount;
             Description = finalTransactionCriteria.Description;
             TransactionType = finalTransactionCriteria.TransactionType;
             TransactionTime = DateTime.Now;

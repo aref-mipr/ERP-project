@@ -5,7 +5,6 @@ namespace ERP.Application.Contract.SideExpenseAgg
 {
     public class CreateSideExpenseDto
     {
-        public int Id { get; set; }
         public SideExpenseCriteria SideExpensesCriteria { get; set; }
     }
 

@@ -6,7 +6,6 @@ using ERP.Domain.Criteria;
 using ERP.Domain.Entity;
 using ERP.Domain.Interface.Repository;
 using static ERP.Domain.Entity.FinancialTransactionModel;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace ERP.Application.Service
 {
@@ -34,9 +33,6 @@ namespace ERP.Application.Service
 
         public void Create(CreateProductDto command)
         {
-            if (_repositoryProduct.IsExist(command.Id))
-                throw new NullReferenceException();
-
             if((command.ProductCriterias.CostPrice * command.ProductCriterias.StockQuantity) > _repositoryBudget.GetLast().TotalBudget)
                 throw new ArgumentOutOfRangeException();
 
@@ -70,10 +66,10 @@ namespace ERP.Application.Service
                 {
                     ProductId = product.Id,
                     TransactionType = TransactionTypes.Purchase,
-                    Mount = -(product.StockQuantity * product.CostPrice),
+                    Amount = -(product.StockQuantity * product.CostPrice),
                 }
             };
-            _applicationBudget.Register(commandTransaction.FinancialTransactionsCriteria.Mount);
+            _applicationBudget.Register(commandTransaction.FinancialTransactionsCriteria.Amount);
             _applicationFinancialTransaction.Create(commandTransaction);
             _repositoryProduct.SaveChange();
         }
@@ -85,6 +81,21 @@ namespace ERP.Application.Service
                 throw new NullReferenceException();
 
             command.ProductCriterias.SellPrice = quary.SellPrice;
+
+            if (command.ProductCriterias.CostPrice != quary.CostPrice)
+            {
+                var commandTransaction = new CreateFinancialTransactionDto
+                {
+                    FinancialTransactionsCriteria = new FinancialTransactionCriteria
+                    {
+                        ProductId = command.Id,
+                        TransactionType = TransactionTypes.Adjustment,
+                        Amount = quary.StockQuantity * (quary.CostPrice - command.ProductCriterias.CostPrice),
+                    }
+                };
+                _applicationBudget.Register(commandTransaction.FinancialTransactionsCriteria.Amount);
+                _applicationFinancialTransaction.Create(commandTransaction);
+            }
             quary.Edit(command.ProductCriterias);
             _repositoryProduct.SaveChange();
         }
@@ -97,16 +108,11 @@ namespace ERP.Application.Service
                 Id = quary.Id,
                 CreationTime = quary.CreationTime.ToString("mm : HH , yyyy/MM/dd"),
                 ProductCategory = quary.ProductCateory.Name,
-                ProductCriterias = new ProductCriteria
-                {
-                    ProductCategoryId = quary.ProductCategoryId,
-                    ProductCode = quary.ProductCode,
-                    Name = quary.Name,
-                    Description = quary.Description,
-                    SellPrice = quary.SellPrice,
-                    CostPrice = quary.CostPrice,
-                    StockQuantity = quary.StockQuantity,
-                }
+                ProductCode = quary.ProductCode,
+                Name = quary.Name,
+                Description = quary.Description,
+                CostPrice = quary.CostPrice,
+                StockQuantity = quary.StockQuantity,
 
             };
             return product;
@@ -119,16 +125,11 @@ namespace ERP.Application.Service
                 Id = x.Id,
                 CreationTime = x.CreationTime.ToString("mm : HH , yyyy/MM/dd"),
                 ProductCategory = x.ProductCateory.Name,
-                ProductCriterias = new ProductCriteria
-                {
-                    ProductCategoryId = x.ProductCategoryId,
-                    ProductCode = x.ProductCode,
-                    Name = x.Name,
-                    CostPrice = x.CostPrice,
-                    SellPrice = x.SellPrice,
-                    StockQuantity = x.StockQuantity,
-                }
-            }).OrderBy(x => x.ProductCriterias.ProductCode).ToList();
+                ProductCode = x.ProductCode,
+                Name = x.Name,
+                CostPrice = x.CostPrice,
+                StockQuantity = x.StockQuantity,
+            }).OrderBy(x => x.ProductCode).ToList();
         }
 
         public EditProductDto GetForEdit(int id)
@@ -143,6 +144,7 @@ namespace ERP.Application.Service
                     Name = product.Name,
                     CostPrice = product.CostPrice,
                     Description = product.Description,
+                    StockQuantity = product.StockQuantity,
                 }
             };
         }
@@ -154,19 +156,8 @@ namespace ERP.Application.Service
                 .Select(x => new ProductViewModel
                 {
                     Id = x.Id,
-                    ProductCategory = x.ProductCateory.Name,
-                    CreationTime = x.CreationTime.ToString("mm : HH , yyyy/MM/dd"),
-                    ProductCriterias = new ProductCriteria
-                    {
-                        ProductCategoryId = x.ProductCategoryId,
-                        ProductCode = x.ProductCode,
-                        Name = x.Name,
-                        Description = x.Description,
-                        SellPrice = x.SellPrice,
-                        CostPrice = x.CostPrice,
-                        StockQuantity = x.StockQuantity,
-                    }
-                }).OrderBy(x => x.ProductCriterias.ProductCode).ToList();
+                    Name = x.Name,
+                }).OrderBy(x => x.ProductCode).ToList();
         }
         public void ChangeStockQuantity(int id, int quantity)
         {

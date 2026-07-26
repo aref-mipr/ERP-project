@@ -2,14 +2,14 @@
 @model ERP.Presentation.Pages.Customer.EditModel
 @{
 }
+
+<div class="container my-5" dir="rtl">
 @if (TempData["Message"] != null)
 {
     <div id="message" class="alert alert-danger">
         @TempData["Message"]
     </div>
 }
-
-<div class="container my-5" dir="rtl">
     <div class="row justify-content-center">
         <div class="col-lg-7 col-md-9">
             <div class="card shadow-sm border-0 rounded-4">
@@ -22,26 +22,26 @@
                     <form method="post">
                         <div class="row g-3 mb-3">
                             <div class="md-6">
-                            <label asp-for="Command.CustomerCriterias.FirstName" class="form-label fw-semibold">نام</label>
-                            <input type="text" asp-for="Command.CustomerCriterias.FirstName" class="form-control" />
-                            <span asp-validation-for="Command.CustomerCriterias.FirstName" class="text-danger"></span>
+                            <label asp-for="Command.CustomersCriteria.FirstName" class="form-label fw-semibold">نام</label>
+                            <input type="text" asp-for="Command.CustomersCriteria.FirstName" class="form-control" />
+                            <span asp-validation-for="Command.CustomersCriteria.FirstName" class="text-danger"></span>
                         </div>
                             <div class="md-6">
-                            <label asp-for="Command.CustomerCriterias.LastName" class="form-label fw-semibold"> نام خانوادگی</label>
-                            <input type="text" asp-for="Command.CustomerCriterias.LastName" class="form-control" />
-                            <span asp-validation-for="Command.CustomerCriterias.LastName" class="text-danger"></span>
+                            <label asp-for="Command.CustomersCriteria.LastName" class="form-label fw-semibold"> نام خانوادگی</label>
+                            <input type="text" asp-for="Command.CustomersCriteria.LastName" class="form-control" />
+                            <span asp-validation-for="Command.CustomersCriteria.LastName" class="text-danger"></span>
                         </div>
                         </div>
                         <div class="row g-3 mb-3">
                             <div class="md-6">
-                            <label asp-for="Command.CustomerCriterias.Phone" class="form-label fw-semibold">شماره همراه</label>
-                            <input type="text" asp-for="Command.CustomerCriterias.Phone" class="form-control" />
-                            <span asp-validation-for="Command.CustomerCriterias.Phone" class="text-danger"></span>
+                            <label asp-for="Command.CustomersCriteria.Phone" class="form-label fw-semibold">شماره همراه</label>
+                            <input type="text" asp-for="Command.CustomersCriteria.Phone" class="form-control" />
+                            <span asp-validation-for="Command.CustomersCriteria.Phone" class="text-danger"></span>
                         </div>
                             <div class="md-6">
-                            <label asp-for="Command.CustomerCriterias.Email" class="form-label fw-semibold">ایمیل</label>
-                            <input type="text" asp-for="Command.CustomerCriterias.Email" class="form-control" />
-                            <span asp-validation-for="Command.CustomerCriterias.Email" class="text-danger"></span>
+                            <label asp-for="Command.CustomersCriteria.Email" class="form-label fw-semibold">ایمیل</label>
+                            <input type="text" asp-for="Command.CustomersCriteria.Email" class="form-control" />
+                            <span asp-validation-for="Command.CustomersCriteria.Email" class="text-danger"></span>
                         </div>
                         </div>
 

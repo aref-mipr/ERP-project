@@ -22,9 +22,6 @@ namespace ERP.Application.Service
         }
         public void Create(CreateSideExpenseDto command)
         {
-            if (_repositorySideExpense.IsExist(command.Id))
-                throw new NullReferenceException();
-
             var sideExpense = new SideExpenseModel(command.SideExpensesCriteria);
             _repositorySideExpense.Create(sideExpense);
             _repositorySideExpense.SaveChange();
@@ -34,10 +31,10 @@ namespace ERP.Application.Service
                 {
                     SideExpenseId = sideExpense.Id,
                     TransactionType = TransactionTypes.Expence,
-                    Mount = -sideExpense.Amount,
+                    Amount = -sideExpense.Amount,
                 }
             };
-            _applicationBudget.Register(commandTransaction.FinancialTransactionsCriteria.Mount);
+            _applicationBudget.Register(commandTransaction.FinancialTransactionsCriteria.Amount);
             _applicationFinancialTransaction.Create(commandTransaction);
             _repositorySideExpense.SaveChange();
         }
@@ -48,6 +45,20 @@ namespace ERP.Application.Service
             if (quary == null)
                 throw new NullReferenceException();
 
+            if(command.SideExpensesCriteria.Amount != quary.Amount)
+            {
+                var commandTransaction = new CreateFinancialTransactionDto
+                {
+                    FinancialTransactionsCriteria = new FinancialTransactionCriteria
+                    {
+                        SideExpenseId = command.Id,
+                        TransactionType = TransactionTypes.Adjustment,
+                        Amount = quary.Amount - command.SideExpensesCriteria.Amount,
+                    }
+                };
+                _applicationBudget.Register(commandTransaction.FinancialTransactionsCriteria.Amount);
+                _applicationFinancialTransaction.Create(commandTransaction);
+            }
             quary.Edit(command.SideExpensesCriteria);
             _repositorySideExpense.SaveChange();
         }
@@ -58,12 +69,8 @@ namespace ERP.Application.Service
             {
                 Id = x.Id,
                 ExpenseRecordingTime = x.ExpenseRecordingTime.ToString("mm : HH , yyyy/MM/dd"),
-                SideExpensesCriteria = new SideExpenseCriteria
-                {
-                    Title = x.Title,
-                    Description = x.Description,
-                    Amount = x.Amount,
-                }
+                Title = x.Title,
+                Amount = x.Amount,
             }).OrderBy(x => x.ExpenseRecordingTime).ToList();
         }
 
@@ -74,12 +81,9 @@ namespace ERP.Application.Service
             {
                 Id = id,
                 ExpenseRecordingTime = sideExpense.ExpenseRecordingTime.ToString("mm : HH , yyyy/MM/dd"),
-                SideExpensesCriteria = new SideExpenseCriteria
-                {
-                    Title = sideExpense.Title,
-                    Description = sideExpense.Description,
-                    Amount = sideExpense.Amount,
-                }
+                Title = sideExpense.Title,
+                Description = sideExpense.Description,
+                Amount = sideExpense.Amount,
             };
         }
 

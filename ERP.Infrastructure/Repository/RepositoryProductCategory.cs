@@ -28,16 +28,6 @@ namespace ERP.Infrastructure.Repository
             return _context.ProductCategories.Include(x => x.Products).FirstOrDefault(x => x.Id == id);
         }
 
-        public bool IsExist(int id)
-        {
-            return _context.ProductCategories.Any(x => x.Id == id);
-        }
-
-        public List<string> GetProductsName()
-        {
-            return _context.ProductCategories.Include(x => x.Products).Select(x => x.Name).ToList();
-        }
-
         public void SaveChange()
         {
             _context.SaveChanges();

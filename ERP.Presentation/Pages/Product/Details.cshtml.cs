@@ -2,7 +2,6 @@ using ERP.Application.Contract.ProductAgg;
 using ERP.Application.Contract.ProductItemAgg;
 using ERP.Domain.Interface.Utility;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using static ERP.Domain.Entity.ProductItemModel;
 
 namespace ERP.Presentation.Pages.Product

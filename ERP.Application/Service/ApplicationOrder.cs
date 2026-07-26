@@ -39,12 +39,9 @@ namespace ERP.Application.Service
 
         public void Create(CreateOrderDto command)
         {
-            if (_repositoryOrder.IsExist(command.Id))
-                throw new NullReferenceException();
-
             int baseOrderCode = _repositoryOrder.GetAll().Count();
 
-            var items = _repositoryProductItem.GetAllReadyToSell()
+            var items = _applicationProductItem.GetAllReadyToSell()
                .Where(x => command.ProductItemIds.Contains(x.Id)).ToList();
 
             var orderCriteria = new OrderCriteria();
@@ -62,30 +59,46 @@ namespace ERP.Application.Service
 
             foreach (var item in items)
             {
-                var itemCriteria = new OrderItemCriteria();
-                itemCriteria.OrderId = order.Id;
-                itemCriteria.ProductItemId = item.Id;
-                itemCriteria.Price = item.Price;
+                var orderItemCriteria = new OrderItemCriteria();
+                orderItemCriteria.OrderId = order.Id;
+                orderItemCriteria.ProductItemId = item.Id;
+                orderItemCriteria.Price = item.Price;
                 _applicationProductItem.ChangeStatus(item.Id, ProductItemStatuses.WaitingOrder);
-                var orderItem = new OrderItemModel(itemCriteria);
+                var orderItem = new OrderItemModel(orderItemCriteria);
                 _repositoryOrderItem.Create(orderItem);
             }
             _repositoryOrderItem.SaveChange();
         }
 
-        public List<OrderViewModel> GetAll()
+        public void Edit(CreateOrderDto command)
         {
-            return _repositoryOrder.GetAll().Select(x => new OrderViewModel
+            if (!_repositoryOrder.IsExist(command.Id))
+                throw new NullReferenceException();
+
+            var quary = _repositoryOrder.GetBy(command.Id);
+            var productItems = _repositoryProductItem.GetAll()
+                .Where(x => command.ProductItemIds.Contains(x.Id));
+            var orderItems = _repositoryOrderItem.GetAllBy(command.Id);
+
+            var orderCriteria = new OrderCriteria();
+            orderCriteria.CustomerId = command.OrdersCriteria.CustomerId;
+            orderCriteria.Description = command.OrdersCriteria.Description;
+            orderCriteria.InitialAmount = command.OrdersCriteria.InitialAmount;
+            orderCriteria.DiscountAmount = command.OrdersCriteria.DiscountAmount;
+            orderCriteria.FinalAmount = command.OrdersCriteria.FinalAmount;
+            quary.Edit(orderCriteria);
+
+            foreach (var item in productItems)
             {
-                Id = x.Id,
-                CreationTime = x.CreationTime.ToString("mm : HH , yyyy/MM/dd"),
-                CustomerFullName = $"{x.Customer.FirstName} {x.Customer.LastName}",
-                OrderStatus = _enumExtension.OrderStatusesToPersianString(x.OrderStatus),
-                OrdersCriteria = new OrderCriteria
-                {
-                    OrderCode = x.OrderCode,
-                }
-            }).OrderBy(x => x.OrdersCriteria.OrderCode).ToList();
+                var orderItemCriteria = new OrderItemCriteria();
+                orderItemCriteria.OrderId = command.Id;
+                orderItemCriteria.ProductItemId = item.Id;
+                orderItemCriteria.Price = item.Price;
+                _applicationProductItem.ChangeStatus(item.Id, ProductItemStatuses.WaitingOrder);
+                var orderItem = new OrderItemModel(orderItemCriteria);
+                _repositoryOrderItem.Create(orderItem);
+            }
+            _repositoryOrder.SaveChange();
         }
 
         public OrderViewModel GetBy(int id)
@@ -101,12 +114,34 @@ namespace ERP.Application.Service
                 CustomerFullName = $"{order.Customer.FirstName} {order.Customer.LastName}",
                 CustomerCode = order.Customer.SubscriptionCode,
                 CreationTime = order.CreationTime.ToString("mm : HH , yyyy/MM/dd"),
-                OrderStatus = _enumExtension.OrderStatusesToPersianString(order.OrderStatus),
-                OrdersCriteria = new OrderCriteria
-                {
-                    OrderCode = order.OrderCode,
-                }
+                OrderCode = order.OrderCode,
             };
+        }
+
+        public List<OrderViewModel> GetAll()
+        {
+            return _repositoryOrder.GetAll().Select(x => new OrderViewModel
+            {
+                Id = x.Id,
+                CreationTime = x.CreationTime.ToString("mm : HH , yyyy/MM/dd"),
+                CustomerFullName = $"{x.Customer.FirstName} {x.Customer.LastName}",
+                OrderStatus = _enumExtension.OrderStatusesToPersianString(x.OrderStatus),
+                OrderCode = x.OrderCode,
+            }).OrderBy(x => x.OrderCode).ToList();
+        }
+
+        public List<OrderViewModel> GetAllBy(int customerId)
+        {
+            var quary = _repositoryOrder.GetAll().Where(x => x.CustomerId == customerId);
+            return quary.Select(x => new OrderViewModel
+            {
+                Id = x.Id,
+                CreationTime = x.CreationTime.ToString("mm : HH , yyyy/MM/dd"),
+                CustomerFullName = $"{x.Customer.FirstName} {x.Customer.LastName}",
+                OrderStatus = _enumExtension.OrderStatusesToPersianString(x.OrderStatus),
+                OrderCode = x.OrderCode,
+                FinalAmount = x.FinalAmount,
+            }).OrderBy(x => x.OrderCode).ToList();
         }
         public List<OrderStatusViewModel> CreateStatuses()
         {
@@ -144,14 +179,14 @@ namespace ERP.Application.Service
                     {
                         OrderId = id,
                         TransactionType = TransactionTypes.Sale,
-                        Mount = quary.FinalAmount,
+                        Amount = quary.FinalAmount,
                     }
                 };
                 foreach (var item in items)
                 {
                     _applicationProductItem.ChangeStatus(item.ProductItem.Id, ProductItemStatuses.Selled);
                 }
-                _applicationBudget.Register(commandTransaction.FinancialTransactionsCriteria.Mount);
+                _applicationBudget.Register(commandTransaction.FinancialTransactionsCriteria.Amount);
                 _applicationFinancialTransaction.Create(commandTransaction);
             }
             else if (quary.OrderStatus == OrderStatuses.Canceled)

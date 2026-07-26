@@ -1,9 +1,12 @@
-﻿using FluentValidation;
+﻿using ERP.Domain.Criteria;
+using FluentValidation;
 
 namespace ERP.Application.Contract.SideExpenseAgg
 {
-    public class EditSideExpenseDto: CreateSideExpenseDto
+    public class EditSideExpenseDto
     {
+        public int Id { get; set; }
+        public SideExpenseCriteria SideExpensesCriteria { get; set; }
     }
 
     public class EditSideExpenseValidator : AbstractValidator<EditSideExpenseDto>

@@ -5,7 +5,6 @@ namespace ERP.Application.Contract.EmployeeAgg
 {
     public class CreateEmployeeDto
     {
-        public int Id { get; set; }
         public EmployeeCriteria EmployeesCriteria { get; set; }
     }
 

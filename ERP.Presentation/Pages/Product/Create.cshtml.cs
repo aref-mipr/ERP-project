@@ -1,7 +1,5 @@
-using ERP.Application.Contract.BudgetAgg;
 using ERP.Application.Contract.ProductAgg;
 using ERP.Application.Contract.ProductCategoryAgg;
-using ERP.Domain.Criteria;
 using ERP.Domain.Interface.Repository;
 using ERP.Domain.Interface.Utility;
 using Microsoft.AspNetCore.Mvc;
@@ -32,7 +30,7 @@ namespace ERP.Presentation.Pages.Product
 
         public void OnGet()
         {
-            CategoriesList = new SelectList(_applicationProductCategory.GetAll().Where(x => x.IsActive == true), "Id", "ProductCategoryCriterias.Name");
+            CategoriesList = new SelectList(_applicationProductCategory.GetAll().Where(x => x.IsActive == true), "Id", "Name");
         }
 
         public RedirectToPageResult OnPost()

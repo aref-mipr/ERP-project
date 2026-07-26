@@ -19,6 +19,7 @@ namespace ERP.Presentation.Pages.Product
         public void OnGet()
         {
             Products = _applicationProduct.GetAll();
+            TempData["NumberItems"] = Products.Count;
         }
 
         public async Task<JsonResult> OnGetItemsByProductId(int productId)

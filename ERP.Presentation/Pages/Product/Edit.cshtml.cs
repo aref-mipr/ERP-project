@@ -26,25 +26,32 @@ namespace ERP.Presentation.Pages.Product
         [BindProperty]
         public EditProductDto Command { get; set; }
 
+        [BindProperty]
+        public decimal LastCostPrice { get; set; }
+
         public SelectList CategoriesList { get; set; }
 
         public void OnGet(int id)
         {
             Command = _applicationProduct.GetForEdit(id);
-            CategoriesList = new SelectList(_applicationProductCategory.GetAll().Where(x => x.IsActive == true), "Id", "ProductCategoryCriterias.Name");
+            CategoriesList = new SelectList(_applicationProductCategory.GetAll().Where(x => x.IsActive == true), "Id", "Name");
+
+            LastCostPrice = Command.ProductCriterias.CostPrice;
         }
 
         public IActionResult OnPost()
         {
-            if (_repositoryBudget.GetLast().TotalBudget < (Command.ProductCriterias.StockQuantity * Command.ProductCriterias.CostPrice))
+            var x = Command.ProductCriterias.StockQuantity * (Command.ProductCriterias.CostPrice - LastCostPrice);
+            if (_repositoryBudget.GetLast().TotalBudget < (Command.ProductCriterias.StockQuantity * (Command.ProductCriterias.CostPrice - LastCostPrice)))
             {
                 TempData["Message"] = _resultMessage.Error("عدم بودجه کافی");
-                return RedirectToPage();
+                CategoriesList = new SelectList(_applicationProductCategory.GetAll().Where(x => x.IsActive == true), "Id", "Name");
+                return Page();
             }
             if (!ModelState.IsValid)
             {
                 TempData["Message"] = _resultMessage.Error("خطا در ویرایش محصول");
-                CategoriesList = new SelectList(_applicationProductCategory.GetAll().Where(x => x.IsActive == true), "Id", "ProductCategoryCriterias.Name");
+                CategoriesList = new SelectList(_applicationProductCategory.GetAll().Where(x => x.IsActive == true), "Id", "Name");
                 return Page();
             }
 

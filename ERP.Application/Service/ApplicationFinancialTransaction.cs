@@ -1,5 +1,4 @@
 ﻿using ERP.Application.Contract.FinancialTransactionAgg;
-using ERP.Domain.Criteria;
 using ERP.Domain.Entity;
 using ERP.Domain.Interface.Repository;
 using ERP.Domain.Interface.Utility;
@@ -19,9 +18,6 @@ namespace ERP.Application.Service
 
         public void Create(CreateFinancialTransactionDto command)
         {
-            if (_repositoryFinancialTransaction.IsExist(command.Id))
-                throw new NullReferenceException();
-
             var financialTransaction = new FinancialTransactionModel(command.FinancialTransactionsCriteria);
             _repositoryFinancialTransaction.Create(financialTransaction);
         }
@@ -44,18 +40,8 @@ namespace ERP.Application.Service
                 Id = financialTransaction.Id,
                 TransactionTime = financialTransaction.TransactionTime.ToString("mm : HH , yyyy/MM/dd"),
                 TransactionType = _enumExtension.TransactionTypesToPersianString(financialTransaction.TransactionType),
-                FinancialTransactionsCriteria = new FinancialTransactionCriteria
-                {
-                    ProductItemId = financialTransaction.ProductItemId,
-                    ProductId = financialTransaction.ProductId,
-                    OrderId = financialTransaction.OrderId,
-                    OrderItemId = financialTransaction.OrderItemId,
-                    EmployeeId = financialTransaction.EmployeeId,
-                    SideExpenseId = financialTransaction.SideExpenseId,
-                    Mount = financialTransaction.Mount,
-                    Description = financialTransaction.Description,
-                    TransactionType = financialTransaction.TransactionType,
-                }
+                Amount = financialTransaction.Amount,
+                Description = financialTransaction.Description,
             };
         }
         public string GetDescritpion(long id)
@@ -71,20 +57,9 @@ namespace ERP.Application.Service
             return _repositoryFinancialTransaction.GetAll().Select(x => new FinancialTransactionViewModel
             {
                 Id = x.Id,
-                TransactionTime = x.TransactionTime.ToString("mm : HH , yyyy/MM/dd"),
                 TransactionType = _enumExtension.TransactionTypesToPersianString(x.TransactionType),
-                FinancialTransactionsCriteria = new FinancialTransactionCriteria
-                {
-                    ProductItemId = x.ProductItemId,
-                    ProductId = x.ProductId,
-                    OrderId = x.OrderId,
-                    OrderItemId = x.OrderItemId,
-                    EmployeeId = x.EmployeeId,
-                    SideExpenseId = x.SideExpenseId,
-                    Mount = x.Mount,
-                    Description = x.Description,
-                    TransactionType = x.TransactionType,
-                }
+                Amount = x.Amount,
+                Description = x.Description,
             }).OrderBy(x => x.Id).ToList();
         }
 
@@ -97,10 +72,7 @@ namespace ERP.Application.Service
                     Id = x.Id,
                     TransactionTime = x.TransactionTime.ToString("mm : HH , yyyy/MM/dd"),
                     TransactionType = _enumExtension.TransactionTypesToPersianString(x.TransactionType),
-                    FinancialTransactionsCriteria = new FinancialTransactionCriteria
-                    {
-                        Mount = x.Mount,
-                    }
+                    Amount = x.Amount,
                 }).OrderBy(x => x.Id).ToList();
         }
 

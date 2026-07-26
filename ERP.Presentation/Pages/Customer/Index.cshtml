@@ -6,7 +6,7 @@
 <div class="container my-5">
     @if (TempData["Message"] != null)
     {
-        <div id="message" class="alert alert-success">
+        <div id="message" dir="rtl" class="alert alert-success">
             @TempData["Message"]
         </div>
     }
@@ -21,7 +21,7 @@
         <div class="card-header bg-white border-0 px-4 py-3">
             <div class="d-flex justify-content-between align-items-center">
                 <h5 class="mb-0 fw-bold">مشتریان</h5>
-                <span class="badge bg-primary-subtle text-primary border border-primary-subtle">آیتم @TempData["NumberItems"]</span>
+                <span class="badge bg-primary-subtle text-primary border border-primary-subtle">تعداد: @TempData["NumberItems"]</span>
             </div>
         </div>
         <div class="table-responsive">
@@ -44,15 +44,15 @@
                     {
                         <tr>
                             <td class="ps-4 fw-semibold">@counter</td>
-                            <td>@item.CustomerCriterias.SubscriptionCode</td>
+                            <td>@item.SubscriptionCode</td>
                             <td>@item.FullName</td>
-                            <td>@item.CustomerCriterias.Phone</td>
+                            <td>@item.Phone</td>
                             <td>
-                                @if(item.CustomerCriterias.Email == null)
+                                @if(item.Email == null)
                                 {
                                     <p class="text-muted">فاقد ایمیل ثبت شده</p>
                                 }
-                                @item.CustomerCriterias.Email
+                                @item.Email
                             </td>
                             <td>@item.CreationTime</td>
                             <td class="text-end pe-1">
@@ -62,7 +62,6 @@
                         </tr>
                         counter++;
                     }
-
                 </tbody>
             </table>
         </div>

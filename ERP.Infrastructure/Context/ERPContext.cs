@@ -11,7 +11,6 @@ namespace ERP.Infrastructure.Context
         {
 
         }
-        public DbSet<AdminModel> Admins { get; set; }
         public DbSet<BudgetModel> Budgets { get; set; }
         public DbSet<CustomerModel> Customers { get; set; }
         public DbSet<EmployeeModel> Employees { get; set; }

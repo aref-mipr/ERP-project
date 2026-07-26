@@ -7,7 +7,6 @@ using ERP.Domain.Interface.Repository;
 using ERP.Domain.Interface.Utility;
 using static ERP.Domain.Entity.EmployeeModel;
 using static ERP.Domain.Entity.FinancialTransactionModel;
-using static ERP.Domain.Entity.OrderModel;
 
 namespace ERP.Application.Service
 {
@@ -28,9 +27,6 @@ namespace ERP.Application.Service
 
         public void Create(CreateEmployeeDto command)
         {
-            if (_repositoryEmployee.IsExist(command.Id))
-                throw new NullReferenceException();
-
             command.EmployeesCriteria.EmployeeCode = _repositoryEmployee.GetAll().Count() + 1;
             var employee = new EmployeeModel(command.EmployeesCriteria);
             _repositoryEmployee.Create(employee);
@@ -56,16 +52,14 @@ namespace ERP.Application.Service
                 Id = employee.Id,
                 CreationTime = employee.CreationTime.ToString("yyyy/MM/dd"),
                 LastSalaryPaymentTime = employee.LastSalaryPaymentDate.ToString("yyyy/MM/dd"),
+                AmountOwed = employee.AmountOwed,
                 EmployeeStatus = _enumExtension.EmployeeStatusesToPersianString(employee.EmployeeStatus),
                 FullName = $"{employee.FirstName} {employee.LastName}",
-                EmployeesCriteria = new EmployeeCriteria
-                {
-                    Phone = employee.Phone,
-                    Position = employee.Position,
-                    Description = employee.Description,
-                    SalaryMonthly = employee.SalaryMonthly,
-                    EmployeeCode = employee.EmployeeCode,
-                }
+                Phone = employee.Phone,
+                Position = employee.Position,
+                Description = employee.Description,
+                SalaryMonthly = employee.SalaryMonthly,
+                EmployeeCode = employee.EmployeeCode,
             };
         }
         public EditEmployeeDto GetForEdit(int id)
@@ -96,30 +90,33 @@ namespace ERP.Application.Service
                 FullName = $"{x.FirstName} {x.LastName}",
                 EmployeeStatus = _enumExtension.EmployeeStatusesToPersianString(x.EmployeeStatus),
                 SalaryPayed = x.SalaryPayed,
-                EmployeesCriteria = new EmployeeCriteria
-                {
-                    Phone = x.Phone,
-                    Position = x.Position,
-                    EmployeeCode = x.EmployeeCode,
-                }
+                Phone = x.Phone,
+                Position = x.Position,
+                EmployeeCode = x.EmployeeCode,
             }).ToList();
             return employees;
         }
 
-        public EmployeeStatuses GetPreviousStatus(EmployeeStatuses previousStatus)
-        {
-            return previousStatus;
-        }
         public void CheckSalaryStatus()
         {
             var employees = _repositoryEmployee.GetAllActive();
             foreach(var employee in employees)
             {
-                if(employee.LastSalaryPaymentDate.Month != DateTime.Now.Month &&
-                    employee.SalaryPaymentDay <= DateTime.Now.Day)
+                var currentMonthlyDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, employee.SalaryPaymentDay);
+
+                if (DateTime.Now < currentMonthlyDate)
+                    currentMonthlyDate.AddMonths(-1);
+
+                if(employee.LastSalaryPaymentDate < currentMonthlyDate)
                 {
                     employee.SalaryDue();
+
+                    int arrearsMonth = 12*(DateTime.Now.Year - employee.LastSalaryPaymentDate.Year) +
+                        DateTime.Now.Month - employee.LastSalaryPaymentDate.Month;
+
+                    employee.CalculateAmountOwed(employee.SalaryMonthly, arrearsMonth);
                 }
+                    
             }
             _repositoryEmployee.SaveChange();
         }
@@ -129,17 +126,17 @@ namespace ERP.Application.Service
             if (employee == null)
                 throw new NullReferenceException();
 
-            employee.PaySalary();
             var commandTransaction = new CreateFinancialTransactionDto
             {
                 FinancialTransactionsCriteria = new FinancialTransactionCriteria
                 {
                     EmployeeId = id,
                     TransactionType = TransactionTypes.Salary,
-                    Mount = -employee.SalaryMonthly,
+                    Amount = -employee.AmountOwed,
                 }
             };
-            _applicationBudget.Register(commandTransaction.FinancialTransactionsCriteria.Mount);
+            employee.PaySalary();
+            _applicationBudget.Register(commandTransaction.FinancialTransactionsCriteria.Amount);
             _applicationFinancialTransaction.Create(commandTransaction);
             _repositoryEmployee.SaveChange();
         }
@@ -154,6 +151,10 @@ namespace ERP.Application.Service
             {
                 quary.ChangeSalaryPaymentDay();
             }
+
+            if (status != EmployeeStatuses.ReEmployment)
+                throw new Exception();
+
             quary.ChangeStatuses(status);
             _repositoryEmployee.SaveChange();
         }

@@ -28,10 +28,6 @@ namespace ERP.Infrastructure.Repository
         {
             return _context.Products.Include(x => x.ProductCateory).FirstOrDefault(x => x.Id == id);
         }
-        public List<string> GetProductItemsName()
-        {
-            return _context.Products.Include(x => x.ProductItems).Select(x => x.Name).ToList();
-        }
 
         public int CalculateCode(int categoryCode, int baseCode)
         {

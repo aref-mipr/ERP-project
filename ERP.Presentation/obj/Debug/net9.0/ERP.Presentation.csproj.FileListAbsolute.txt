@@ -237,9 +237,10 @@ D:\projects\ERP-v01\ERP.Presentation\obj\Debug\net9.0\refint\ERP.Presentation.dl
 D:\projects\ERP-v01\ERP.Presentation\obj\Debug\net9.0\ERP.Presentation.pdb
 D:\projects\ERP-v01\ERP.Presentation\obj\Debug\net9.0\ERP.Presentation.genruntimeconfig.cache
 D:\projects\ERP-v01\ERP.Presentation\obj\Debug\net9.0\ref\ERP.Presentation.dll
-D:\projects\ERP-v01\ERP.Presentation\obj\Debug\net9.0\compressed\6o1sbqfqna-{0}-enkxjk1nvd-enkxjk1nvd.gz
 D:\projects\ERP-v01\ERP.Presentation\obj\Debug\net9.0\compressed\67hhrrz6ha-{0}-251gozlndp-251gozlndp.gz
 D:\projects\ERP-v01\ERP.Presentation\obj\Debug\net9.0\compressed\1o800ey5ko-{0}-sc0v89jbew-sc0v89jbew.gz
-D:\projects\ERP-v01\ERP.Presentation\obj\Debug\net9.0\compressed\4rdzn8gpxd-{0}-x0rwo1hp92-x0rwo1hp92.gz
 D:\projects\ERP-v01\ERP.Presentation\obj\Debug\net9.0\compressed\nkfli83smx-{0}-couxujkfz6-couxujkfz6.gz
+D:\projects\ERP-v01\ERP.Presentation\obj\Debug\net9.0\ERP.Presentation.sourcelink.json
 D:\projects\ERP-v01\ERP.Presentation\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
+D:\projects\ERP-v01\ERP.Presentation\obj\Debug\net9.0\compressed\6o1sbqfqna-{0}-lr8evht00g-lr8evht00g.gz
+D:\projects\ERP-v01\ERP.Presentation\obj\Debug\net9.0\compressed\4rdzn8gpxd-{0}-jvnsbsk735-jvnsbsk735.gz

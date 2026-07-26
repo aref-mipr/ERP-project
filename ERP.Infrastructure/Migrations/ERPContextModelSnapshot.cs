@@ -22,41 +22,7 @@ namespace ERP.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("ERP.Domain.Entity.AdminModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AccessLevel")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("EmployeeId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PasswordHash")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EmployeeId")
-                        .IsUnique();
-
-                    b.ToTable("Admins", (string)null);
-                });
-
-            modelBuilder.Entity("ERP.Domain.Entity.BudgetMdoel", b =>
+            modelBuilder.Entity("ERP.Domain.Entity.BudgetModel", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -67,7 +33,7 @@ namespace ERP.Infrastructure.Migrations
                     b.Property<DateTime>("LastUpdate")
                         .HasColumnType("datetime2");
 
-                    b.Property<decimal>("Amount")
+                    b.Property<decimal>("TotalBudget")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
@@ -120,6 +86,9 @@ namespace ERP.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("AmountOwed")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
@@ -177,14 +146,14 @@ namespace ERP.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("EmployeeId")
                         .HasColumnType("int");
-
-                    b.Property<decimal>("Mount")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int?>("OrderId")
                         .HasColumnType("int");
@@ -420,17 +389,6 @@ namespace ERP.Infrastructure.Migrations
                     b.ToTable("SideExpenses", (string)null);
                 });
 
-            modelBuilder.Entity("ERP.Domain.Entity.AdminModel", b =>
-                {
-                    b.HasOne("ERP.Domain.Entity.EmployeeModel", "Employee")
-                        .WithOne("Admin")
-                        .HasForeignKey("ERP.Domain.Entity.AdminModel", "EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Employee");
-                });
-
             modelBuilder.Entity("ERP.Domain.Entity.FinancialTransactionModel", b =>
                 {
                     b.HasOne("ERP.Domain.Entity.EmployeeModel", "Employee")
@@ -529,8 +487,6 @@ namespace ERP.Infrastructure.Migrations
 
             modelBuilder.Entity("ERP.Domain.Entity.EmployeeModel", b =>
                 {
-                    b.Navigation("Admin");
-
                     b.Navigation("FinancialTransactions");
                 });
 

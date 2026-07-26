@@ -9,7 +9,7 @@
         <div class="card-header bg-white border-0 px-4 py-3">
             <div class="d-flex justify-content-between align-items-center">
                 <h5 class="mb-0 fw-bold">لیست تراکنش ها</h5>
-                <span class="badge bg-primary-subtle text-primary border border-primary-subtle">تعداد تراکنش ها:  @TempData["NumberItems"]</span>
+                <span class="badge bg-primary-subtle text-primary border border-primary-subtle">تعداد:  @TempData["NumberItems"]</span>
             </div>
         </div>
         <div class="table-responsive">
@@ -29,13 +29,13 @@
                         <tr>
                             <td class="ps-4 fw-semibold">@counter</td>
                             <td class="text-muted">@item.TransactionType</td>
-                            @if(item.FinancialTransactionsCriteria.Mount >= 0)
+                            @if(item.Amount >= 0)
                             {
-                                <td class="text-success fw-bold">@item.FinancialTransactionsCriteria.Mount.ToString("N0")</td>
+                                <td class="text-success fw-bold">@item.Amount.ToString("N0")</td>
                             }
                             else
                             {
-                                <td class="text-danger fw-bold">@item.FinancialTransactionsCriteria.Mount.ToString("N0")</td>
+                                <td class="text-danger fw-bold">@item.Amount.ToString("N0")</td>
                             }
 
                             <td>@item.TransactionTime</td>
