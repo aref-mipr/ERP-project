@@ -27,12 +27,6 @@ namespace ERP.Infrastructure.Repository
             return _context.Employees.AsNoTracking().ToList();
         }
 
-        public List<EmployeeModel> GetAllActive()
-        {
-            return _context.Employees
-                .Where(x => x.EmployeeStatus == EmployeeStatuses.Active || x.EmployeeStatus == EmployeeStatuses.ReEmployment).ToList();
-        }
-
         public bool IsExist(int id)
         {
             return _context.Employees.Any(x => x.Id == id);

@@ -14,6 +14,8 @@ namespace ERP.Presentation.Pages.SideExpense
         public SideExpenseViewModel SideExpense { get; set; }
         public void OnGet(int id)
         {
+            ViewData["PageTitle"] = "مدیریت هزینه های جانبی";
+            ViewData["SideExpenseActive"] = "active";
             SideExpense = _applicationSideExpense.GetBy(id);
         }
     }

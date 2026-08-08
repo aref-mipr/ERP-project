@@ -29,6 +29,8 @@ namespace ERP.Presentation.Pages.Order
 
         public void OnGet(int id)
         {
+            ViewData["PageTitle"] = "مدیریت سفارش ها";
+            ViewData["OrderActive"] = "active";
             Customers = _applicationCustomer.GetAll();
             Id = id;
         }

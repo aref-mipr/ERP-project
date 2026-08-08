@@ -18,6 +18,8 @@ namespace ERP.Presentation.Pages.Product
         public List<ProductViewModel> Products { get; set; }
         public void OnGet()
         {
+            ViewData["PageTitle"] = "مدیریت محصولات";
+            ViewData["ProductActive"] = "active";
             Products = _applicationProduct.GetAll();
             TempData["NumberItems"] = Products.Count;
         }

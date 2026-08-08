@@ -30,9 +30,11 @@ namespace ERP.Presentation.Pages.Order
 
         public void OnGet(int id)
         {
+            ViewData["PageTitle"] = "مدیریت سفارش ها";
+            ViewData["OrderActive"] = "active";
             ProductItems = _applicationProductItem.GetAllReadyToSell();
             Id = id;
-            var orderItems = _applicationOrderItem.GetAllBy(id);
+            var orderItems = _applicationOrderItem.GetAllWaitingOrderBy(id);
             List<ProductItemViewModel> editProductItems = new List<ProductItemViewModel>();
             foreach (var orderItem in orderItems)
             {

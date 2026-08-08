@@ -20,7 +20,8 @@ namespace ERP.Presentation.Pages.Customer
 
         public void OnGet()
         {
-
+            ViewData["PageTitle"] = "مدیریت مشتریان";
+            ViewData["CustomerActive"] = "active";
         }
 
         public IActionResult OnPost()

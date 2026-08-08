@@ -1,0 +1,131 @@
+﻿@model bool
+@{
+}
+@if (Model)
+{
+    <div id="sidebarOverlay" class="sidebar-overlay"></div>
+    <header class="topbar">
+        <div class="topbar-left">
+
+            <button id="sidebarToggle" class="menu-btn">
+                <i id="menuIcon" class="bi bi-list"></i>
+            </button>
+
+            <h2 class="page-title">
+                @ViewData["PageTitle"]
+            </h2>
+
+            <div class="today-date">
+
+                <i class="bi bi-calendar3"></i>
+
+                <span>
+                    Sunday, July 27, 2025
+                </span>
+
+            </div>
+
+        </div>
+
+        <div class="topbar-right">
+
+            <div class="profile">
+
+                <div class="avatar">
+
+                    <i class="bi bi-person-fill"></i>
+
+                </div>
+
+                <div>
+
+                    <div class="profile-name">
+                        Administrator
+                    </div>
+
+                    <small>
+                        سییتم مدیریتی
+                    </small>
+
+                </div>
+
+                <i class="bi bi-chevron-down"></i>
+
+            </div>
+
+        </div>
+    </header>
+}
+
+
+
+@* <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+    <ul class="navbar-nav flex-grow-1">
+        @if (Model)
+        {
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-page="/Index">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-page="/ProductCategory/Index">ProductCategories</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-page="/Product/Index">Products</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-page="/ProductItem/Index">ProductItems</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-page="/Customer/Index">Customers</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-page="/Order/Index">Orders</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-page="/Employee/Index">Employees</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-page="/SideExpense/Index">SideExpenses</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-page="/Budget/Index">Budgets</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-page="/FinancialTransaction/Index">Financial transactions</a>
+            </li>
+        }
+        else
+        {
+            <li class="nav-item">
+                <a class="nav-link text-dark">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark">ProductCategories</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark">Products</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark">ProductItems</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark">Customers</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark">Orders</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark">Employees</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark">SideExpenses</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark">Budgets</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark">Financial transactions</a>
+            </li>
+        }
+    </ul>
+</div> *@

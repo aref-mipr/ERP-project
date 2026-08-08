@@ -26,6 +26,8 @@ namespace ERP.Presentation.Pages.Budget
 
         public void OnGet()
         {
+            ViewData["PageTitle"] = "مدیریت سرمایه";
+            ViewData["BudgetActive"] = "active";
         }
 
         public RedirectToPageResult OnPost()

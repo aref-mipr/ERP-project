@@ -22,6 +22,8 @@ namespace ERP.Presentation.Pages.Employee
         public EditEmployeeDto Command { get; set; }
         public void OnGet(int id)
         {
+            ViewData["PageTitle"] = "مدیریت کارمندان";
+            ViewData["EmployeeActive"] = "active";
             Command = _applicationEmployee.GetForEdit(id);
         }
 

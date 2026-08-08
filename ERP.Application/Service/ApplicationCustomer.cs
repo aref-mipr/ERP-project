@@ -76,7 +76,7 @@ namespace ERP.Application.Service
                 Phone = x.Phone,
                 Email = x.Email,
                 SubscriptionCode = x.SubscriptionCode,
-            }).OrderBy(x => x.SubscriptionCode).ToList();
+            }).OrderByDescending(x => x.SubscriptionCode).ToList();
         }
     }
 }

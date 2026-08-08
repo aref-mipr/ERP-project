@@ -44,6 +44,7 @@ namespace ERP.Application.Service
                 FinancialTransactionsCriteria = new FinancialTransactionCriteria
                 {
                     ProductItemId = productItem.Id,
+                    ProductId = productItem.ProductId,
                     Amount = -productItem.Product.CostPrice,
                     TransactionType = TransactionTypes.Purchase,
                 }
@@ -68,6 +69,7 @@ namespace ERP.Application.Service
                         ProductItemId = command.Id,
                         TransactionType = TransactionTypes.ReturnedProduct,
                         Amount = quary.Product.CostPrice,
+                        ProductId = quary.ProductId,
                     }
                 };
                 _applicationBudget.Register(commandTransaction.FinancialTransactionsCriteria.Amount);
@@ -116,7 +118,7 @@ namespace ERP.Application.Service
                     ProductItemStatus = _enumExtension.ItemStatusesToPersianString(x.ProductItemStatus),
                     ProductItemCode = x.ProductItemCode,
                     Price = x.Price,
-            }).OrderBy(x => x.ProductItemCode).ToList();
+            }).OrderByDescending(x => x.ProductItemCode).ToList();
         }
 
         public List<ProductItemViewModel> GetAllReadyToSell()
@@ -129,7 +131,7 @@ namespace ERP.Application.Service
                 Id = x.Id,
                 Name = x.Product.Name,
                 ProductItemCode = x.ProductItemCode,
-            }).OrderBy(x => x.ProductItemCode).ToList();
+            }).OrderByDescending(x => x.ProductItemCode).ToList();
         }
 
         public List<ProductItemViewModel> GetAllBy(int productId)
@@ -140,7 +142,8 @@ namespace ERP.Application.Service
                 Id = x.Id,
                 ProductItemCode = x.ProductItemCode,
                 Price = x.Price,
-            }).OrderBy(x => x.ProductItemCode).ToList();
+                ProductItemStatus = _enumExtension.ItemStatusesToPersianString(x.ProductItemStatus)
+            }).OrderByDescending(x => x.ProductItemCode).ToList();
         }
 
         public List<ProductItemViewModel> GetIAlltemsInWarehouse()
@@ -159,7 +162,7 @@ namespace ERP.Application.Service
                 ProductId = x.ProductId,
                 ProductItemCode = x.ProductItemCode,
                 Price = x.Price,
-            }).OrderBy(x => x.ProductItemCode).ToList();
+            }).OrderByDescending(x => x.ProductItemCode).ToList();
         }
 
         public EditProductItemDto GetForEdit(long id)

@@ -25,6 +25,8 @@ namespace ERP.Presentation.Pages.SideExpense
         public decimal LastAmount { get; set; }
         public void OnGet(int id)
         {
+            ViewData["PageTitle"] = "مدیریت هزینه های جانبی";
+            ViewData["SideExpenseActive"] = "active";
             Command = _applicationSideExpense.GetForEdit(id);
             LastAmount = Command.SideExpensesCriteria.Amount;
         }

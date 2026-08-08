@@ -19,6 +19,8 @@ namespace ERP.Presentation.Pages.ProductCategory
         public CreateProductCategoryDto Command { get; set; }
         public void OnGet()
         {
+            ViewData["PageTitle"] = "مدیریت دسته بندی ها";
+            ViewData["ProductCategoryActive"] = "active";
         }
 
         public IActionResult OnPost()

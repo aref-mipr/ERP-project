@@ -19,6 +19,8 @@ namespace ERP.Presentation.Pages.Customer
         public EditCustomerDto Command { get; set; }
         public void OnGet(int id)
         {
+            ViewData["PageTitle"] = "مدیریت مشتریان";
+            ViewData["CustomerActive"] = "active";
             Command = _applicationCustomer.GetForEdit(id);
         }
 

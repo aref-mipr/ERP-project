@@ -25,7 +25,10 @@ namespace ERP.Infrastructure.Repository
 
         public List<FinancialTransactionModel> GetAll()
         {
-            return _context.FinancialTransactions.AsNoTracking().ToList();
+            return _context.FinancialTransactions.AsNoTracking()
+                .Include(x => x.Product).Include(x => x.OrderItem)
+                .Include(x => x.Order).Include(x => x.ProductItem)
+                .Include(x => x.SideExpense).Include(x => x.Employee).ToList();
         }
 
         public bool IsExist(long id)

@@ -15,6 +15,8 @@ namespace ERP.Presentation.Pages.FinancialTransaction
 
         public void OnGet()
         {
+            ViewData["PageTitle"] = "مدیریت سرمایه";
+            ViewData["BudgetActive"] = "active";
             Budgets = _applicationFinancialTransaction.GetBudgets();
             TempData["NumberItems"] = Budgets.Count();
         }

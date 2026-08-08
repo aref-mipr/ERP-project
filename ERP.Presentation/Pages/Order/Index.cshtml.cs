@@ -31,6 +31,8 @@ namespace ERP.Presentation.Pages.Order
 
         public void OnGet()
         {
+            ViewData["PageTitle"] = "مدیریت سفارش ها";
+            ViewData["OrderActive"] = "active";
             Orders = _applicationOrder.GetAll();
             TempData["NumberItems"] = Orders.Count;
             var statuses = _applicationOrder.CreateStatuses()

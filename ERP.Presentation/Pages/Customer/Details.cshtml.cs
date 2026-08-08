@@ -23,6 +23,8 @@ namespace ERP.Presentation.Pages.Customer
         public List<OrderViewModel> Orders { get; set; }
         public void OnGet(int id)
         {
+            ViewData["PageTitle"] = "مدیریت مشتریان";
+            ViewData["CustomerActive"] = "active";
             Customer = _applicationCustomer.GetBy(id);
             Orders = _applicationOrder.GetAllBy(id);
             TempData["NumberItems"] = Orders.Count();

@@ -30,9 +30,11 @@ namespace ERP.Presentation.Pages.FinancialTransaction
 
         public void OnGet(long id)
         {
+            ViewData["PageTitle"] = "مدیریت تراکنش ها";
+            ViewData["TransactionActive"] = "active";
             Id = id;
-            if(_repositorynFinancialTransaction.GetBy(id).Description != null)
-                Description = _applicationFinancialTransaction.GetBy(id).Description;
+            if(_applicationFinancialTransaction.GetDescritpion(id) != null)
+                Description = _applicationFinancialTransaction.GetDescritpion(id);
         }
 
         public IActionResult OnPost(long id)

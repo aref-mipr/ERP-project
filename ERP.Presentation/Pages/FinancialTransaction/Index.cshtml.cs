@@ -18,6 +18,8 @@ namespace ERP.Presentation.Pages.FinancialTransaction
 
         public void OnGet()
         {
+            ViewData["PageTitle"] = "مدیریت تراکنش ها";
+            ViewData["TransactionActive"] = "active";
             FinancialTransactions = _applicationfinancialTransaction.GetAll();
             TempData["NumberItems"] = FinancialTransactions.Count();
         }

@@ -1,0 +1,152 @@
+﻿@media (max-width:1400px) {
+
+    .stats-grid {
+        grid-template-columns: repeat(2,1fr);
+    }
+}
+
+@media (max-width:1200px) {
+
+    .stats-grid {
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    .capital-section {
+        grid-template-columns: minmax(0, 1fr) 270px;
+    }
+}
+
+@media(max-width:1100px) {
+
+    .analytics-section {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media(max-width:991px) {
+
+    .quick-actions-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .orders-card {
+        overflow-x: auto;
+    }
+
+    .orders-table {
+        min-width: 760px;
+    }
+
+    .sidebar {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        transform: translateX(100%);
+        z-index: 999;
+    }
+
+    .sidebar.show {
+        transform: translateX(0);
+    }
+
+    .content {
+        width: 100%;
+    }
+
+    .dashboard-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+    }
+
+    #closeSidebar {
+        display: flex;
+    }
+
+    .menu-btn {
+        display: flex;
+    }
+
+    .capital-section {
+        grid-template-columns: 1fr;
+        margin: 0 20px 24px;
+    }
+
+    .financial-summary-card {
+        order: -1;
+    }
+}
+
+@media (max-width:768px) {
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+        padding: 0 20px 24px;
+    }
+
+    .stat-card {
+        padding: 20px;
+    }
+
+    .stat-value {
+        font-size: 32px;
+    }
+
+    .quick-actions-card {
+        margin: 0 20px 24px;
+        padding: 20px;
+    }
+
+    .orders-card {
+        margin: 0 20px 24px;
+        padding: 20px;
+    }
+
+    .activity-card {
+        margin: 0 20px 24px;
+        padding: 20px;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .quick-actions-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .search-box {
+        display: none;
+    }
+
+    .page-title {
+        font-size: 22px;
+    }
+
+    .dashboard-section {
+        margin: 0 16px 20px;
+    }
+
+    .capital-section {
+        margin: 0 16px 20px;
+    }
+
+    .capital-chart-card {
+        padding: 22px 18px 18px;
+    }
+
+    .financial-summary-card {
+        padding: 22px 18px;
+    }
+
+    .capital-card-header h3,
+    .financial-summary-header h3 {
+        font-size: 16px;
+    }
+}

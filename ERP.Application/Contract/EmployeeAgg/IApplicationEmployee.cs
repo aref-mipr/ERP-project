@@ -9,6 +9,7 @@ namespace ERP.Application.Contract.EmployeeAgg
         EmployeeViewModel GetBy(int id);
         EditEmployeeDto GetForEdit(int id);
         List<EmployeeViewModel> GetAll();
+        List<EmployeeViewModel> GetAllActive();
         void CheckSalaryStatus();
         void PaySalary(int id);
         List<EmployeeStatusViewModel> CreateStatuses();

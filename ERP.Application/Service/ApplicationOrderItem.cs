@@ -27,17 +27,47 @@ namespace ERP.Application.Service
             _applicationBudget = applicationBudget;
         }
 
+        public List<OrderItemViewModel> GetAllWaitingOrderBy(int orderId)
+        {
+            return _repositoryOrderItem.GetAllWaitingOrderBy(orderId)
+                .Select(x => new OrderItemViewModel
+                    {
+                        Id = x.Id,
+                        ProductItemId = x.ProductItem.Id,
+                        ProductItemCode = x.ProductItem.ProductItemCode,
+                        ProductName = x.ProductItem.Product.Name,
+                        Price = x.ProductItem.Price,
+                        Returned = x.Returned,
+                    }).OrderByDescending(x => x.ProductItemCode).ToList();
+        }
+
+        public List<OrderItemViewModel> GetAllSelledBy(int orderId)
+        {
+            return _repositoryOrderItem.GetAll()
+                .Where(x => x.OrderId == orderId && (x.ProductItem.ProductItemStatus == ProductItemStatuses.Selled))
+                .Select(x => new OrderItemViewModel
+                {
+                    Id = x.Id,
+                    ProductItemId = x.ProductItem.Id,
+                    ProductItemCode = x.ProductItem.ProductItemCode,
+                    ProductName = x.ProductItem.Product.Name,
+                    Price = x.ProductItem.Price,
+                    Returned = x.Returned,
+                }).OrderByDescending(x => x.ProductItemCode).ToList();
+        }
+
         public List<OrderItemViewModel> GetAllBy(int orderId)
         {
-            return _repositoryOrderItem.GetAllBy(orderId).Select(x => new OrderItemViewModel
-            {
-                Id = x.Id,
-                ProductItemId = x.ProductItem.Id,
-                ProductItemCode = x.ProductItem.ProductItemCode,
-                ProductName = x.ProductItem.Product.Name,
-                Price = x.ProductItem.Price,
-                Returned = x.Returned,
-            }).OrderBy(x => x.ProductItemCode).ToList();
+            return _repositoryOrderItem.GetAllBy(orderId)
+                .Select(x => new OrderItemViewModel
+                    {
+                        Id = x.Id,
+                        ProductItemId = x.ProductItem.Id,
+                        ProductItemCode = x.ProductItem.ProductItemCode,
+                        ProductName = x.ProductItem.Product.Name,
+                        Price = x.ProductItem.Price,
+                        Returned = x.Returned,
+                    }).OrderByDescending(x => x.ProductItemCode).ToList();
         }
 
         public void Return(long id)
@@ -58,6 +88,8 @@ namespace ERP.Application.Service
                 FinancialTransactionsCriteria = new FinancialTransactionCriteria
                 {
                     OrderItemId = id,
+                    OrderId = quary.OrderId,
+                    ProductId = quary.ProductItem.ProductId,
                     TransactionType = TransactionTypes.ReturnedOrderItem,
                     Amount = -quary.Price,
                 }

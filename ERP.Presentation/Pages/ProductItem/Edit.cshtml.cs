@@ -29,6 +29,8 @@ namespace ERP.Presentation.Pages.ProductItem
         public SelectList StatusesList { get; set; }
         public void OnGet(long id)
         {
+            ViewData["PageTitle"] = "مدیریت محصولات";
+            ViewData["ProductActive"] = "active";
             Command = _applicationProductItem.GetForEdit(id);
             if(Command.ProductItemCriterias.ProductItemStatus != ProductItemStatuses.Returned &&
                 Command.ProductItemCriterias.ProductItemStatus != ProductItemStatuses.ThrownOut &&

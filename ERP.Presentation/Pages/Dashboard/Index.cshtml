@@ -1,16 +1,821 @@
 ﻿@page
+@using System.Text.Json
 @model ERP.Presentation.Pages.Dashboard.IndexModel
 @{
 }
-<div class="container align-items-center">
-    @if (!Model.InitialCapital)
-    {
+@if (!Model.InitialCapital)
+{
+    <div class="container align-items-center">
         <div class="row">
             <h5>برای شروع فعالیت، ابتدا یک سرمایه اولیه ثبت کنید</h5>
-
+    
             <a asp-page="/Budget/Create" class="btn btn-primary">
                 ثبت سرمایه اولیه
             </a>
         </div>
-    }
-</div>
+    </div>
+}
+else
+{
+    <div class="dashboard-container">
+
+        <!-- Welcome Section -->
+        <section class="dashboard-header">
+
+            <div class="dashboard-header-left">
+
+                <h1 class="dashboard-title">
+                    خوش اومدی عارف
+                </h1>
+
+                <p class="dashboard-subtitle">
+                    اینجا میتونی کسب و کار خودتو مدیریت کنی
+                </p>
+
+            </div>
+
+        </section>
+
+        <!-- Statistics Cards -->
+        <section class="stats-grid">
+
+            <!-- Budget -->
+
+            <div class="stat-card budget">
+
+                <div class="stat-top-border"></div>
+
+                <div class="stat-icon">
+
+                    <i class="bi bi-wallet2"></i>
+
+                </div>
+
+                <div class="stat-content">
+
+                    <div class="stat-title">
+
+                        بوجه فعلی
+
+                    </div>
+
+                    <div class="stat-value">
+
+                        £@((Model.TotalBudget/10000000).ToString("N0"))
+
+                    </div>
+
+                    <div class="stat-subtitle">
+
+                        مجموع بودجه در دسترس
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Orders -->
+
+            <div class="stat-card primary">
+
+                <div class="stat-top-border"></div>
+
+                <div class="stat-icon">
+
+                    <i class="bi bi-cart3"></i>
+
+                </div>
+
+                <div class="stat-content">
+
+                    <div class="stat-title">
+
+                        سفارش ها
+
+                    </div>
+
+                    <div class="stat-value">
+
+                        @TempData["NumberOfOrders"]
+
+                    </div>
+
+                    <div class="stat-subtitle">
+
+                        تعداد سفارش های تایید شده
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Customers -->
+
+            <div class="stat-card product">
+
+                <div class="stat-top-border"></div>
+
+                <div class="stat-icon">
+
+                    <i class="bi bi-people"></i>
+
+                </div>
+
+                <div class="stat-content">
+
+                    <div class="stat-title">
+
+                        مشتریان
+
+                    </div>
+
+                    <div class="stat-value">
+
+                        @TempData["NumberOfCustomers"]
+
+                    </div>
+
+                    <div class="stat-subtitle">
+
+                        تعداد مشتریان ثبت شده
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Employees -->
+
+            <div class="stat-card employee">
+
+                <div class="stat-top-border"></div>
+
+                <div class="stat-icon">
+
+                    <i class="bi bi-person-badge"></i>
+
+                </div>
+
+                <div class="stat-content">
+
+                    <div class="stat-title">
+
+                        کارمندان
+
+                    </div>
+
+                    <div class="stat-value">
+
+                        @TempData["NumberOfEmployees"]
+
+                    </div>
+
+                    <div class="stat-subtitle">
+
+                        تعداد کارمندان  مشغول به کار
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- Quick Actions -->
+        <section class="quick-actions-card">
+
+            <div class="section-header">
+
+                <h3>دسترسی سریع</h3>
+
+            </div>
+
+            <div class="quick-actions-grid">
+
+                <a asp-page="/Order/SelectProductItem" class="quick-action blue">
+
+                    <div class="quick-icon icon-order">
+
+                        <i class="bi bi-cart-plus"></i>
+
+                    </div>
+
+                    <div class="quick-text">
+
+                        <span class="quick-title">
+                            ثبت سفارش
+                        </span>
+
+                        <small>یک  سفارش جدید ایجاد کن</small>
+
+                    </div>
+
+                    <i class="bi bi-arrow-right-short action-arrow"></i>
+
+                </a>
+
+                <a asp-page="/Customer/Create" class="quick-action green">
+
+                    <div class="quick-icon">
+
+                        <i class="bi bi-person-plus"></i>
+
+                    </div>
+
+                    <div class="quick-text">
+
+                        <span class="quick-title">
+                            ثبت مشتری
+                        </span>
+
+                        <small>یک  مشتری جدید ثبت کن</small>
+
+                    </div>
+
+                    <i class="bi bi-arrow-right-short action-arrow"></i>
+
+                </a>
+
+                <a asp-page="/Product/Create" class="quick-action orange">
+
+                    <div class="quick-icon icon-product">
+
+                        <i class="bi bi-box-seam"></i>
+
+                    </div>
+
+                    <div class="quick-text">
+
+                        <span class="quick-title">
+                            ثبت محصول
+                        </span>
+
+                        <small>یک محصول جدید ثبت کن</small>
+
+                    </div>
+
+                    <i class="bi bi-arrow-right-short action-arrow"></i>
+
+                </a>
+
+                <a asp-page="/SideExpense/Create" class="quick-action red">
+
+                    <div class="quick-icon">
+
+                        <i class="bi bi-receipt"></i>
+
+                    </div>
+
+                    <div class="quick-text">
+
+                        <span class="quick-title">
+                            ثبت هزینه جانبی
+                        </span>
+
+                        <small>یک هزینه جانبی جدید ثبت کن</small>
+
+                    </div>
+
+                    <i class="bi bi-arrow-right-short action-arrow"></i>
+
+                </a>
+
+            </div>
+
+        </section>
+
+        <!-- Chart Section -->
+        <section class="capital-section">
+
+            <div class="capital-chart-card">
+
+                <div class="capital-card-header">
+
+                    <div>
+                        <h3>تغییرات سرمایه</h3>
+                        <span>روند تغییر سرمایه در ماه‌های گذشته</span>
+                    </div>
+
+                </div>
+
+                <div class="capital-chart-wrapper">
+
+
+                    <div class="capital-chart-y-axis">
+
+                        <span>£@(((long)(Model.Middle*2) / 100000000 * 100).ToString("N0"))</span>
+                        <span>£@(((long)(Model.Middle*15/10) / 100000000 * 100).ToString("N0"))</span>
+                        <span>£@(((long)(Model.Middle*12/10) / 100000000 * 100).ToString("N0"))</span>
+                        <span>£@(((long)(Model.Middle*75/100) / 100000000 * 100).ToString("N0"))</span>
+                        <span>£@(((long)(Model.Middle/3) / 100000000 * 100).ToString("N0"))</span>
+                        <span>0</span>
+
+                    </div>
+
+                    <div class="capital-chart-scroll">
+
+                        <div class="capital-chart-inner">
+
+                            <canvas id="capitalChart"></canvas>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Financial Summary -->
+
+            <div class="financial-summary-card">
+                <div class="financial-summary-card">
+
+                    <div class="financial-summary-header">
+
+                        <div>
+
+                            <h3>خلاصه مالی</h3>
+
+                            <span>
+                                @TempData["Date"]
+                            </span>
+
+                        </div>
+
+                        <form method="post">
+                            <select asp-for="Date" asp-items="Model.DateList" onchange="this.form.submit()">
+
+                                <option value="">انتخاب کنید</option>
+
+                            </select>
+                        </form>
+
+                    </div>
+
+
+                    <div class="financial-summary-content">
+
+
+                        <!-- Income -->
+
+                        <div class="financial-item">
+
+                            <div class="financial-item-icon income">
+
+                                <i class="bi bi-arrow-down-left"></i>
+
+                            </div>
+
+                            <div class="financial-item-info">
+
+                                <span>درآمد</span>
+
+                                <strong>
+                                    @TempData["IncomeAmount"]
+                                </strong>
+
+                                <small>تومان</small>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Expense -->
+
+                        <div class="financial-item">
+
+                            <div class="financial-item-icon expense">
+
+                                <i class="bi bi-arrow-up-right"></i>
+
+                            </div>
+
+                            <div class="financial-item-info">
+
+                                <span>هزینه</span>
+
+                                <strong>
+                                    @TempData["ExpenceAmount"]
+                                </strong>
+
+                                <small>تومان</small>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Profit -->
+
+                        <div class="financial-item">
+
+                            <div class="financial-item-icon profit">
+
+                                <i class="bi bi-graph-up-arrow"></i>
+
+                            </div>
+
+                            <div class="financial-item-info">
+
+                                <span>سود</span>
+
+                                <strong>
+                                    @TempData["ProfitAmount"]
+                                </strong>
+
+                                <small>تومان</small>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Recent Orders -->
+
+        <section class="orders-card">
+
+            <div class="section-header">
+
+                <h3>سفارش های اخیر</h3>
+
+                <a asp-page="/Order/Index" class="view-all">
+
+                    دیدن همه
+
+                    <i class="bi bi-arrow-right"></i>
+
+                </a>
+
+            </div>
+
+            <div class="table-responsive">
+
+                <table class="orders-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>مشتری</th>
+
+                            <th>کد سفارش</th>
+
+                            <th>تاریخ ثبت</th>
+
+                            <th>مبلغ نهایی</th>
+
+                            <th>وضعیت</th>
+
+                            <th></th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        @foreach (var order in Model.LastOrders)
+                        {
+                            <tr>
+
+                                <td>
+
+                                    <div class="customer-info">
+
+
+                                        <span>@order.CustomerFullName</span>
+
+                                    </div>
+
+                                </td>
+
+                                <td>#@order.OrderCode</td>
+
+                                <td>@order.CreationTime</td>
+
+                                <td class="amount">£@(order.FinalAmount / 1000000)</td>
+
+                                <td>
+                                    @if (order.OrderStatus == TempData["ApprovedOrder"])
+                                    {
+                                        <span class="status @TempData["ApprovedOrderStyle"]">
+
+                                            @order.OrderStatus
+
+                                        </span>
+                                    }
+                                    else if (order.OrderStatus == TempData["CanceledOrder"])
+                                    {
+                                        <span class="status @TempData["CanceledOrderStyle"]">
+
+                                            @order.OrderStatus
+
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="status pending">
+
+                                            @order.OrderStatus
+
+                                        </span>
+                                    }
+
+                                </td>
+
+                                <td>
+                                    <button class="table-action">
+                                        <a asp-page="/Order/Details" asp-route-id="@order.Id">
+
+                                            <i class="bi bi-eye"></i>
+
+                                        </a>
+                                    </button>
+
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+        <!-- Recent Activity -->
+
+        <section class="activity-card">
+
+            <div class="section-header">
+
+                <h3>تراکنش های اخیر</h3>
+
+                <a asp-page="/FinancialTransaction/Index" class="view-all">
+
+                    دیدن همه
+
+                    <i class="bi bi-arrow-right"></i>
+
+                </a>
+
+            </div>
+
+            <div class="activity-list">
+
+                @foreach (var transaction in Model.Transactions)
+                {
+                    <div class="activity-item">
+
+                        @if (transaction.TransactionType == TempData["Purchase"])
+                        {
+                            <div class="activity-icon success">
+
+                                <i class="bi bi-cart-check"></i>
+
+                            </div>
+
+                            <div class="activity-content">
+
+                                <div class="activity-title">
+
+                                    محصول <strong>@transaction.ProductName</strong> خریداری شد
+
+                                </div>
+
+                                <div class="activity-time">
+
+                                    15 دقیقه پیش
+
+                                </div>
+
+                            </div>
+                        }
+                        else if (transaction.TransactionType == TempData["Sale"])
+                        {
+                            <div class="activity-icon success">
+
+                                <i class="bi bi-cart-check"></i>
+
+                            </div>
+
+                            <div class="activity-content">
+
+                                <div class="activity-title">
+
+                                    سفارش <strong>#@transaction.OrderCode</strong> تایید شد
+
+                                </div>
+
+                                <div class="activity-time">
+
+                                    15 دقیقه پیش
+
+                                </div>
+
+                            </div>
+                        }
+                        else if (transaction.TransactionType == TempData["ReturnedProduct"])
+                        {
+                            <div class="activity-icon danger">
+
+                                <i class="bi bi-x-circle"></i>
+
+                            </div>
+
+                            <div class="activity-content">
+
+                                <div class="activity-title">
+
+                                    یک آیتم از محصول <strong>@transaction.ProductName</strong> به خریدار برگشت داده شد
+
+                                </div>
+
+                                <div class="activity-time">
+
+                                    دوشنبه 9:15
+
+                                </div>
+
+                            </div>
+                        }
+                        else if (transaction.TransactionType == TempData["ReturnedOrderItem"])
+                        {
+                            <div class="activity-icon danger">
+
+                                <i class="bi bi-x-circle"></i>
+
+                            </div>
+
+                            <div class="activity-content">
+
+                                <div class="activity-title">
+
+                                    آیتم <strong>@transaction.ProductName</strong> از سفارش <span>@transaction.OrderCode</span> مرجوع شد
+
+                                </div>
+
+                                <div class="activity-time">
+
+                                    دوشنبه 9:15
+
+                                </div>
+
+                            </div>
+                        }
+                        else if (transaction.TransactionType == TempData["Salary"])
+                        {
+                            <div class="activity-icon primary">
+
+                                <i class="bi bi-person-plus"></i>
+
+                            </div>
+
+                            <div class="activity-content">
+
+                                <div class="activity-title">
+
+                                    دستمزد <strong>@transaction.EmployeeName</strong> پرداخت شد
+
+                                </div>
+
+                                <div class="activity-time">
+
+                                    45 دقیقه پیش
+
+                                </div>
+
+                            </div>
+                        }
+                        else if (transaction.TransactionType == TempData["Expence"])
+                        {
+                            <div class="activity-icon icon-side-expense">
+
+                                <i class="bi bi-wallet2"></i>
+
+                            </div>
+
+                            <div class="activity-content">
+
+                                <div class="activity-title">
+
+                                    هزینه جانبی <strong>@transaction.SideExpense</strong> پرداخت شد
+
+                                </div>
+
+                                <div class="activity-time">
+
+                                    سه شنبه 12:30
+
+                                </div>
+
+                            </div>
+                        }
+                        else if (transaction.TransactionType == TempData["Adjustment"])
+                        {
+                            <div class="activity-icon purple">
+
+                                <i class="bi bi-box-seam"></i>
+
+                            </div>
+
+                            <div class="activity-content">
+
+                                @if (transaction.ProductName != null)
+                                {
+                                    <div class="activity-title">
+                                        قیمت خرید محصول <strong>@transaction.ProductName</strong> به روز شد
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="activity-title">
+                                        میزان هزینه جانبی <strong>@transaction.SideExpense</strong> به روز شد
+                                    </div>
+                                }
+
+                                <div class="activity-time">
+
+                                    5 ساعت پیش
+
+                                </div>
+
+                            </div>
+                        }
+                        else if (transaction.TransactionType == TempData["OnerWithdrawal"])
+                        {
+                            <div class="activity-icon danger">
+                                <i class="bi bi-cash-coin"></i>
+                            </div>
+
+                            <div class="activity-content">
+
+                                <div class="activity-title">
+
+                                    مقدار <strong>@transaction.Amount</strong> از سرمایه برداشت شد
+
+                                </div>
+
+                                <div class="activity-time">
+
+                                    5 ساعت پیش
+
+                                </div>
+
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="activity-icon success">
+
+                                <i class="bi bi-piggy-bank"></i>
+
+                            </div>
+
+                            <div class="activity-content">
+
+                                <div class="activity-title">
+
+                                    مقدار <strong>@transaction.Amount</strong> به سرمایه افزوده شد
+
+                                </div>
+
+                                <div class="activity-time">
+
+                                    5 ساعت پیش
+
+                                </div>
+
+                            </div>
+                        }
+
+                    </div>
+                }
+
+            </div>
+
+        </section>
+    </div>
+}
+<script>
+
+    const weeks = @Html.Raw(JsonSerializer.Serialize(Model.Weeks));
+    const capitalData = @Html.Raw(JsonSerializer.Serialize(Model.Capitals));
+
+</script>
+<script src="~/js/chart.js"></script>

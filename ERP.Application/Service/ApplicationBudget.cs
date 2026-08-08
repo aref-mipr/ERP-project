@@ -84,17 +84,75 @@ namespace ERP.Application.Service
                 TotalBudget = x.TotalBudget,
                 ChangeMount = CalculateChangeBudget(x.Id),
                 LastUpdate = x.LastUpdate.ToString("mm : HH , yyyy/MM/dd"),
-            }).OrderBy(x => x.Id).ToList();
+            }).OrderByDescending(x => x.Id).ToList();
         }
 
         public decimal CalculateChangeBudget(long id)
         {
             var currentBudget = _repositoryBudget.GetBy(id);
-            var command = _repositoryBudget.GetAll().Where(x => x.Id < currentBudget.Id).OrderByDescending(x => x.Id).FirstOrDefault();
+            var command = _repositoryBudget.GetAll()
+                .Where(x => x.LastUpdate < currentBudget.LastUpdate)
+                .OrderByDescending(x => x.LastUpdate).FirstOrDefault();
+
             if (command == null)
                 return currentBudget.TotalBudget;
             else
                 return currentBudget.TotalBudget - command.TotalBudget;
+        }
+
+        public decimal GetTotalBudget()
+        {
+            return _repositoryBudget.GetLast().TotalBudget;
+        }
+
+        public decimal CalculateCapitalInDate(int year, int mounth, int day)
+        {
+            DateTime date = new DateTime(year, mounth, day).AddDays(1);
+            var quary = _repositoryBudget.GetAll()
+                .Where(x => x.LastUpdate <= date)
+                .OrderByDescending(x => x.LastUpdate).FirstOrDefault();
+
+            var firstBudget = _repositoryBudget.GetAll().OrderBy(x => x.Id).FirstOrDefault();
+
+            if (quary == null)
+                return 0;
+            else
+            {
+                var capital = _repositoryBudget.GetAll()
+                .Where(x => x.LastUpdate <= quary.LastUpdate && x.TotalBudget > 0)
+                .OrderByDescending(x => x.LastUpdate).FirstOrDefault();
+
+                return capital.TotalBudget / 10;
+            }
+        }
+
+        public List<string> WeeksForChart()
+        {
+            int i;
+            DateTime today = DateTime.Today;
+            List<string> weeks = new List<string>();
+            for (i = 19; i >= 0; i--)
+            {
+                weeks.Add(today.AddDays(-(i * 7)).ToString("dd/MM/yyyy"));
+            }
+
+            return weeks;
+        }
+
+        public List<decimal> CapitalOfWeek()
+        {
+            int i;
+            DateTime today = DateTime.Today;
+            List<decimal> capitals = new List<decimal>();
+            for (i = 19; i >= 0; i--)
+            {
+                capitals
+                    .Add(CalculateCapitalInDate(
+                        today.AddDays(-(i * 7)).Year, today.AddDays(-(i * 7)).Month, today.AddDays(-(i * 7)).Day)
+                    );
+            }
+
+            return capitals;
         }
     }
 }

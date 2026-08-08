@@ -33,7 +33,7 @@ namespace ERP.Infrastructure.Migrations
                     b.Property<DateTime>("LastUpdate")
                         .HasColumnType("datetime2");
 
-                    b.Property<decimal>("TotalBudget")
+                    b.Property<decimal>("GetTotalBudget")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");

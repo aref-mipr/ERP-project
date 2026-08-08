@@ -15,6 +15,8 @@ namespace ERP.Presentation.Pages.Customer
 
         public void OnGet()
         {
+            ViewData["PageTitle"] = "مدیریت مشتریان";
+            ViewData["CustomerActive"] = "active";
             Customers = _applicationCustomer.GetAll();
             TempData["NumberItems"] = Customers.Count();
         }

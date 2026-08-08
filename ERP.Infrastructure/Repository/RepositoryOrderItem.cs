@@ -2,6 +2,7 @@
 using ERP.Domain.Interface.Repository;
 using ERP.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
+using static ERP.Domain.Entity.ProductItemModel;
 
 namespace ERP.Infrastructure.Repository
 {
@@ -22,7 +23,7 @@ namespace ERP.Infrastructure.Repository
         }
         public OrderItemModel GetBy(long id)
         {
-            return _context.OrderItems.FirstOrDefault(x => x.Id == id);
+            return _context.OrderItems.Include(x => x.Order).FirstOrDefault(x => x.Id == id);
         }
         public List<OrderItemModel> GetAll()
         {
@@ -30,9 +31,14 @@ namespace ERP.Infrastructure.Repository
         }
         public List<OrderItemModel> GetAllBy(int orderId)
         {
+            return _context.OrderItems.AsNoTracking().Include(x => x.ProductItem).Include(x => x.ProductItem.Product)
+                .Where(x => x.OrderId == orderId).ToList();
+        }
+        public List<OrderItemModel> GetAllWaitingOrderBy(int orderId)
+        {
             return _context.OrderItems.Include(x => x.ProductItem)
                 .Include(x => x.ProductItem.Product)
-                .Where(x => x.OrderId == orderId).ToList();
+                .Where(x => x.OrderId == orderId && x.ProductItem.ProductItemStatus == ProductItemStatuses.WaitingOrder).ToList();
         }
         public bool IsExist(long id)
         {

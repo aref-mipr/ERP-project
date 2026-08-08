@@ -39,7 +39,7 @@ namespace ERP.Application.Service
                 CreationTime = x.CreationTime.ToString("mm : HH , yyyy/MM/dd"),
                 Name = x.Name,
                 ProductCategoryCode = x.ProductCategoryCode,
-            }).OrderBy(x => x.ProductCategoryCode).ToList();
+            }).OrderByDescending(x => x.ProductCategoryCode).ToList();
         }
 
         public EditProductCategoryDto GetForEdit(int id)

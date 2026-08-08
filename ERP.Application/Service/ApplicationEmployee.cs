@@ -93,13 +93,22 @@ namespace ERP.Application.Service
                 Phone = x.Phone,
                 Position = x.Position,
                 EmployeeCode = x.EmployeeCode,
-            }).ToList();
+            }).OrderByDescending(x => x.EmployeeCode).ToList();
             return employees;
+        }
+
+        public List<EmployeeViewModel> GetAllActive()
+        {
+            return _repositoryEmployee.GetAll()
+                .Where(x => x.EmployeeStatus == EmployeeStatuses.Active || x.EmployeeStatus == EmployeeStatuses.ReEmployment)
+                .Select(x => new EmployeeViewModel { })
+                .OrderByDescending(x => x.EmployeeCode).ToList();
         }
 
         public void CheckSalaryStatus()
         {
-            var employees = _repositoryEmployee.GetAllActive();
+            var employees = _repositoryEmployee.GetAll()
+                .Where(x => x.EmployeeStatus == EmployeeStatuses.Active || x.EmployeeStatus == EmployeeStatuses.ReEmployment);
             foreach(var employee in employees)
             {
                 var currentMonthlyDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, employee.SalaryPaymentDay);

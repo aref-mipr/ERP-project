@@ -33,6 +33,8 @@ namespace ERP.Presentation.Pages.Product
 
         public void OnGet(int id)
         {
+            ViewData["PageTitle"] = "مدیریت محصولات";
+            ViewData["ProductActive"] = "active";
             Command = _applicationProduct.GetForEdit(id);
             CategoriesList = new SelectList(_applicationProductCategory.GetAll().Where(x => x.IsActive == true), "Id", "Name");
 

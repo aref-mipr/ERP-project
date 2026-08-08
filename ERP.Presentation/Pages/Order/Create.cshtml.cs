@@ -40,6 +40,8 @@ namespace ERP.Presentation.Pages.Order
             List<long> productItemIds,
             int id)
         {
+            ViewData["PageTitle"] = "مدیریت سفارش ها";
+            ViewData["OrderActive"] = "active";
             ProductItems = _applicationProductItem.GetAll()
                 .Where(x => productItemIds.Contains(x.Id)).ToList();
 

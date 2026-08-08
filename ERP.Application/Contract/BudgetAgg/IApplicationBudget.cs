@@ -8,5 +8,9 @@
         BudgetViewModel GetBy(long id);
         List<BudgetViewModel> GetAll();
         decimal CalculateChangeBudget(long id);
+        public decimal GetTotalBudget();
+        decimal CalculateCapitalInDate(int year, int mounth, int day);
+        List<string> WeeksForChart();
+        List<decimal> CapitalOfWeek();
     }
 }

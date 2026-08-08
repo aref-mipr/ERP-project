@@ -1,6 +1,7 @@
 ﻿using ERP.Application.Contract.BudgetAgg;
 using ERP.Application.Contract.FinancialTransactionAgg;
 using ERP.Application.Contract.OrderAgg;
+using ERP.Application.Contract.OrderItemAgg;
 using ERP.Application.Contract.ProductItemAgg;
 using ERP.Domain.Criteria;
 using ERP.Domain.Entity;
@@ -22,10 +23,12 @@ namespace ERP.Application.Service
         private readonly IEnumExtension _enumExtension;
         private readonly IApplicationFinancialTransaction _applicationFinancialTransaction;
         private readonly IApplicationBudget _applicationBudget;
+        private readonly IApplicationOrderItem _applicationOrderItem;
         public ApplicationOrder(IRepositoryOrder repositoryOrder, IRepositoryOrderItem repositoryOrderItem,
             IRepositoryCustomer repositoryCustomer, IRepositoryProductItem repositoryProductItem,
             IApplicationProductItem applicationProductItem, IEnumExtension enumExtension,
-            IApplicationFinancialTransaction applicationFinancialTransaction, IApplicationBudget applicationBudget)
+            IApplicationFinancialTransaction applicationFinancialTransaction, IApplicationBudget applicationBudget,
+            IApplicationOrderItem applicationOrderItem)
         {
             _repositoryOrder = repositoryOrder;
             _repositoryOrderItem = repositoryOrderItem;
@@ -35,6 +38,7 @@ namespace ERP.Application.Service
             _enumExtension = enumExtension;
             _applicationFinancialTransaction = applicationFinancialTransaction;
             _applicationBudget = applicationBudget;
+            _applicationOrderItem = applicationOrderItem;
         }
 
         public void Create(CreateOrderDto command)
@@ -78,7 +82,11 @@ namespace ERP.Application.Service
             var quary = _repositoryOrder.GetBy(command.Id);
             var productItems = _repositoryProductItem.GetAll()
                 .Where(x => command.ProductItemIds.Contains(x.Id));
-            var orderItems = _repositoryOrderItem.GetAllBy(command.Id);
+
+            var lastProductItems = _repositoryProductItem.GetAll()
+                .Where(x => !command.ProductItemIds.Contains(x.Id) && x.ProductItemStatus == ProductItemStatuses.WaitingOrder);
+
+            var lastOrderItems = _repositoryOrderItem.GetAllBy(command.Id);
 
             var orderCriteria = new OrderCriteria();
             orderCriteria.CustomerId = command.OrdersCriteria.CustomerId;
@@ -87,6 +95,9 @@ namespace ERP.Application.Service
             orderCriteria.DiscountAmount = command.OrdersCriteria.DiscountAmount;
             orderCriteria.FinalAmount = command.OrdersCriteria.FinalAmount;
             quary.Edit(orderCriteria);
+
+            foreach(var item in lastOrderItems)
+                _repositoryOrderItem.Remove(item);
 
             foreach (var item in productItems)
             {
@@ -97,6 +108,11 @@ namespace ERP.Application.Service
                 _applicationProductItem.ChangeStatus(item.Id, ProductItemStatuses.WaitingOrder);
                 var orderItem = new OrderItemModel(orderItemCriteria);
                 _repositoryOrderItem.Create(orderItem);
+            }
+
+            foreach(var item in lastProductItems)
+            {
+                 _applicationProductItem.ChangeStatus(item.Id, ProductItemStatuses.Approved);
             }
             _repositoryOrder.SaveChange();
         }
@@ -127,7 +143,8 @@ namespace ERP.Application.Service
                 CustomerFullName = $"{x.Customer.FirstName} {x.Customer.LastName}",
                 OrderStatus = _enumExtension.OrderStatusesToPersianString(x.OrderStatus),
                 OrderCode = x.OrderCode,
-            }).OrderBy(x => x.OrderCode).ToList();
+                FinalAmount = x.FinalAmount,
+            }).OrderByDescending(x => x.OrderCode).ToList();
         }
 
         public List<OrderViewModel> GetAllBy(int customerId)
@@ -141,7 +158,14 @@ namespace ERP.Application.Service
                 OrderStatus = _enumExtension.OrderStatusesToPersianString(x.OrderStatus),
                 OrderCode = x.OrderCode,
                 FinalAmount = x.FinalAmount,
-            }).OrderBy(x => x.OrderCode).ToList();
+            }).OrderByDescending(x => x.OrderCode).ToList();
+        }
+
+        public List<OrderViewModel> GetAllApproved()
+        {
+            return _repositoryOrder.GetAll()
+                .Where(x => x.OrderStatus == OrderStatuses.Approved)
+                .Select(x => new OrderViewModel { }).ToList();
         }
         public List<OrderStatusViewModel> CreateStatuses()
         {
@@ -170,7 +194,7 @@ namespace ERP.Application.Service
                 throw new NullReferenceException();
 
             quary.ChangeStatus(status);
-            var items = _repositoryOrderItem.GetAllBy(quary.Id);
+            var items = _repositoryOrderItem.GetAllWaitingOrderBy(quary.Id);
             if (quary.OrderStatus == OrderStatuses.Approved)
             {
                 var commandTransaction = new CreateFinancialTransactionDto

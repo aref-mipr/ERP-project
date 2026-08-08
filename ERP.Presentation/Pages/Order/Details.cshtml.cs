@@ -33,8 +33,11 @@ namespace ERP.Presentation.Pages.Order
 
         public void OnGet(int id)
         {
+            ViewData["PageTitle"] = "مدیریت سفارش ها";
+            ViewData["OrderActive"] = "active";
             Order = _applicationOrder.GetBy(id);
             OrderItems = _applicationOrderItem.GetAllBy(id);
+
             TempData["NumberItems"] = OrderItems.Count();
             TempData["DiscountPercent"] = "Model.Order.DiscountAmount / Model.Order.FinalAmount * 100";
             var orderStatus = _repositoryOrder.GetBy(id).OrderStatus;

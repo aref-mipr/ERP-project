@@ -14,6 +14,8 @@ namespace ERP.Presentation.Pages.Dashboard
         public List<ProductItemViewModel> ProductItems { get; set; }
         public void OnGet()
         {
+            ViewData["PageTitle"] = "لیست انبار";
+            ViewData["WarehouseActive"] = "active";
             ProductItems = _appliationProductItem.GetIAlltemsInWarehouse();
             TempData["NumberItems"] = ProductItems.Count();
         }

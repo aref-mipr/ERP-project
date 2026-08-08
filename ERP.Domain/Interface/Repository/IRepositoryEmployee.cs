@@ -7,7 +7,6 @@ namespace ERP.Domain.Interface.Repository
         void Create(EmployeeModel employee);
         EmployeeModel GetBy(int id);
         List<EmployeeModel> GetAll();
-        List<EmployeeModel> GetAllActive();
         bool IsExist(int id);
         void SaveChange();
     }

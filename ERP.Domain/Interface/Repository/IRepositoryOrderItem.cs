@@ -9,6 +9,7 @@ namespace ERP.Domain.Interface.Repository
         OrderItemModel GetBy(long id);
         List<OrderItemModel> GetAll();
         List<OrderItemModel> GetAllBy(int orderId);
+        List<OrderItemModel> GetAllWaitingOrderBy(int orderId);
         bool IsExist(long id);
         void SaveChange();
     }

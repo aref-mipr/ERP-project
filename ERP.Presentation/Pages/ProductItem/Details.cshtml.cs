@@ -20,6 +20,8 @@ namespace ERP.Presentation.Pages.ProductItem
 
         public void OnGet(long id)
         {
+            ViewData["PageTitle"] = "مدیریت محصولات";
+            ViewData["ProductActive"] = "active";
             ProductItem = _applicationProductItem.GetBy(id);
 
             if (ProductItem.ProductItemStatus == _enumExtension.ItemStatusesToPersianString(ProductItemStatuses.Approved))

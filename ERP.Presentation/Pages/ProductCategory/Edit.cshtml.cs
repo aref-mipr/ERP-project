@@ -20,6 +20,8 @@ namespace ERP.Presentation.Pages.ProductCategory
 
         public void OnGet(int id)
         {
+            ViewData["PageTitle"] = "مدیریت دسته بندی ها";
+            ViewData["ProductCategoryActive"] = "active";
             Command = _applicationProductCategory.GetForEdit(id);
         }
 

@@ -31,7 +31,9 @@ namespace ERP.Presentation.Pages.ProductItem
 
         public IActionResult OnPost()
         {
-            if(_repositoryProduct.GetBy(Command.ProductItemCriterias.ProductId).CostPrice > _repositoryBudget.GetLast().TotalBudget)
+            ViewData["PageTitle"] = "مدیریت محصولات";
+            ViewData["ProductActive"] = "active";
+            if (_repositoryProduct.GetBy(Command.ProductItemCriterias.ProductId).CostPrice > _repositoryBudget.GetLast().TotalBudget)
             {
                 TempData["Message"] = _resultMessage.Error("عدم بودجه کافی");
                 return Page();

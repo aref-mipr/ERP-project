@@ -20,6 +20,8 @@ namespace ERP.Presentation.Pages.Employee
         public EmployeeViewModel Employee { get; set; }
         public void OnGet(int id)
         {
+            ViewData["PageTitle"] = "مدیریت کارمندان";
+            ViewData["EmployeeActive"] = "active";
             Employee = _applicationEmployee.GetBy(id);
 
             if (Employee.EmployeeStatus == _enumExtension.EmployeeStatusesToPersianString(EmployeeStatuses.Active) ||

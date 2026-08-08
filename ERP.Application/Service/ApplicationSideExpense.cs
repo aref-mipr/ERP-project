@@ -71,7 +71,7 @@ namespace ERP.Application.Service
                 ExpenseRecordingTime = x.ExpenseRecordingTime.ToString("mm : HH , yyyy/MM/dd"),
                 Title = x.Title,
                 Amount = x.Amount,
-            }).OrderBy(x => x.ExpenseRecordingTime).ToList();
+            }).OrderByDescending(x => x.ExpenseRecordingTime).ToList();
         }
 
         public SideExpenseViewModel GetBy(int id)

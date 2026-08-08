@@ -25,6 +25,8 @@ namespace ERP.Presentation.Pages.SideExpense
         public CreateSideExpenseDto Command { get; set; }
         public void OnGet()
         {
+            ViewData["PageTitle"] = "مدیریت هزینه های جانبی";
+            ViewData["SideExpenseActive"] = "active";
         }
 
         public RedirectToPageResult OnPost()

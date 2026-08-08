@@ -35,16 +35,20 @@ namespace ERP.Presentation.Pages.Employee
 
         public void OnGet()
         {
+            ViewData["PageTitle"] = "مدیریت کارمندان";
+            ViewData["EmployeeActive"] = "active";
             _applicationEmployee.CheckSalaryStatus();
             Employees = _applicationEmployee.GetAll();
 
             var allsStatuses = _applicationEmployee.CreateStatuses()
                 .Where(x => x.Text != _enumExtension.EmployeeStatusesToPersianString(EmployeeStatuses.ReEmployment) &&
                 x.Text != _enumExtension.EmployeeStatusesToPersianString(EmployeeStatuses.Active));
+
             StatusesList = new SelectList(allsStatuses, "Value", "Text");
 
             var reEmployment = _applicationEmployee.CreateStatuses()
                 .Where(x => x.Text == _enumExtension.EmployeeStatusesToPersianString(EmployeeStatuses.ReEmployment));
+
             ReEmploymentStatus = new SelectList(reEmployment, "Value", "Text");
 
             TempData["Active"] = _enumExtension.EmployeeStatusesToPersianString(EmployeeStatuses.Active);

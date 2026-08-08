@@ -24,6 +24,8 @@ namespace ERP.Presentation.Pages.Product
 
         public void OnGet(int id)
         {
+            ViewData["PageTitle"] = "مدیریت محصولات";
+            ViewData["ProductActive"] = "active";
             Product = _applicationProduct.GetBy(id);
             ProductItems = _applicationProductItem.GetAllBy(id);
             TempData["NumberItems"] = ProductItems.Count();

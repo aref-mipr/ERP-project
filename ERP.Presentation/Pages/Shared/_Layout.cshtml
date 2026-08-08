@@ -6,25 +6,21 @@
     <title>@ViewData["Title"] - ERP.Presentation</title>
     <script type="importmap"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/bootstrap-icons/bootstrap-icons.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ERP.Presentation.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/header_sidebar.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/dashboard.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/responsibility.css" asp-append-version="true" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">ERP.Presentation</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
 
-                @await Component.InvokeAsync("Navbar")
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+    <div class="dashboard-layout" dir="rtl">
+
+        @await Component.InvokeAsync("Sidebar")
+
+        <main class="content">
+            @await Component.InvokeAsync("Header")
             @RenderBody()
         </main>
     </div>
@@ -36,11 +32,13 @@
     </footer>
 
     <partial name="_ValidationScriptsPartial.cshtml" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/timeout_for_alert.js"></script>
-
+    <script src="~/js/sidebar.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

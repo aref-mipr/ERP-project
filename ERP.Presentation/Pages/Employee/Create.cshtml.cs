@@ -20,6 +20,8 @@ namespace ERP.Presentation.Pages.Employee
 
         public void OnGet()
         {
+            ViewData["PageTitle"] = "مدیریت کارمندان";
+            ViewData["EmployeeActive"] = "active";
         }
         public IActionResult OnPost()
         {

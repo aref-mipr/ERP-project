@@ -22,6 +22,8 @@ namespace ERP.Presentation.Pages.ProductCategory
 
         public void OnGet()
         {
+            ViewData["PageTitle"] = "مدیریت دسته بندی ها";
+            ViewData["ProductCategoryActive"] = "active";
             ProductCategories = _applicationProductCategory.GetAll();
             TempData["NumberItems"] = _applicationProductCategory.GetAll().Count();
         }

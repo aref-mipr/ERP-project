@@ -129,7 +129,7 @@ namespace ERP.Application.Service
                 Name = x.Name,
                 CostPrice = x.CostPrice,
                 StockQuantity = x.StockQuantity,
-            }).OrderBy(x => x.ProductCode).ToList();
+            }).OrderByDescending(x => x.ProductCode).ToList();
         }
 
         public EditProductDto GetForEdit(int id)
@@ -157,7 +157,7 @@ namespace ERP.Application.Service
                 {
                     Id = x.Id,
                     Name = x.Name,
-                }).OrderBy(x => x.ProductCode).ToList();
+                }).OrderByDescending(x => x.ProductCode).ToList();
         }
         public void ChangeStockQuantity(int id, int quantity)
         {
