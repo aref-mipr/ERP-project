@@ -92,6 +92,19 @@ The architecture is designed to separate business logic from UI and infrastructu
 
 # ✨ Implemented Features
 
+## 🔐 Authentication
+
+Features:
+
+* User login
+* User logout
+* Cookie-based user authentication
+* Password hashing
+* User information management and editing
+
+The authentication module provides secure user authentication and account management, including cookie-based authentication and protected password storage.
+
+
 ## 💰 Financial Management
 
 Features:
@@ -159,7 +172,6 @@ Database features:
 
 Future improvements include:
 
-- Authentication and authorization
 - User and role management
 - Inventory management
 - Advanced financial reports
