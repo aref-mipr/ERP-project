@@ -2325,9 +2325,12 @@ D:\projects\ERP-v01\ERP.Presentation\obj\Debug\net9.0\compressed\ew0cyhh2ud-{0}-
 D:\projects\ERP-v01\ERP.Presentation\obj\Debug\net9.0\compressed\rned8ggt0p-{0}-cj4ojh8vq2-cj4ojh8vq2.gz
 D:\projects\ERP-v01\ERP.Presentation\obj\Debug\net9.0\compressed\6ujlrkxd15-{0}-tpa8tcwxyn-tpa8tcwxyn.gz
 D:\projects\ERP-v01\ERP.Presentation\obj\Debug\net9.0\compressed\mvmrerd6vp-{0}-7715y9hxmu-7715y9hxmu.gz
-D:\projects\ERP-v01\ERP.Presentation\obj\Debug\net9.0\compressed\bsrnzsfovn-{0}-hwn1hooctz-hwn1hooctz.gz
 D:\projects\ERP-v01\ERP.Presentation\obj\Debug\net9.0\compressed\mmkxik54ng-{0}-4oma3all3x-4oma3all3x.gz
-D:\projects\ERP-v01\ERP.Presentation\obj\Debug\net9.0\compressed\8vg9ts3xu5-{0}-9nlszdkcqq-9nlszdkcqq.gz
 D:\projects\ERP-v01\ERP.Presentation\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
 D:\projects\ERP-v01\ERP.Presentation\obj\Debug\net9.0\compressed\8d4ppfn0sh-{0}-f6h2h0scxn-f6h2h0scxn.gz
 D:\projects\ERP-v01\ERP.Presentation\obj\Debug\net9.0\compressed\359xw95u8j-{0}-v9e71joj7x-v9e71joj7x.gz
+D:\projects\ERP-v01\ERP.Presentation\obj\Debug\net9.0\compressed\ees6bup36o-{0}-96rfksln2l-96rfksln2l.gz
+D:\projects\ERP-v01\ERP.Presentation\obj\Debug\net9.0\compressed\bsrnzsfovn-{0}-66i43j05yu-66i43j05yu.gz
+D:\projects\ERP-v01\ERP.Presentation\obj\Debug\net9.0\compressed\zutmodbkqg-{0}-exjbbxfzv9-exjbbxfzv9.gz
+D:\projects\ERP-v01\ERP.Presentation\obj\Debug\net9.0\compressed\j3qa3wiwr0-{0}-qcfv2kyyns-qcfv2kyyns.gz
+D:\projects\ERP-v01\ERP.Presentation\obj\Debug\net9.0\compressed\8vg9ts3xu5-{0}-alpip5z85i-alpip5z85i.gz

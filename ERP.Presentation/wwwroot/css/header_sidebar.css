@@ -157,15 +157,18 @@
 }
 
 .avatar {
-    width: 46px;
-    height: 46px;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
-    background: #dbeafe;
-    color: #2563eb;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 24px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
 }
 
 .profile-name {

@@ -2,12 +2,14 @@ using ERP.Application.Contract.ProductAgg;
 using ERP.Application.Contract.ProductCategoryAgg;
 using ERP.Domain.Interface.Repository;
 using ERP.Domain.Interface.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ERP.Presentation.Pages.Product
 {
+    [Authorize]
     public class CreateModel : PageModel
     {
         private readonly IApplicationProduct _applicationProduct;

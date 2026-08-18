@@ -1,6 +1,7 @@
 using ERP.Application.Contract.OrderAgg;
 using ERP.Application.Contract.OrderItemAgg;
 using ERP.Domain.Interface.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -8,6 +9,7 @@ using static ERP.Domain.Entity.OrderModel;
 
 namespace ERP.Presentation.Pages.Order
 {
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly IApplicationOrder _applicationOrder;

@@ -1,8 +1,10 @@
 using ERP.Application.Contract.ProductItemAgg;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ERP.Presentation.Pages.ProductItem
 {
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly IApplicationProductItem _appliationProductItem;

@@ -1,10 +1,12 @@
 using ERP.Application.Contract.CustomerAgg;
 using ERP.Domain.Interface.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ERP.Presentation.Pages.Customer
 {
+    [Authorize]
     public class CreateModel : PageModel
     {
         private readonly IApplicationCustomer _applicationCustomer;

@@ -1,11 +1,13 @@
 using ERP.Application.Contract.OrderItemAgg;
 using ERP.Application.Contract.ProductItemAgg;
 using ERP.Domain.Interface.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ERP.Presentation.Pages.Order
 {
+    [Authorize]
     public class SelectProductItemModel : PageModel
     {
         private readonly IApplicationProductItem _applicationProductItem;

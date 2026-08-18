@@ -1,9 +1,11 @@
 using ERP.Application.Contract.FinancialTransactionAgg;
 using ERP.Domain.Interface.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ERP.Presentation.Pages.FinancialTransaction
 {
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly IApplicationFinancialTransaction _applicationfinancialTransaction;

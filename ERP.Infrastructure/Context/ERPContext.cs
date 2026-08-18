@@ -21,6 +21,7 @@ namespace ERP.Infrastructure.Context
         public DbSet<ProductModel> Products { get; set; }
         public DbSet<ProductItemModel> ProductItems { get; set; }
         public DbSet<SideExpenseModel> SideExpenses { get; set; }
+        public DbSet<UserModel> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

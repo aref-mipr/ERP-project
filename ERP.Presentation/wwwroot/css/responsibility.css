@@ -150,3 +150,17 @@
         font-size: 16px;
     }
 }
+
+@media (max-width: 576px) {
+    .profile-card {
+        margin: 25px 12px;
+    }
+
+    .profile-body {
+        padding: 75px 20px 25px;
+    }
+
+    .profile-header {
+        height: 130px;
+    }
+}

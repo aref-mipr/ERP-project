@@ -1,12 +1,71 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\projects\\ERP-v01\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{268595BA-A9BF-6267-90A3-9A6EFBAA12B0}|ERP.Presentation\\ERP.Presentation.csproj|d:\\projects\\erp-v01\\erp.presentation\\pages\\dashboard\\index.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{268595BA-A9BF-6267-90A3-9A6EFBAA12B0}|ERP.Presentation\\ERP.Presentation.csproj|solutionrelative:erp.presentation\\pages\\dashboard\\index.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{268595BA-A9BF-6267-90A3-9A6EFBAA12B0}|ERP.Presentation\\ERP.Presentation.csproj|d:\\projects\\erp-v01\\erp.presentation\\pages\\dashboard\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{268595BA-A9BF-6267-90A3-9A6EFBAA12B0}|ERP.Presentation\\ERP.Presentation.csproj|solutionrelative:erp.presentation\\pages\\dashboard\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{268595BA-A9BF-6267-90A3-9A6EFBAA12B0}|ERP.Presentation\\ERP.Presentation.csproj|d:\\projects\\erp-v01\\erp.presentation\\pages\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{268595BA-A9BF-6267-90A3-9A6EFBAA12B0}|ERP.Presentation\\ERP.Presentation.csproj|solutionrelative:erp.presentation\\pages\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Index.cshtml.cs",
+              "DocumentMoniker": "D:\\projects\\ERP-v01\\ERP.Presentation\\Pages\\Dashboard\\Index.cshtml.cs",
+              "RelativeDocumentMoniker": "ERP.Presentation\\Pages\\Dashboard\\Index.cshtml.cs",
+              "ToolTip": "D:\\projects\\ERP-v01\\ERP.Presentation\\Pages\\Dashboard\\Index.cshtml.cs",
+              "RelativeToolTip": "ERP.Presentation\\Pages\\Dashboard\\Index.cshtml.cs",
+              "ViewState": "AgIAAHwAAAAAAAAAAADwv4sAAABZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-17T12:42:33.652Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\projects\\ERP-v01\\ERP.Presentation\\Pages\\Dashboard\\Index.cshtml",
+              "RelativeDocumentMoniker": "ERP.Presentation\\Pages\\Dashboard\\Index.cshtml",
+              "ToolTip": "D:\\projects\\ERP-v01\\ERP.Presentation\\Pages\\Dashboard\\Index.cshtml",
+              "RelativeToolTip": "ERP.Presentation\\Pages\\Dashboard\\Index.cshtml",
+              "ViewState": "AgIAAFABAAAAAAAAAAAqwFsBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-08-17T12:42:32.624Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "D:\\projects\\ERP-v01\\ERP.Presentation\\Pages\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "ERP.Presentation\\Pages\\Shared\\_Layout.cshtml",
+              "ToolTip": "D:\\projects\\ERP-v01\\ERP.Presentation\\Pages\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "ERP.Presentation\\Pages\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAABIAAAAAAAAAAAAAACcAAABCAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-08-17T12:41:27.324Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }

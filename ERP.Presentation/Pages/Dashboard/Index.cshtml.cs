@@ -3,18 +3,21 @@ using ERP.Application.Contract.CustomerAgg;
 using ERP.Application.Contract.EmployeeAgg;
 using ERP.Application.Contract.FinancialTransactionAgg;
 using ERP.Application.Contract.OrderAgg;
+using ERP.Application.Contract.UserAgg;
 using ERP.Domain.Interface.Repository;
 using ERP.Domain.Interface.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Diagnostics.Eventing.Reader;
+using System.Security.Claims;
 using static ERP.Application.Contract.FinancialTransactionAgg.DisplayFinancialSummaryViewModel;
 using static ERP.Domain.Entity.FinancialTransactionModel;
 using static ERP.Domain.Entity.OrderModel;
 
 namespace ERP.Presentation.Pages.Dashboard
 {
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly IRepositoryBudget _repositoryBudget;
@@ -23,11 +26,12 @@ namespace ERP.Presentation.Pages.Dashboard
         private readonly IApplicationCustomer _applicationCustomer;
         private readonly IApplicationEmployee _applicationEmployee;
         private readonly IApplicationFinancialTransaction _applicationFinancialTransaction;
+        private readonly IApplicationUser _applicationUser;
         private readonly IEnumExtension _enumExtension;
         public IndexModel(IRepositoryBudget repositoryBudget, IApplicationBudget applicationBudget,
             IApplicationOrder applicationOrder, IApplicationCustomer applicationCustomer,
             IApplicationEmployee applicationEmployee, IEnumExtension enumExtension,
-            IApplicationFinancialTransaction applicationFinancialTransaction)
+            IApplicationFinancialTransaction applicationFinancialTransaction, IApplicationUser applicationUser)
         {
             _repositoryBudget = repositoryBudget;
             _applicationBudget = applicationBudget;
@@ -35,6 +39,7 @@ namespace ERP.Presentation.Pages.Dashboard
             _applicationCustomer = applicationCustomer;
             _applicationEmployee = applicationEmployee;
             _applicationFinancialTransaction = applicationFinancialTransaction;
+            _applicationUser = applicationUser;
             _enumExtension = enumExtension;
         }
 
@@ -46,6 +51,7 @@ namespace ERP.Presentation.Pages.Dashboard
         public List<CustomerViewModel> Customers { get; set; }
         public List<EmployeeViewModel> Employees { get; set; }
         public List<FinancialTransactionViewModel> Transactions { get; set; }
+        public UserViewModel UserLogin { get; set; }
 
         [BindProperty]
         public FinancialSummaryDates Date { get; set; }
@@ -66,10 +72,14 @@ namespace ERP.Presentation.Pages.Dashboard
         public decimal TotalExpenseLastYear { get; set; }
         public decimal TotalExpenseAllTime { get; set; }
 
+        
         public void OnGet()
         {
             ViewData["PageTitle"] = "داشبورد";
             ViewData["DashboardActive"] = "active";
+            int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            UserLogin = _applicationUser.GetBy(userId);
+
             InitialCapital = _repositoryBudget.HasInitialCapital();
             TotalBudget = _applicationBudget.GetTotalBudget();
             Orders = _applicationOrder.GetAllApproved();

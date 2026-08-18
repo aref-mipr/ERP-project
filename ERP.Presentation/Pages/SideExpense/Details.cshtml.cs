@@ -1,8 +1,10 @@
 using ERP.Application.Contract.SideExpenseAgg;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ERP.Presentation.Pages.SideExpense
 {
+    [Authorize]
     public class DetailsModel : PageModel
     {
         private readonly IApplicationSideExpense _applicationSideExpense;

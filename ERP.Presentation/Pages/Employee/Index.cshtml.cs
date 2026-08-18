@@ -1,6 +1,7 @@
 using ERP.Application.Contract.EmployeeAgg;
 using ERP.Domain.Interface.Repository;
 using ERP.Domain.Interface.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -8,6 +9,7 @@ using static ERP.Domain.Entity.EmployeeModel;
 
 namespace ERP.Presentation.Pages.Employee
 {
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly IApplicationEmployee _applicationEmployee;

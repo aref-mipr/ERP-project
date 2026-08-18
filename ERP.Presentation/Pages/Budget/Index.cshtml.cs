@@ -1,8 +1,10 @@
 using ERP.Application.Contract.BudgetAgg;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ERP.Presentation.Pages.Budget
 {
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly IApplicationBudget _applicationBudget;

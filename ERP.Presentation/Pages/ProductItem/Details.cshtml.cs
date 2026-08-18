@@ -1,11 +1,13 @@
 using ERP.Application.Contract.ProductItemAgg;
 using ERP.Domain.Interface.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using static ERP.Domain.Entity.ProductItemModel;
 
 namespace ERP.Presentation.Pages.ProductItem
 {
+    [Authorize]
     public class DetailsModel : PageModel
     {
         private readonly IApplicationProductItem _applicationProductItem;

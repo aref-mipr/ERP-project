@@ -1,12 +1,14 @@
 using ERP.Application.Contract.FinancialTransactionAgg;
 using ERP.Domain.Interface.Repository;
 using ERP.Domain.Interface.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
 
 namespace ERP.Presentation.Pages.FinancialTransaction
 {
+    [Authorize]
     public class RegisterDescriptionModel : PageModel
     {
         private readonly IApplicationFinancialTransaction _applicationFinancialTransaction;

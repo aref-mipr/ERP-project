@@ -3,11 +3,13 @@ using ERP.Application.Contract.OrderAgg;
 using ERP.Application.Contract.ProductItemAgg;
 using ERP.Domain.Criteria;
 using ERP.Domain.Interface.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ERP.Presentation.Pages.Order
 {
+    [Authorize]
     public class CreateModel : PageModel
     {
         private readonly IApplicationProductItem _applicationProductItem;

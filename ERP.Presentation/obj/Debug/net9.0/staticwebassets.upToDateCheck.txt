@@ -866,6 +866,7 @@ D:\projects\ERP-v01\ERP.Presentation\wwwroot\lib\bootstrap\dist\bootstrap-icons\
 D:\projects\ERP-v01\ERP.Presentation\wwwroot\lib\bootstrap\dist\bootstrap-icons\clipboard2-heart.svg
 D:\projects\ERP-v01\ERP.Presentation\wwwroot\lib\bootstrap\dist\bootstrap-icons\whatsapp.svg
 D:\projects\ERP-v01\ERP.Presentation\wwwroot\lib\bootstrap\dist\bootstrap-icons\telephone-plus.svg
+D:\projects\ERP-v01\ERP.Presentation\wwwroot\js\drag&drop.js
 D:\projects\ERP-v01\ERP.Presentation\wwwroot\lib\bootstrap\dist\bootstrap-icons\distribute-horizontal.svg
 D:\projects\ERP-v01\ERP.Presentation\wwwroot\lib\bootstrap\dist\bootstrap-icons\dpad.svg
 D:\projects\ERP-v01\ERP.Presentation\wwwroot\lib\bootstrap\dist\bootstrap-icons\luggage.svg
@@ -1146,6 +1147,7 @@ D:\projects\ERP-v01\ERP.Presentation\wwwroot\lib\bootstrap\dist\bootstrap-icons\
 D:\projects\ERP-v01\ERP.Presentation\wwwroot\lib\bootstrap\dist\bootstrap-icons\bing.svg
 D:\projects\ERP-v01\ERP.Presentation\wwwroot\lib\bootstrap\dist\bootstrap-icons\cart-plus-fill.svg
 D:\projects\ERP-v01\ERP.Presentation\wwwroot\lib\bootstrap\dist\bootstrap-icons\record-btn-fill.svg
+D:\projects\ERP-v01\ERP.Presentation\wwwroot\css\profile.css
 D:\projects\ERP-v01\ERP.Presentation\wwwroot\lib\bootstrap\dist\bootstrap-icons\r-circle.svg
 D:\projects\ERP-v01\ERP.Presentation\wwwroot\lib\bootstrap\dist\bootstrap-icons\file-x-fill.svg
 D:\projects\ERP-v01\ERP.Presentation\wwwroot\lib\bootstrap\dist\bootstrap-icons\cart2.svg
@@ -2140,6 +2142,7 @@ D:\projects\ERP-v01\ERP.Presentation\wwwroot\lib\bootstrap\dist\bootstrap-icons\
 D:\projects\ERP-v01\ERP.Presentation\wwwroot\lib\bootstrap\dist\bootstrap-icons\chat-square-heart-fill.svg
 D:\projects\ERP-v01\ERP.Presentation\wwwroot\lib\bootstrap\dist\bootstrap-icons\cake.svg
 D:\projects\ERP-v01\ERP.Presentation\wwwroot\lib\bootstrap\dist\bootstrap-icons\sign-intersection-y.svg
+D:\projects\ERP-v01\ERP.Presentation\wwwroot\js\logout.js
 D:\projects\ERP-v01\ERP.Presentation\wwwroot\lib\bootstrap\dist\bootstrap-icons\file-text.svg
 D:\projects\ERP-v01\ERP.Presentation\wwwroot\lib\bootstrap\dist\bootstrap-icons\fork-knife.svg
 D:\projects\ERP-v01\ERP.Presentation\wwwroot\lib\bootstrap\dist\bootstrap-icons\paperclip.svg
@@ -2154,11 +2157,23 @@ D:\projects\ERP-v01\ERP.Presentation\wwwroot\lib\bootstrap\dist\bootstrap-icons\
 D:\projects\ERP-v01\ERP.Presentation\wwwroot\lib\bootstrap\dist\bootstrap-icons\layers-fill.svg
 wwwroot\css\dashboard.css
 wwwroot\css\header_sidebar.css
+wwwroot\css\profile.css
 wwwroot\css\responsibility.css
 wwwroot\css\site.css
 wwwroot\favicon.ico
+wwwroot\images\profile\0549f0d7-d890-4ab6-9ea4-6e2d8534694bProfile1.jpg
+wwwroot\images\profile\08c9d5e9-285a-4ced-b73b-f9750a045342Profile4.jpg
+wwwroot\images\profile\08d40750-b236-4f9f-9b21-61a23c454de1Profile4.jpg
+wwwroot\images\profile\230cf52b-1bbe-426f-9ce5-70abc868cb8fProfile1.jpg
+wwwroot\images\profile\44882e5d-8005-463e-804d-13a8e6b6d091Profile1.jpg
+wwwroot\images\profile\63e20179-6c68-4e36-a566-121cec802dc2Desktop.jpg
+wwwroot\images\profile\9a0fdf67-48da-45ab-9976-1f8cd5d66a19Desktop.jpg
+wwwroot\images\profile\f7dc5415-afe5-49f2-9a99-c9aa45f3c059Profile1.jpg
+wwwroot\images\profile\fe21bdcc-ae03-405b-8a92-1cc7ba4a533bDesktop.jpg
 wwwroot\js\calculate_final_amount.js
 wwwroot\js\chart.js
+wwwroot\js\drag&drop.js
+wwwroot\js\logout.js
 wwwroot\js\order_item_dropdown.js
 wwwroot\js\product_dropdown.js
 wwwroot\js\product_item_dropdown.js

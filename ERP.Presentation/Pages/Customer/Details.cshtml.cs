@@ -1,11 +1,13 @@
 using ERP.Application.Contract.CustomerAgg;
 using ERP.Application.Contract.OrderAgg;
 using ERP.Application.Contract.OrderItemAgg;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ERP.Presentation.Pages.Customer
 {
+    [Authorize]
     public class DetailsModel : PageModel
     {
         private readonly IApplicationCustomer _applicationCustomer;

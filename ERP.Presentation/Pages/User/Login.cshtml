@@ -1,0 +1,89 @@
+﻿@page
+@model ERP.Presentation.Pages.User.LoginModel
+@{
+}
+<div class="row justify-content-center">
+
+    @if (TempData["Message"] != null)
+    {
+        <div id="message" class="alert alert-success">
+            @TempData["Message"]
+        </div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div id="message" class="alert alert-danger">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+
+    <div class="col-lg-7 col-md-9">
+
+        <div class="card shadow-sm border-0 rounded-4">
+
+            <div class="card-header bg-white border-0 p-4">
+                <h4 class="fw-bold mb-0">
+                    ورود کاربر
+                </h4>
+            </div>
+
+            <div class="card-body p-4">
+
+                <form method="post" enctype="multipart/form-data">
+
+
+                    <!-- Username -->
+                    <div class="mb-3">
+
+                        <label class="form-label fw-semibold">
+                            نام کاربری
+                        </label>
+
+                        <input asp-for="Command.Username" type="text"
+                               class="form-control"
+                               placeholder="نام کاربری">
+
+                    </div>
+
+                    <!-- Password -->
+                    <div class="mb-4">
+
+                        <label class="form-label fw-semibold">
+                            رمز عبور
+                        </label>
+
+                        <input asp-for="Command.Password" type="password"
+                               class="form-control"
+                               placeholder="رمز عبور">
+
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="d-flex justify-content-end gap-2">
+
+                        <a asp-page="License" class="btn btn-light border">
+                            حساب کاربری ندارم
+                        </a>
+
+                        <a asp-page="License" class="btn btn-light border">
+                            رمز عبور خود را فراموش کردم
+                        </a>
+
+                        <input type="hidden" asp-for="Command.Id">
+
+                        <button type="submit"
+                                class="btn btn-primary px-4">
+                            ورود
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

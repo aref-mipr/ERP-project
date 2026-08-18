@@ -9,6 +9,7 @@ namespace ERP.Application.Contract.ProductAgg
         List<ProductViewModel> GetAll();
         EditProductDto GetForEdit(int id);
         List<ProductViewModel> GetProductsByCategoryId(int id);
+        int GetCount();
         void ChangeStockQuantity(int id, int quantity);
     }
 }

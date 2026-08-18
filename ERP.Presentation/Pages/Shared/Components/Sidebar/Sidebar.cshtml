@@ -1,4 +1,5 @@
-﻿@{
+﻿@model ERP.Presentation.ViewModels.SidebarViewMdoel
+@{
 }
 <aside id="sidebar" class="sidebar">
 
@@ -25,65 +26,117 @@
     </div>
 
     <nav class="sidebar-menu">
+        @if(Model.UserLogin != null && Model.InitialCapital != false)
+        {
+            <a asp-page="/Dashboard/Index" class="menu-item @ViewData["DashboardActive"]">
+                <i class="bi bi-house"></i>
+                <span>داشبورد</span>
+            </a>
 
-        <a asp-page="/Dashboard/Index" class="menu-item @ViewData["DashboardActive"]">
-            <i class="bi bi-house"></i>
-            <span>داشبورد</span>
-        </a>
+            <a asp-page="/Dashboard/Warehouse" class="menu-item @ViewData["WarehouseActive"]">
+                <i class="bi bi-house"></i>
+                <span>انبار</span>
+            </a>
 
-        <a asp-page="/Dashboard/Warehouse" class="menu-item @ViewData["WarehouseActive"]">
-            <i class="bi bi-house"></i>
-            <span>انبار</span>
-        </a>
+            <a asp-page="/Order/Index" class="menu-item @ViewData["OrderActive"]">
+                <i class="bi bi-receipt"></i>
+                <span>سفارش ها</span>
+            </a>
 
-        <a asp-page="/Order/Index" class="menu-item @ViewData["OrderActive"]">
-            <i class="bi bi-receipt"></i>
-            <span>سفارش ها</span>
-        </a>
+            <a asp-page="/Customer/Index" class="menu-item @ViewData["CustomerActive"]">
+                <i class="bi bi-people"></i>
+                <span>مشتریان</span>
+            </a>
 
-        <a asp-page="/Customer/Index" class="menu-item @ViewData["CustomerActive"]">
-            <i class="bi bi-people"></i>
-            <span>مشتریان</span>
-        </a>
+            <a asp-page="/Product/Index" class="menu-item @ViewData["ProductActive"]">
+                <i class="bi bi-box"></i>
+                <span>محصول ها</span>
+            </a>
 
-        <a asp-page="/Product/Index" class="menu-item @ViewData["ProductActive"]">
-            <i class="bi bi-box"></i>
-            <span>محصول ها</span>
-        </a>
+            <a asp-page="/ProductCategory/Index" class="menu-item @ViewData["ProductCategoryActive"]">
+                <i class="bi bi-box"></i>
+                <span>دسته بندی محصول ها</span>
+            </a>
 
-        <a asp-page="/ProductCategory/Index" class="menu-item @ViewData["ProductCategoryActive"]">
-            <i class="bi bi-box"></i>
-            <span>دسته بندی محصول ها</span>
-        </a>
+            <a asp-page="/Employee/Index" class="menu-item @ViewData["EmployeeActive"]">
+                <i class="bi bi-person-badge"></i>
+                <span>کارمندان</span>
+            </a>
 
-        <a asp-page="/Employee/Index" class="menu-item @ViewData["EmployeeActive"]">
-            <i class="bi bi-person-badge"></i>
-            <span>کارمندان</span>
-        </a>
+            <a asp-page="/SideExpense/Index" class="menu-item @ViewData["SideExpenseActive"]">
+                <i class="bi bi-cash-stack"></i>
+                <span>هزینه های جانبی</span>
+            </a>
 
-        <a asp-page="/SideExpense/Index" class="menu-item @ViewData["SideExpenseActive"]">
-            <i class="bi bi-cash-stack"></i>
-            <span>هزینه های جانبی</span>
-        </a>
+            <a asp-page="/FinancialTransaction/Index" class="menu-item @ViewData["TransactionActive"]">
+                <i class="bi bi-wallet2"></i>
+                <span>تراکنش ها</span>
+            </a>
+            <a asp-page="/Budget/Index" class="menu-item @ViewData["BudgetActive"]">
+                <i class="bi bi-wallet2"></i>
+                <span>تغییرات بودجه</span>
+            </a>
+        }
+        else
+        {
+            <a class="menu-item @ViewData["DashboardActive"]">
+                <i class="bi bi-house"></i>
+                <span>داشبورد</span>
+            </a>
 
-        <a asp-page="/FinancialTransaction/Index" class="menu-item @ViewData["TransactionActive"]">
-            <i class="bi bi-wallet2"></i>
-            <span>تراکنش ها</span>
-        </a>
-        <a asp-page="/Budget/Index" class="menu-item @ViewData["BudgetActive"]">
-            <i class="bi bi-wallet2"></i>
-            <span>تغییرات بودجه</span>
-        </a>
+            <a class="menu-item @ViewData["WarehouseActive"]">
+                <i class="bi bi-house"></i>
+                <span>انبار</span>
+            </a>
 
+            <a class="menu-item @ViewData["OrderActive"]">
+                <i class="bi bi-receipt"></i>
+                <span>سفارش ها</span>
+            </a>
+
+            <a class="menu-item @ViewData["CustomerActive"]">
+                <i class="bi bi-people"></i>
+                <span>مشتریان</span>
+            </a>
+
+            <a class="menu-item @ViewData["ProductActive"]">
+                <i class="bi bi-box"></i>
+                <span>محصول ها</span>
+            </a>
+
+            <a class="menu-item @ViewData["ProductCategoryActive"]">
+                <i class="bi bi-box"></i>
+                <span>دسته بندی محصول ها</span>
+            </a>
+
+            <a class="menu-item @ViewData["EmployeeActive"]">
+                <i class="bi bi-person-badge"></i>
+                <span>کارمندان</span>
+            </a>
+
+            <a class="menu-item @ViewData["SideExpenseActive"]">
+                <i class="bi bi-cash-stack"></i>
+                <span>هزینه های جانبی</span>
+            </a>
+
+            <a class="menu-item @ViewData["TransactionActive"]">
+                <i class="bi bi-wallet2"></i>
+                <span>تراکنش ها</span>
+            </a>
+            <a class="menu-item @ViewData["BudgetActive"]">
+                <i class="bi bi-wallet2"></i>
+                <span>تغییرات بودجه</span>
+            </a>
+        }
     </nav>
 
-    <div class="sidebar-footer">
+    @* <div class="sidebar-footer">
 
-        <a href="#" class="menu-item">
-            <i class="bi bi-box-arrow-right"></i>
-            <span>خروج از حساب کاربری</span>
-        </a>
+            <a href="#" class="menu-item">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>خروج از حساب کاربری</span>
+            </a>
 
-    </div>
+    </div> *@
 
 </aside>

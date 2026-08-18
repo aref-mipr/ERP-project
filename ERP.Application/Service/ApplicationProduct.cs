@@ -159,6 +159,12 @@ namespace ERP.Application.Service
                     Name = x.Name,
                 }).OrderByDescending(x => x.ProductCode).ToList();
         }
+
+        public int GetCount()
+        {
+            return _repositoryProduct.GetAll().Count();
+        }
+
         public void ChangeStockQuantity(int id, int quantity)
         {
             var product = _repositoryProduct.GetBy(id);

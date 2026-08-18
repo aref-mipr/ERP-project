@@ -1,23 +1,26 @@
-﻿using ERP.Application.Contract.ProductCategoryAgg;
+﻿using ERP.Application.Contract.BudgetAgg;
+using ERP.Application.Contract.CustomerAgg;
+using ERP.Application.Contract.EmployeeAgg;
+using ERP.Application.Contract.FinancialTransactionAgg;
+using ERP.Application.Contract.OrderAgg;
+using ERP.Application.Contract.OrderItemAgg;
+using ERP.Application.Contract.ProductAgg;
+using ERP.Application.Contract.ProductCategoryAgg;
+using ERP.Application.Contract.ProductItemAgg;
+using ERP.Application.Contract.SideExpenseAgg;
+using ERP.Application.Contract.UserAgg;
 using ERP.Application.Service;
 using ERP.Domain.Interface.Repository;
 using ERP.Domain.Interface.Utility;
 using ERP.Infrastructure.Context;
 using ERP.Infrastructure.Repository;
 using ERP.Infrastructure.Utility;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using FluentValidation;
 using FluentValidation.AspNetCore;
-using ERP.Application.Contract.ProductAgg;
-using ERP.Application.Contract.ProductItemAgg;
-using ERP.Application.Contract.CustomerAgg;
-using ERP.Application.Contract.OrderAgg;
-using ERP.Application.Contract.OrderItemAgg;
-using ERP.Application.Contract.EmployeeAgg;
-using ERP.Application.Contract.SideExpenseAgg;
-using ERP.Application.Contract.BudgetAgg;
-using ERP.Application.Contract.FinancialTransactionAgg;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ERP.Infrastructure.Config
 {
@@ -57,13 +60,30 @@ namespace ERP.Infrastructure.Config
             services.AddScoped<IRepositoryFinancialTransaction, RepositoryFinancialTransaction>();
             services.AddScoped<IApplicationFinancialTransaction, ApplicationFinancialTransaction>();
 
+            services.AddScoped<IRepositoryUser, RepositoryUser>();
+            services.AddScoped<IApplicationUser, ApplicationUser>();
+
             services.AddScoped<IEnumExtension, EnumExtension>();
+            services.AddScoped<IEncoder, Encoder>();
+            services.AddScoped<IFileManager, FileManager>();
 
             services.AddDbContext<ERPContext>(options => options.UseSqlServer(connectionString));
 
             services.AddControllersWithViews();
             services.AddFluentValidationAutoValidation();
             services.AddValidatorsFromAssemblyContaining<CreateProductCategoryValidator>();
+
+            services.AddAuthentication(option =>
+            {
+                option.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                option.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                option.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            }).AddCookie(option =>
+            {
+                option.LoginPath = "/User/Login";
+                option.ExpireTimeSpan = TimeSpan.FromDays(10);
+            });
+            services.AddHttpContextAccessor();
         }
     }
 }

@@ -1,12 +1,14 @@
 using ERP.Application.Contract.BudgetAgg;
 using ERP.Domain.Interface.Repository;
 using ERP.Domain.Interface.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
 
 namespace ERP.Presentation.Pages.Budget
 {
+    [Authorize]
     public class WithDrawalModel : PageModel
     {
         private readonly IApplicationBudget _applicationBudget;

@@ -1,8 +1,10 @@
 using ERP.Infrastructure.Config;
+using ERP.Presentation.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 
 Bootstrapper.Config(builder.Services, builder.Configuration.GetConnectionString("ERPv01-DB"));
+builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 
 builder.Services.AddRazorPages();
 

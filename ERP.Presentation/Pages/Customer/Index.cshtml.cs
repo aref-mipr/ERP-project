@@ -1,8 +1,10 @@
 using ERP.Application.Contract.CustomerAgg;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ERP.Presentation.Pages.Customer
 {
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly IApplicationCustomer _applicationCustomer;

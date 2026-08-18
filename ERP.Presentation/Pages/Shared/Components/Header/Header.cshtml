@@ -1,7 +1,7 @@
-﻿@model bool
+﻿@model ERP.Presentation.ViewModels.HeaderViewModel
 @{
 }
-@if (Model)
+@if (Model.InitialCapital)
 {
     <div id="sidebarOverlay" class="sidebar-overlay"></div>
     <header class="topbar">
@@ -20,7 +20,7 @@
                 <i class="bi bi-calendar3"></i>
 
                 <span>
-                    Sunday, July 27, 2025
+                    @DateTime.Now.ToString("yyyy/MM/dd")
                 </span>
 
             </div>
@@ -29,29 +29,38 @@
 
         <div class="topbar-right">
 
-            <div class="profile">
+            @if(Model.UserLogin != null)
+            {
+                <a asp-page="/User/Details" asp-route-id="@Model.UserLogin.Id" style="text-decoration:none;">
+                    <div class="profile">
+                        <div class="avatar">
+                            @if (Model.UserLogin.UsersCriteria.ProfilePicture == null)
+                            {
+                                <i class="bi bi-person-fill"></i>
+                            }
+                            else
+                            {
+                                <img src="/images/profile/@Model.UserLogin.UsersCriteria.ProfilePicture" alt="Profile">
+                            }
+                        </div>
 
-                <div class="avatar">
+                        <div>
 
-                    <i class="bi bi-person-fill"></i>
+                            <div class="profile-name">
+                                @Model.UserLogin.UsersCriteria.UserName
+                            </div>
 
-                </div>
+                            <small>
+                                سییتم مدیریتی
+                            </small>
 
-                <div>
+                        </div>
 
-                    <div class="profile-name">
-                        Administrator
+                        <i class="bi bi-chevron-down"></i>
+
                     </div>
-
-                    <small>
-                        سییتم مدیریتی
-                    </small>
-
-                </div>
-
-                <i class="bi bi-chevron-down"></i>
-
-            </div>
+                </a>
+            }
 
         </div>
     </header>

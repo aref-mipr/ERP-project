@@ -1,8 +1,10 @@
 using ERP.Application.Contract.FinancialTransactionAgg;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ERP.Presentation.Pages.FinancialTransaction
 {
+    [Authorize]
     public class BudgetsModel : PageModel
     {
         private readonly IApplicationFinancialTransaction _applicationFinancialTransaction;

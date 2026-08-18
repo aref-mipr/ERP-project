@@ -1,0 +1,76 @@
+﻿@page
+@model ERP.Presentation.Pages.User.LicenseModel
+@{
+}
+<div class="container my-5" dir="rtl">
+    @if (TempData["Message"] != null)
+    {
+        <div id="message" class="alert alert-danger">
+            @TempData["Message"]
+        </div>
+    }
+    <div class="row justify-content-center">
+
+        <div class="col-lg-5 col-md-7 col-sm-10">
+
+            <div class="card shadow-sm border-0 rounded-4">
+
+                <div class="card-body p-4 p-md-5">
+
+                    <!-- Title -->
+                    <div class="text-center mb-4">
+
+                        <h3 class="fw-bold mb-2">
+                            سیستم مدیریت منابع سازمانی
+                        </h3>
+
+                        <div class="text-muted">
+                            فعالسازی برنامه
+                        </div>
+
+                    </div>
+
+                    <!-- Description -->
+                    <div class="alert alert-light border rounded-3 mb-4">
+                        <div class="text-secondary lh-lg">
+                            برای استفاده از این برنامه، ابتدا کد فعالسازی درج شده
+                            بر روی دیسک و یا دریافت شده از پنل شخصی خود در سایت
+                            را وارد کنید.
+                        </div>
+                    </div>
+
+                    <!-- Activation Code -->
+                    <form method="post">
+                        <div class="mb-4">
+
+                            <label class="form-label fw-semibold">
+                                کد فعالسازی
+                            </label>
+
+                            <input asp-for="LicenseCode" type="text"
+                                   class="form-control form-control-lg text-center"
+                                   placeholder="کد فعالسازی را وارد کنید"
+                                   autocomplete="off">
+                            <span asp-validation-for="LicenseCode" class="text-danger"></span>
+
+                        </div>
+
+                        <!-- Submit -->
+                        <div class="d-grid">
+
+                            <button type="submit"
+                                    class="btn btn-primary btn-lg">
+                                فعالسازی برنامه
+                            </button>
+
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
