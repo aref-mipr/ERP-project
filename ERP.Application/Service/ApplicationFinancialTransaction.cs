@@ -1,7 +1,9 @@
-﻿using ERP.Application.Contract.FinancialTransactionAgg;
+﻿using ERP.Application.Contract.FilterAgg;
+using ERP.Application.Contract.FinancialTransactionAgg;
 using ERP.Domain.Entity;
 using ERP.Domain.Interface.Repository;
 using ERP.Domain.Interface.Utility;
+using System.Globalization;
 using static ERP.Application.Contract.FinancialTransactionAgg.DisplayFinancialSummaryViewModel;
 using static ERP.Domain.Entity.FinancialTransactionModel;
 
@@ -36,10 +38,15 @@ namespace ERP.Application.Service
         public FinancialTransactionViewModel GetBy(long id)
         {
             var financialTransaction = _repositoryFinancialTransaction.GetBy(id);
+            var persianDate = new PersianCalendar();
             return new FinancialTransactionViewModel
             {
                 Id = financialTransaction.Id,
-                TransactionTime = financialTransaction.TransactionTime.ToString("mm : HH , yyyy/MM/dd"),
+                TransactionTime =
+                        $"{financialTransaction.TransactionTime:HH:mm} , " +
+                        $"{persianDate.GetYear(financialTransaction.TransactionTime):0000}/" +
+                        $"{persianDate.GetMonth(financialTransaction.TransactionTime):00}/" +
+                        $"{persianDate.GetDayOfMonth(financialTransaction.TransactionTime):00}",
                 TransactionType = _enumExtension.TransactionTypesToPersianString(financialTransaction.TransactionType),
                 Amount = financialTransaction.Amount,
                 Description = financialTransaction.Description,
@@ -53,34 +60,94 @@ namespace ERP.Application.Service
 
             return _repositoryFinancialTransaction.GetBy(id).Description;
         }
+
         public List<FinancialTransactionViewModel> GetAll()
         {
-            var quary = _repositoryFinancialTransaction.GetAll().Select(x => new FinancialTransactionViewModel
+            var transactions = _repositoryFinancialTransaction.GetAll();
+            var persianDate = new PersianCalendar();
+
+            return transactions
+               .OrderByDescending(x => x.TransactionTime)
+               .Select(x => new FinancialTransactionViewModel
+               {
+                   Id = x.Id,
+                   TransactionType = _enumExtension.TransactionTypesToPersianString(x.TransactionType),
+                   Amount = x.Amount,
+                   TransactionTime =
+                       $"{x.TransactionTime:HH:mm} , " +
+                       $"{persianDate.GetYear(x.TransactionTime):0000}/" +
+                       $"{persianDate.GetMonth(x.TransactionTime):00}/" +
+                       $"{persianDate.GetDayOfMonth(x.TransactionTime):00}",
+                   ProductName = x.Product?.Name ?? "",
+                   OrderCode = x.Order?.OrderCode ?? 0,
+                   EmployeeName = $"{x.Employee?.FirstName ?? ""} {x.Employee?.LastName ?? ""}".Trim(),
+                   SideExpense = x.SideExpense?.Title ?? "",
+               }).ToList();
+        }
+
+        public List<FinancialTransactionViewModel> GetAll(FilterParamsDto filterParams)
+        {
+            var transactions = _repositoryFinancialTransaction.GetAll();
+            var persianDate = new PersianCalendar();
+
+            if (!string.IsNullOrWhiteSpace(filterParams.Subject))
+                transactions = transactions.Where(x => _enumExtension.TransactionTypesToPersianString(x.TransactionType).Contains(filterParams.Subject)).ToList();
+
+             return transactions
+                .OrderByDescending(x => x.TransactionTime)
+                .Skip(filterParams.Skip)
+                .Take(filterParams.Take)
+                .Select(x => new FinancialTransactionViewModel
             {
                 Id = x.Id,
                 TransactionType = _enumExtension.TransactionTypesToPersianString(x.TransactionType),
                 Amount = x.Amount,
-                TransactionTime = x.TransactionTime.ToString("mm : HH , yyyy/MM/dd"),
+                TransactionTime =
+                    $"{x.TransactionTime:HH:mm} , " +
+                    $"{persianDate.GetYear(x.TransactionTime):0000}/" +
+                    $"{persianDate.GetMonth(x.TransactionTime):00}/" +
+                    $"{persianDate.GetDayOfMonth(x.TransactionTime):00}",
                 ProductName = x.Product?.Name ?? "",
                 OrderCode = x.Order?.OrderCode ?? 0,
                 EmployeeName = $"{x.Employee?.FirstName ?? ""} {x.Employee?.LastName ?? ""}".Trim(),
                 SideExpense = x.SideExpense?.Title ?? "",
-            });
-            var transaction = quary.OrderByDescending(x => x.Id).ToList();
-            return transaction;
+            }).ToList();
         }
 
-        public List<FinancialTransactionViewModel> GetBudgets()
+        public List<FinancialTransactionViewModel> GetBudgets(FilterParamsDto filterParams)
         {
-            return _repositoryFinancialTransaction.GetAll()
+            var transactions = _repositoryFinancialTransaction.GetAll()
                 .Where(x => x.TransactionType == TransactionTypes.OpeningBalance ||
-                x.TransactionType == TransactionTypes.IncreaseBudget).Select(x => new FinancialTransactionViewModel
-                {
-                    Id = x.Id,
-                    TransactionTime = x.TransactionTime.ToString("mm : HH , yyyy/MM/dd"),
-                    TransactionType = _enumExtension.TransactionTypesToPersianString(x.TransactionType),
-                    Amount = x.Amount,
-                }).OrderByDescending(x => x.Id).ToList();
+                x.TransactionType == TransactionTypes.IncreaseBudget).AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(filterParams.Subject))
+                transactions = transactions.Where(x => _enumExtension.TransactionTypesToPersianString(x.TransactionType).Contains(filterParams.Subject));
+
+            var persianDate = new PersianCalendar();
+
+            return transactions
+               .OrderByDescending(x => x.TransactionTime)
+               .Skip(filterParams.Skip)
+               .Take(filterParams.Take).Select(x => new FinancialTransactionViewModel
+               {
+                   Id = x.Id,
+                   TransactionTime =
+                       $"{x.TransactionTime:HH:mm} , " +
+                       $"{persianDate.GetYear(x.TransactionTime):0000}/" +
+                       $"{persianDate.GetMonth(x.TransactionTime):00}/" +
+                       $"{persianDate.GetDayOfMonth(x.TransactionTime):00}",
+                   TransactionType = _enumExtension.TransactionTypesToPersianString(x.TransactionType),
+                   Amount = x.Amount,
+               }).ToList();
+        }
+
+        public int GetCount(string? subject = null)
+        {
+            var transactions = _repositoryFinancialTransaction.GetAll().AsQueryable();
+            if (!string.IsNullOrWhiteSpace(subject))
+                transactions = transactions.Where(x => _enumExtension.TransactionTypesToPersianString(x.TransactionType).Contains(subject));
+
+            return transactions.Count();
         }
 
         public List<FinancialTransactionTypeModel> CreateStatuses()

@@ -1,8 +1,10 @@
 ﻿using ERP.Application.Contract.BudgetAgg;
+using ERP.Application.Contract.FilterAgg;
 using ERP.Application.Contract.FinancialTransactionAgg;
 using ERP.Domain.Criteria;
 using ERP.Domain.Entity;
 using ERP.Domain.Interface.Repository;
+using System.Globalization;
 using static ERP.Domain.Entity.FinancialTransactionModel;
 
 namespace ERP.Application.Service
@@ -68,23 +70,38 @@ namespace ERP.Application.Service
             if (budget == null)
                 throw new NullReferenceException();
 
+            var persianDate = new PersianCalendar();
+
             return new BudgetViewModel
             {
                 Id = budget.Id,
                 TotalBudget = budget.TotalBudget,
-                LastUpdate = budget.LastUpdate.ToString("mm : HH , yyyy/MM/dd"),
+                LastUpdate =
+                    $"{budget.LastUpdate:HH:mm} , " +
+                    $"{persianDate.GetYear(budget.LastUpdate):0000}/" +
+                    $"{persianDate.GetMonth(budget.LastUpdate):00}/" +
+                    $"{persianDate.GetDayOfMonth(budget.LastUpdate):00}",
             };
         }
 
-        public List<BudgetViewModel> GetAll()
+        public List<BudgetViewModel> GetAll(FilterParamsDto filterParams)
         {
-            return _repositoryBudget.GetAll().Select(x => new BudgetViewModel
+            var budgets = _repositoryBudget.GetAll().AsQueryable();
+            var persianDate = new PersianCalendar();
+            return budgets.OrderByDescending(x => x.LastUpdate)
+                .Skip(filterParams.Skip)
+                .Take(filterParams.Take)
+                .Select(x => new BudgetViewModel
             {
                 Id = x.Id,
                 TotalBudget = x.TotalBudget,
                 ChangeMount = CalculateChangeBudget(x.Id),
-                LastUpdate = x.LastUpdate.ToString("mm : HH , yyyy/MM/dd"),
-            }).OrderByDescending(x => x.Id).ToList();
+                LastUpdate =
+                    $"{x.LastUpdate:HH:mm} , " +
+                    $"{persianDate.GetYear(x.LastUpdate):0000}/" +
+                    $"{persianDate.GetMonth(x.LastUpdate):00}/" +
+                    $"{persianDate.GetDayOfMonth(x.LastUpdate):00}",
+                }).ToList();
         }
 
         public decimal CalculateChangeBudget(long id)
@@ -103,6 +120,11 @@ namespace ERP.Application.Service
         public decimal GetTotalBudget()
         {
             return _repositoryBudget.GetLast().TotalBudget;
+        }
+
+        public int GetCount()
+        {
+            return _repositoryBudget.GetAll().Count();
         }
 
         public decimal CalculateCapitalInDate(int year, int mounth, int day)
@@ -126,14 +148,34 @@ namespace ERP.Application.Service
             }
         }
 
+        //public List<string> WeeksForChart()
+        //{
+        //    int i;
+        //    DateTime today = DateTime.Today;
+        //    List<string> weeks = new List<string>();
+        //    for (i = 19; i >= 0; i--)
+        //    {
+        //        weeks.Add(today.AddDays(-(i * 7)).ToString("dd/MM/yyyy"));
+        //    }
+
+        //    return weeks;
+        //}
+
         public List<string> WeeksForChart()
         {
             int i;
             DateTime today = DateTime.Today;
             List<string> weeks = new List<string>();
+
+            PersianCalendar persionDate = new PersianCalendar();
+
             for (i = 19; i >= 0; i--)
             {
-                weeks.Add(today.AddDays(-(i * 7)).ToString("dd/MM/yyyy"));
+                DateTime date = today.AddDays(-(i * 7));
+
+                weeks.Add(
+                    $"{persionDate.GetDayOfMonth(date):00}/{persionDate.GetMonth(date):00}/{persionDate.GetYear(date):0000}"
+                );
             }
 
             return weeks;
@@ -146,9 +188,8 @@ namespace ERP.Application.Service
             List<decimal> capitals = new List<decimal>();
             for (i = 19; i >= 0; i--)
             {
-                capitals
-                    .Add(CalculateCapitalInDate(
-                        today.AddDays(-(i * 7)).Year, today.AddDays(-(i * 7)).Month, today.AddDays(-(i * 7)).Day)
+                capitals.Add(CalculateCapitalInDate(
+                    today.AddDays(-(i * 7)).Year, today.AddDays(-(i * 7)).Month, today.AddDays(-(i * 7)).Day)
                     );
             }
 

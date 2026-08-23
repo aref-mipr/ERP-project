@@ -91,7 +91,13 @@
                                 </select>
                             </td>
                             <td class="text-end pe-1">
-                                <a asp-page="/Order/Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary me-2">جزئیات</a>
+                                <button class="table-action">
+                                    <a asp-page="/Order/Details" asp-route-id="@item.Id">
+                                
+                                        <i class="bi bi-eye"></i>
+                                
+                                    </a>
+                                </button>
                             </td>
                         </tr>
                         counter++;

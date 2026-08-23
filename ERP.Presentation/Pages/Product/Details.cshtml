@@ -148,7 +148,13 @@
                                 @item.ProductItemStatus
                             </td>
                             <td class="text-end pe-1">
-                                <a asp-page="/ProductItem/Details" asp-route-id = "@item.Id" class="btn btn-sm btn-outline-primary me-2">جزئیات</a>
+                                <button class="table-action">
+                                    <a asp-page="/ProductItem/Details" asp-route-id="@item.Id">
+
+                                        <i class="bi bi-eye"></i>
+
+                                    </a>
+                                </button>
                                 <a asp-page="/ProductItem/Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">ویرایش</a>
                             </td>
                         </tr>

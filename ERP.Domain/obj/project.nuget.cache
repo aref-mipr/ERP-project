@@ -16,5 +16,15 @@
     "C:\\Users\\Aref\\.nuget\\packages\\microsoft.extensions.options\\9.0.9\\microsoft.extensions.options.9.0.9.nupkg.sha512",
     "C:\\Users\\Aref\\.nuget\\packages\\microsoft.extensions.primitives\\9.0.9\\microsoft.extensions.primitives.9.0.9.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1900",
+      "level": "Warning",
+      "message": "Error occurred while getting package vulnerability data: Unable to load the service index for source https://api.nuget.org/v3/index.json.",
+      "projectPath": "D:\\projects\\ERP-v01\\ERP.Domain\\ERP.Domain.csproj",
+      "warningLevel": 1,
+      "filePath": "D:\\projects\\ERP-v01\\ERP.Domain\\ERP.Domain.csproj",
+      "targetGraphs": []
+    }
+  ]
 }

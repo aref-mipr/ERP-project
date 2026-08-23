@@ -1,4 +1,6 @@
-﻿namespace ERP.Application.Contract.FinancialTransactionAgg
+﻿using ERP.Application.Contract.FilterAgg;
+
+namespace ERP.Application.Contract.FinancialTransactionAgg
 {
      public interface IApplicationFinancialTransaction
      {
@@ -6,8 +8,10 @@
          void RegisterDescription(long id, string description);
          FinancialTransactionViewModel GetBy(long id);
          string GetDescritpion(long id);
-         List<FinancialTransactionViewModel> GetAll();
-         List<FinancialTransactionViewModel> GetBudgets();
+        List<FinancialTransactionViewModel> GetAll();
+         List<FinancialTransactionViewModel> GetAll(FilterParamsDto filterParams);
+         List<FinancialTransactionViewModel> GetBudgets(FilterParamsDto filterParams);
+        int GetCount(string? subject = null);
          List<FinancialTransactionTypeModel> CreateStatuses();
          List<DisplayFinancialSummaryModel> CreateFinancialSummaryDate();
          decimal CalculateTotalIncomeLastWeek();

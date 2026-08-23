@@ -217,9 +217,13 @@
                                     <td>@item.Price ریال</td>
 
                                     <td>
-                                        <a asp-page="/ProductItem/Details" asp-route-id="@item.ProductItemId" class="btn btn-sm btn-outline-primary">
-                                            مشاهده
-                                        </a>
+                                        <button class="table-action">
+                                            <a asp-page="/ProductItem/Details" asp-route-id="@item.ProductItemId">
+
+                                                <i class="bi bi-eye"></i>
+
+                                            </a>
+                                        </button>
                                     </td>
                                 </tr>
                             }

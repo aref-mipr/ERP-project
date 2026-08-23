@@ -1,0 +1,103 @@
+﻿@model ERP.Application.Contract.FilterAgg.SearchViewModel
+
+@functions {
+    string GetPageUrl(int pageId)
+    {
+        var parameters = new List<string>
+        {
+            $"pageId={pageId}"
+        };
+
+        if (!string.IsNullOrWhiteSpace(Model.FilterParams.Subject))
+        {
+            parameters.Add(
+                $"search={Uri.EscapeDataString(Model.FilterParams.Subject)}");
+        }
+
+        foreach (var parameter in Model.AdditionalParameters)
+        {
+            foreach (var value in parameter.Value)
+            {
+                parameters.Add(
+                    $"{parameter.Key}={Uri.EscapeDataString(value)}");
+            }
+        }
+
+        return "?" + string.Join("&", parameters);
+    }
+}
+
+@if (Model.FilterParams.PageCount > 1)
+{
+    <div class="d-flex justify-content-center mt-4" dir="rtl">
+
+        <nav aria-label="صفحه‌بندی">
+
+            <ul class="pagination pagination-sm mb-0">
+
+                @if (Model.FilterParams.PageId == 1)
+                {
+                    <li class="page-item disabled">
+                        <a class="page-link px-3" href="#">
+                            <i class="bi bi-chevron-right"></i>
+                            قبلی
+                        </a>
+                    </li>
+                }
+                else
+                {
+                    <li class="page-item">
+                        <a class="page-link px-3"
+                           href="@GetPageUrl(Model.FilterParams.PageId - 1)">
+
+                            <i class="bi bi-chevron-right"></i>
+                            قبلی
+
+                        </a>
+                    </li>
+                }
+
+
+                @for (int i = 1; i <= Model.FilterParams.PageCount; i++)
+                {
+                    <li class="page-item @(i == Model.FilterParams.PageId ? "active" : null)">
+
+                        <a class="page-link"
+                           href="@GetPageUrl(i)">
+
+                            @i
+
+                        </a>
+
+                    </li>
+                }
+
+
+                @if (Model.FilterParams.PageId == Model.FilterParams.PageCount)
+                {
+                    <li class="page-item disabled">
+                        <a class="page-link px-3" href="#">
+                            بعدی
+                            <i class="bi bi-chevron-left"></i>
+                        </a>
+                    </li>
+                }
+                else
+                {
+                    <li class="page-item">
+                        <a class="page-link px-3"
+                           href="@GetPageUrl(Model.FilterParams.PageId + 1)">
+
+                            بعدی
+                            <i class="bi bi-chevron-left"></i>
+
+                        </a>
+                    </li>
+                }
+
+            </ul>
+
+        </nav>
+
+    </div>
+}

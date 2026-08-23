@@ -1,9 +1,11 @@
 ﻿using ERP.Application.Contract.BudgetAgg;
+using ERP.Application.Contract.FilterAgg;
 using ERP.Application.Contract.FinancialTransactionAgg;
 using ERP.Application.Contract.SideExpenseAgg;
 using ERP.Domain.Criteria;
 using ERP.Domain.Entity;
 using ERP.Domain.Interface.Repository;
+using System.Globalization;
 using static ERP.Domain.Entity.FinancialTransactionModel;
 
 namespace ERP.Application.Service
@@ -63,24 +65,44 @@ namespace ERP.Application.Service
             _repositorySideExpense.SaveChange();
         }
 
-        public List<SideExpenseViewModel> GetAll()
+        public List<SideExpenseViewModel> GetAll(FilterParamsDto filterParams)
         {
-            return _repositorySideExpense.GetAll().Select(x => new SideExpenseViewModel
-            {
-                Id = x.Id,
-                ExpenseRecordingTime = x.ExpenseRecordingTime.ToString("mm : HH , yyyy/MM/dd"),
-                Title = x.Title,
-                Amount = x.Amount,
-            }).OrderByDescending(x => x.ExpenseRecordingTime).ToList();
+            var sideExpenses = _repositorySideExpense.GetAll().AsQueryable();
+            var persianDate = new PersianCalendar();
+
+            if (!string.IsNullOrWhiteSpace(filterParams.Subject))
+                sideExpenses = sideExpenses
+                    .Where(x => x.Title.Contains(filterParams.Subject));
+
+            return sideExpenses.OrderByDescending(x => x.ExpenseRecordingTime)
+                .Skip(filterParams.Skip)
+                .Take(filterParams.Take)
+                .Select(x => new SideExpenseViewModel
+                {
+                    Id = x.Id,
+                    ExpenseRecordingTime =
+                        $"{x.ExpenseRecordingTime:HH:mm} , " +
+                        $"{persianDate.GetYear(x.ExpenseRecordingTime):0000}/" +
+                        $"{persianDate.GetMonth(x.ExpenseRecordingTime):00}/" +
+                        $"{persianDate.GetDayOfMonth(x.ExpenseRecordingTime):00}",
+                    Title = x.Title,
+                    Amount = x.Amount,
+                }).ToList();
         }
 
         public SideExpenseViewModel GetBy(int id)
         {
             var sideExpense = _repositorySideExpense.GetBy(id);
+            var persianDate = new PersianCalendar();
+
             return new SideExpenseViewModel
             {
                 Id = id,
-                ExpenseRecordingTime = sideExpense.ExpenseRecordingTime.ToString("mm : HH , yyyy/MM/dd"),
+                ExpenseRecordingTime =
+                    $"{sideExpense.ExpenseRecordingTime:HH:mm} , " +
+                    $"{persianDate.GetYear(sideExpense.ExpenseRecordingTime):0000}/" +
+                    $"{persianDate.GetMonth(sideExpense.ExpenseRecordingTime):00}/" +
+                    $"{persianDate.GetDayOfMonth(sideExpense.ExpenseRecordingTime):00}",
                 Title = sideExpense.Title,
                 Description = sideExpense.Description,
                 Amount = sideExpense.Amount,
@@ -100,6 +122,17 @@ namespace ERP.Application.Service
                     Amount = sideExpense.Amount,
                 }
             };
+        }
+
+        public int GetCount(string? subject = null)
+        {
+            var sideExpenses = _repositorySideExpense.GetAll().AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(subject))
+                sideExpenses = sideExpenses
+                    .Where(x => x.Title.Contains(subject));
+
+            return sideExpenses.Count();
         }
     }
 }

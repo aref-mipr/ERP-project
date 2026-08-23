@@ -1,10 +1,13 @@
 ﻿using ERP.Application.Contract.BudgetAgg;
+using ERP.Application.Contract.FilterAgg;
 using ERP.Application.Contract.FinancialTransactionAgg;
 using ERP.Application.Contract.ProductAgg;
 using ERP.Application.Contract.ProductItemAgg;
 using ERP.Domain.Criteria;
 using ERP.Domain.Entity;
 using ERP.Domain.Interface.Repository;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.Globalization;
 using static ERP.Domain.Entity.FinancialTransactionModel;
 
 namespace ERP.Application.Service
@@ -102,11 +105,16 @@ namespace ERP.Application.Service
 
         public ProductViewModel GetBy(int id)
         {
+            var persianDate = new PersianCalendar();
             var quary =  _repositoryProduct.GetBy(id);
             var product = new ProductViewModel
             {
                 Id = quary.Id,
-                CreationTime = quary.CreationTime.ToString("mm : HH , yyyy/MM/dd"),
+                CreationTime =
+                        $"{quary.CreationTime:HH:mm} , " +
+                        $"{persianDate.GetYear(quary.CreationTime):0000}/" +
+                        $"{persianDate.GetMonth(quary.CreationTime):00}/" +
+                        $"{persianDate.GetDayOfMonth(quary.CreationTime):00}",
                 ProductCategory = quary.ProductCateory.Name,
                 ProductCode = quary.ProductCode,
                 Name = quary.Name,
@@ -118,18 +126,35 @@ namespace ERP.Application.Service
             return product;
         }
 
-        public List<ProductViewModel> GetAll()
+        public List<ProductViewModel> GetAll(FilterParamsDto filterParams)
         {
-            return  _repositoryProduct.GetAll().Select(x => new ProductViewModel
-            {
-                Id = x.Id,
-                CreationTime = x.CreationTime.ToString("mm : HH , yyyy/MM/dd"),
-                ProductCategory = x.ProductCateory.Name,
-                ProductCode = x.ProductCode,
-                Name = x.Name,
-                CostPrice = x.CostPrice,
-                StockQuantity = x.StockQuantity,
-            }).OrderByDescending(x => x.ProductCode).ToList();
+            var products = _repositoryProduct.GetAll().AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(filterParams.Subject))
+                products = products
+                    .Where(x => x.Name.Contains(filterParams.Subject) ||
+                    x.ProductCode.ToString().Contains(filterParams.Subject));
+
+            var persianDate = new PersianCalendar();
+
+            return products
+                .OrderByDescending(x => x.ProductCode)
+                .Skip(filterParams.Skip)
+                .Take(filterParams.Take)
+                .Select(x => new ProductViewModel
+                {
+                    Id = x.Id,
+                    CreationTime =
+                        $"{x.CreationTime:HH:mm} , " +
+                        $"{persianDate.GetYear(x.CreationTime):0000}/" +
+                        $"{persianDate.GetMonth(x.CreationTime):00}/" +
+                        $"{persianDate.GetDayOfMonth(x.CreationTime):00}",
+                    ProductCategory = x.ProductCateory.Name,
+                    ProductCode = x.ProductCode,
+                    Name = x.Name,
+                    CostPrice = x.CostPrice,
+                    StockQuantity = x.StockQuantity,
+                }).ToList();
         }
 
         public EditProductDto GetForEdit(int id)
@@ -160,9 +185,16 @@ namespace ERP.Application.Service
                 }).OrderByDescending(x => x.ProductCode).ToList();
         }
 
-        public int GetCount()
+        public int GetCount(string? subject = null)
         {
-            return _repositoryProduct.GetAll().Count();
+            var products = _repositoryProduct.GetAll().AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(subject))
+                products = products
+                    .Where(x => x.Name.Contains(subject) ||
+                    x.ProductCode.ToString().Contains(subject));
+
+            return products.Count();
         }
 
         public void ChangeStockQuantity(int id, int quantity)

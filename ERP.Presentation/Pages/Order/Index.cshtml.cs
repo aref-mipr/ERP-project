@@ -1,3 +1,4 @@
+using ERP.Application.Contract.FilterAgg;
 using ERP.Application.Contract.OrderAgg;
 using ERP.Application.Contract.OrderItemAgg;
 using ERP.Domain.Interface.Utility;
@@ -30,17 +31,47 @@ namespace ERP.Presentation.Pages.Order
 
         [BindProperty]
         public OrderStatuses Status { get; set; }
+        public FilterParamsDto FilterParams { get; set; }
+        public SearchViewModel Search { get; set; }
 
-        public void OnGet()
+        public void OnGet(int pageId = 1, string? search = "")
         {
             ViewData["PageTitle"] = "مدیریت سفارش ها";
             ViewData["OrderActive"] = "active";
-            Orders = _applicationOrder.GetAll();
-            TempData["NumberItems"] = Orders.Count;
             var statuses = _applicationOrder.CreateStatuses()
                 .Where(x => x.Text != _enumExtension.OrderStatusesToPersianString(OrderStatuses.Pending));
             TempData["PendingStatus"] = _enumExtension.OrderStatusesToPersianString(OrderStatuses.Pending);
             StatusesList = new SelectList(statuses, "Value", "Text");
+
+            const int take = 15;
+            int count = _applicationOrder.GetCount(search);
+            int pageCount = (int)Math.Ceiling((double)count / take);
+
+            if (pageCount < 1)
+                pageCount = 1;
+
+            if (pageId < 1)
+                pageId = 1;
+
+            if (pageId > pageCount)
+                pageId = pageCount;
+
+            var filterParamsCriteria = new FilterParamsCriteria
+            {
+                Take = take,
+                PageCount = pageCount,
+                PageId = pageId,
+                Subject = search
+            };
+
+            FilterParams = new FilterParamsDto(filterParamsCriteria);
+            Search = new SearchViewModel
+            {
+                FilterParams = FilterParams
+            };
+
+            Orders = _applicationOrder.GetAll(FilterParams);
+            TempData["NumberItems"] = _applicationOrder.GetCount();
         }
 
         public RedirectToPageResult OnPost(int id)

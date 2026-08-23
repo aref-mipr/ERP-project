@@ -1,10 +1,12 @@
 ﻿using ERP.Application.Contract.BudgetAgg;
 using ERP.Application.Contract.EmployeeAgg;
+using ERP.Application.Contract.FilterAgg;
 using ERP.Application.Contract.FinancialTransactionAgg;
 using ERP.Domain.Criteria;
 using ERP.Domain.Entity;
 using ERP.Domain.Interface.Repository;
 using ERP.Domain.Interface.Utility;
+using System.Globalization;
 using static ERP.Domain.Entity.EmployeeModel;
 using static ERP.Domain.Entity.FinancialTransactionModel;
 
@@ -47,11 +49,19 @@ namespace ERP.Application.Service
             if (employee == null)
                 throw new NullReferenceException();
 
+            var persianDate = new PersianCalendar();
+
             return new EmployeeViewModel
             {
                 Id = employee.Id,
-                CreationTime = employee.CreationTime.ToString("yyyy/MM/dd"),
-                LastSalaryPaymentTime = employee.LastSalaryPaymentDate.ToString("yyyy/MM/dd"),
+                CreationTime =
+                    $"{persianDate.GetYear(employee.CreationTime):0000}/" +
+                    $"{persianDate.GetMonth(employee.CreationTime):00}/" +
+                    $"{persianDate.GetDayOfMonth(employee.CreationTime):00}",
+                LastSalaryPaymentTime = 
+                    $"{persianDate.GetYear(employee.CreationTime):0000}/" +
+                    $"{persianDate.GetMonth(employee.CreationTime):00}/" +
+                    $"{persianDate.GetDayOfMonth(employee.CreationTime):00}",
                 AmountOwed = employee.AmountOwed,
                 EmployeeStatus = _enumExtension.EmployeeStatusesToPersianString(employee.EmployeeStatus),
                 FullName = $"{employee.FirstName} {employee.LastName}",
@@ -81,20 +91,29 @@ namespace ERP.Application.Service
                 }
             };
         }
-        public List<EmployeeViewModel> GetAll()
+        public List<EmployeeViewModel> GetAll(FilterParamsDto filterParams)
         {
-            var quary = _repositoryEmployee.GetAll();
-            var employees = quary.Select(x => new EmployeeViewModel
-            {
-                Id = x.Id,
-                FullName = $"{x.FirstName} {x.LastName}",
-                EmployeeStatus = _enumExtension.EmployeeStatusesToPersianString(x.EmployeeStatus),
-                SalaryPayed = x.SalaryPayed,
-                Phone = x.Phone,
-                Position = x.Position,
-                EmployeeCode = x.EmployeeCode,
-            }).OrderByDescending(x => x.EmployeeCode).ToList();
-            return employees;
+            var employees = _repositoryEmployee.GetAll().AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(filterParams.Subject))
+                employees = employees
+                    .Where(x => x.FirstName.Contains(filterParams.Subject) ||
+                    x.LastName.Contains(filterParams.Subject) ||
+                    x.EmployeeCode.ToString().Contains(filterParams.Subject));
+
+            return employees.OrderByDescending(x => x.EmployeeCode)
+                .Skip(filterParams.Skip)
+                .Take(filterParams.Take)
+                .Select(x => new EmployeeViewModel
+                {
+                    Id = x.Id,
+                    FullName = $"{x.FirstName} {x.LastName}",
+                    EmployeeStatus = _enumExtension.EmployeeStatusesToPersianString(x.EmployeeStatus),
+                    SalaryPayed = x.SalaryPayed,
+                    Phone = x.Phone,
+                    Position = x.Position,
+                    EmployeeCode = x.EmployeeCode,
+                }).ToList();
         }
 
         public List<EmployeeViewModel> GetAllActive()
@@ -103,6 +122,17 @@ namespace ERP.Application.Service
                 .Where(x => x.EmployeeStatus == EmployeeStatuses.Active || x.EmployeeStatus == EmployeeStatuses.ReEmployment)
                 .Select(x => new EmployeeViewModel { })
                 .OrderByDescending(x => x.EmployeeCode).ToList();
+        }
+
+        public int GetCount(string? subject = null)
+        {
+            var employees = _repositoryEmployee.GetAll().AsQueryable();
+            if (!string.IsNullOrWhiteSpace(subject))
+                employees = employees.Where(x => x.FirstName.Contains(subject) ||
+                x.LastName.Contains(subject) ||
+                    x.EmployeeCode.ToString().Contains(subject));
+
+            return employees.Count();
         }
 
         public void CheckSalaryStatus()

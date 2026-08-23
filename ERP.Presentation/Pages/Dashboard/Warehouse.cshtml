@@ -5,6 +5,13 @@
 }
 
 <div class="container my-5">
+
+    <div class="d-flex justify-content-start mb-4">
+
+        <partial name="_Search" model="Model.Search" />
+
+    </div>
+
     <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
         <div class="card-header bg-white border-0 px-4 py-3">
             <div class="d-flex justify-content-between align-items-center">
@@ -31,7 +38,7 @@
                         <tr>
                             <td class="ps-4 fw-semibold">@counter</td>
                             <td class="text-muted">@item.ProductItemCode</td>
-                            <td><a asp-page="/Product/Details" asp-route-id="@item.ProductId">@item.Name</a></td>
+                            <td><a asp-page="/Product/Details" asp-route-id="@item.ProductId" style="text-decoration: none;">@item.Name</a></td>
                             <td class="text-success fw-bold">@item.Price.ToString("N0")</td>
                             <td>
                                 @item.ProductItemStatus
@@ -52,4 +59,5 @@
             </table>
         </div>
     </div>
+    <partial name="_Pagination" model="Model.Search" />
 </div>

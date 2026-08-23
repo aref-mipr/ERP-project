@@ -90,8 +90,7 @@ namespace ERP.Presentation.Pages.Dashboard
             TempData["CanceledOrder"] = _enumExtension.OrderStatusesToPersianString(OrderStatuses.Canceled);
             TempData["CanceledOrderStyle"] = "canceled";
 
-            Customers = _applicationCustomer.GetAll();
-            TempData["NumberOfCustomers"] = Customers.Count();
+            TempData["NumberOfCustomers"] = _applicationCustomer.GetCount();
 
             Employees = _applicationEmployee.GetAllActive();
             TempData["NumberOfEmployees"] = Employees.Count();

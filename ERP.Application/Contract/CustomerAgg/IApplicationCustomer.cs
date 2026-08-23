@@ -1,4 +1,6 @@
-﻿namespace ERP.Application.Contract.CustomerAgg
+﻿using ERP.Application.Contract.FilterAgg;
+
+namespace ERP.Application.Contract.CustomerAgg
 {
     public interface IApplicationCustomer
     {
@@ -6,6 +8,7 @@
         void Edit(EditCustomerDto command);
         CustomerViewModel GetBy(int id);
         EditCustomerDto GetForEdit(int id);
-        List<CustomerViewModel> GetAll();
+        List<CustomerViewModel> GetAll(FilterParamsDto filterParams);
+        int GetCount(string? subject = null);
     }
 }

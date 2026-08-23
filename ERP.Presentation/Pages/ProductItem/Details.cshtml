@@ -37,7 +37,9 @@
                     <div class="border rounded-3 p-3 h-100 bg-light">
                         <small class="text-muted">نام</small>
                         <div class="fw-semibold fs-5">
-                            <a asp-page-handler="RedirectToProduct" asp-route-id="@Model.ProductItem.ProductId">@Model.ProductItem.Name</a>
+                            <a asp-page-handler="RedirectToProduct"
+                            asp-route-id="@Model.ProductItem.ProductId"
+                            style="text-decoration:none">@Model.ProductItem.Name</a>
                         </div>
                         <small class="text-secondary">
                             دسته بندی: @Model.ProductItem.Category

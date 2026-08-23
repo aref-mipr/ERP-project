@@ -29,6 +29,12 @@
         <h4 class="fw-bold mb-0">لیست سرمایه های ثبت شده</h4>
     </div>
 
+    <div class="d-flex justify-content-start mb-4">
+
+        <partial name="_Search" model="Model.Search" />
+
+    </div>
+
     <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
         <div class="card-header bg-white border-0 px-4 py-3">
             <div class="d-flex justify-content-between align-items-center">
@@ -66,5 +72,6 @@
             </table>
         </div>
     </div>
+    <partial name="_Pagination" model="Model.Search" />
 </div>
 <script src="~/js/timeout_for_alert.js"></script>

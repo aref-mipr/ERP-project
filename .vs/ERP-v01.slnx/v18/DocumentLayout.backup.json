@@ -3,16 +3,20 @@
   "WorkspaceRootPath": "D:\\projects\\ERP-v01\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{268595BA-A9BF-6267-90A3-9A6EFBAA12B0}|ERP.Presentation\\ERP.Presentation.csproj|d:\\projects\\erp-v01\\erp.presentation\\pages\\dashboard\\index.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{268595BA-A9BF-6267-90A3-9A6EFBAA12B0}|ERP.Presentation\\ERP.Presentation.csproj|solutionrelative:erp.presentation\\pages\\dashboard\\index.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{268595BA-A9BF-6267-90A3-9A6EFBAA12B0}|ERP.Presentation\\ERP.Presentation.csproj|d:\\projects\\erp-v01\\erp.presentation\\pages\\productitem\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{268595BA-A9BF-6267-90A3-9A6EFBAA12B0}|ERP.Presentation\\ERP.Presentation.csproj|solutionrelative:erp.presentation\\pages\\productitem\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{268595BA-A9BF-6267-90A3-9A6EFBAA12B0}|ERP.Presentation\\ERP.Presentation.csproj|d:\\projects\\erp-v01\\erp.presentation\\pages\\dashboard\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{268595BA-A9BF-6267-90A3-9A6EFBAA12B0}|ERP.Presentation\\ERP.Presentation.csproj|solutionrelative:erp.presentation\\pages\\dashboard\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{43F14A2A-049F-64C5-FCF2-D26208E0764A}|ERP.Application\\ERP.Application.csproj|d:\\projects\\erp-v01\\erp.application\\service\\applicationsideexpense.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43F14A2A-049F-64C5-FCF2-D26208E0764A}|ERP.Application\\ERP.Application.csproj|solutionrelative:erp.application\\service\\applicationsideexpense.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{268595BA-A9BF-6267-90A3-9A6EFBAA12B0}|ERP.Presentation\\ERP.Presentation.csproj|d:\\projects\\erp-v01\\erp.presentation\\pages\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{268595BA-A9BF-6267-90A3-9A6EFBAA12B0}|ERP.Presentation\\ERP.Presentation.csproj|solutionrelative:erp.presentation\\pages\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{43F14A2A-049F-64C5-FCF2-D26208E0764A}|ERP.Application\\ERP.Application.csproj|d:\\projects\\erp-v01\\erp.application\\service\\applicationproductitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43F14A2A-049F-64C5-FCF2-D26208E0764A}|ERP.Application\\ERP.Application.csproj|solutionrelative:erp.application\\service\\applicationproductitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{43F14A2A-049F-64C5-FCF2-D26208E0764A}|ERP.Application\\ERP.Application.csproj|d:\\projects\\erp-v01\\erp.application\\service\\applicationproductcategory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43F14A2A-049F-64C5-FCF2-D26208E0764A}|ERP.Application\\ERP.Application.csproj|solutionrelative:erp.application\\service\\applicationproductcategory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -27,40 +31,53 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Index.cshtml.cs",
-              "DocumentMoniker": "D:\\projects\\ERP-v01\\ERP.Presentation\\Pages\\Dashboard\\Index.cshtml.cs",
-              "RelativeDocumentMoniker": "ERP.Presentation\\Pages\\Dashboard\\Index.cshtml.cs",
-              "ToolTip": "D:\\projects\\ERP-v01\\ERP.Presentation\\Pages\\Dashboard\\Index.cshtml.cs",
-              "RelativeToolTip": "ERP.Presentation\\Pages\\Dashboard\\Index.cshtml.cs",
-              "ViewState": "AgIAAHwAAAAAAAAAAADwv4sAAABZAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-17T12:42:33.652Z",
+              "Title": "Details.cshtml",
+              "DocumentMoniker": "D:\\projects\\ERP-v01\\ERP.Presentation\\Pages\\ProductItem\\Details.cshtml",
+              "RelativeDocumentMoniker": "ERP.Presentation\\Pages\\ProductItem\\Details.cshtml",
+              "ToolTip": "D:\\projects\\ERP-v01\\ERP.Presentation\\Pages\\ProductItem\\Details.cshtml",
+              "RelativeToolTip": "ERP.Presentation\\Pages\\ProductItem\\Details.cshtml",
+              "ViewState": "AgIAAFEAAAAAAAAAAAAAAGcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-08-22T19:46:38.491Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\projects\\ERP-v01\\ERP.Presentation\\Pages\\Dashboard\\Index.cshtml",
-              "RelativeDocumentMoniker": "ERP.Presentation\\Pages\\Dashboard\\Index.cshtml",
-              "ToolTip": "D:\\projects\\ERP-v01\\ERP.Presentation\\Pages\\Dashboard\\Index.cshtml",
-              "RelativeToolTip": "ERP.Presentation\\Pages\\Dashboard\\Index.cshtml",
-              "ViewState": "AgIAAFABAAAAAAAAAAAqwFsBAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-08-17T12:42:32.624Z",
+              "Title": "ApplicationSideExpense.cs",
+              "DocumentMoniker": "D:\\projects\\ERP-v01\\ERP.Application\\Service\\ApplicationSideExpense.cs",
+              "RelativeDocumentMoniker": "ERP.Application\\Service\\ApplicationSideExpense.cs",
+              "ToolTip": "D:\\projects\\ERP-v01\\ERP.Application\\Service\\ApplicationSideExpense.cs",
+              "RelativeToolTip": "ERP.Application\\Service\\ApplicationSideExpense.cs",
+              "ViewState": "AgIAAH4AAAAAAAAAAAAAAGoAAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-22T19:26:55.617Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "_Layout.cshtml",
-              "DocumentMoniker": "D:\\projects\\ERP-v01\\ERP.Presentation\\Pages\\Shared\\_Layout.cshtml",
-              "RelativeDocumentMoniker": "ERP.Presentation\\Pages\\Shared\\_Layout.cshtml",
-              "ToolTip": "D:\\projects\\ERP-v01\\ERP.Presentation\\Pages\\Shared\\_Layout.cshtml",
-              "RelativeToolTip": "ERP.Presentation\\Pages\\Shared\\_Layout.cshtml",
-              "ViewState": "AgIAABIAAAAAAAAAAAAAACcAAABCAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-08-17T12:41:27.324Z",
+              "Title": "ApplicationProductItem.cs",
+              "DocumentMoniker": "D:\\projects\\ERP-v01\\ERP.Application\\Service\\ApplicationProductItem.cs",
+              "RelativeDocumentMoniker": "ERP.Application\\Service\\ApplicationProductItem.cs",
+              "ToolTip": "D:\\projects\\ERP-v01\\ERP.Application\\Service\\ApplicationProductItem.cs",
+              "RelativeToolTip": "ERP.Application\\Service\\ApplicationProductItem.cs",
+              "ViewState": "AgIAAPoAAAAAAAAAAAAAAFsAAAA9AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-22T19:26:32.985Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ApplicationProductCategory.cs",
+              "DocumentMoniker": "D:\\projects\\ERP-v01\\ERP.Application\\Service\\ApplicationProductCategory.cs",
+              "RelativeDocumentMoniker": "ERP.Application\\Service\\ApplicationProductCategory.cs",
+              "ToolTip": "D:\\projects\\ERP-v01\\ERP.Application\\Service\\ApplicationProductCategory.cs",
+              "RelativeToolTip": "ERP.Application\\Service\\ApplicationProductCategory.cs",
+              "ViewState": "AgIAAHAAAAAAAAAAAAAAAEgAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-22T19:26:14.205Z",
               "EditorCaption": ""
             }
           ]

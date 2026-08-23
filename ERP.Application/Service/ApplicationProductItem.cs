@@ -1,10 +1,12 @@
 ﻿using ERP.Application.Contract.BudgetAgg;
+using ERP.Application.Contract.FilterAgg;
 using ERP.Application.Contract.FinancialTransactionAgg;
 using ERP.Application.Contract.ProductItemAgg;
 using ERP.Domain.Criteria;
 using ERP.Domain.Entity;
 using ERP.Domain.Interface.Repository;
 using ERP.Domain.Interface.Utility;
+using System.Globalization;
 using static ERP.Domain.Entity.FinancialTransactionModel;
 using static ERP.Domain.Entity.ProductItemModel;
 
@@ -81,12 +83,18 @@ namespace ERP.Application.Service
         public ProductItemViewModel GetBy(long id)
         {
             var quary = _repositoryProductItem.GetBy(id);
+            var persianDate = new PersianCalendar();
+
             return new ProductItemViewModel
             {
                 Id = quary.Id,
                 Name = quary.Product.Name,
                 Category = quary.Product.ProductCateory.Name,
-                CreationTime = quary.Product.CreationTime.ToString("mm : HH , yyyy/MM/dd"),
+                CreationTime =
+                    $"{quary.Product.CreationTime:HH:mm} , " +
+                    $"{persianDate.GetYear(quary.Product.CreationTime):0000}/" +
+                    $"{persianDate.GetMonth(quary.Product.CreationTime):00}/" +
+                    $"{persianDate.GetDayOfMonth(quary.Product.CreationTime):00}",
                 ProductItemStatus = _enumExtension.ItemStatusesToPersianString(quary.ProductItemStatus),
                 ProductId = quary.ProductId,
                 ProductItemCode = quary.ProductItemCode,
@@ -121,17 +129,30 @@ namespace ERP.Application.Service
             }).OrderByDescending(x => x.ProductItemCode).ToList();
         }
 
-        public List<ProductItemViewModel> GetAllReadyToSell()
+        public List<ProductItemViewModel> GetAllReadyToSell(int id)
         {
             var quary = _repositoryProductItem.GetAll()
-                .Where(x => x.ProductItemStatus == ProductItemStatuses.Approved);
+                .Where(x => x.ProductItemStatus == ProductItemStatuses.Approved).AsQueryable();
 
-            return quary.Select(x => new ProductItemViewModel
+            if (id != 0)
+            {
+                var itemsReadyToSell = quary.ToList();
+                var orderItems = _repositoryOrderItem.GetAllBy(id);
+                foreach (var orderIrem in orderItems)
+                {
+                    var itemInOrder = _repositoryProductItem.GetBy(orderIrem.ProductItemId);
+                    itemsReadyToSell.Add(itemInOrder);
+                }
+                quary = itemsReadyToSell.AsQueryable();
+            }
+
+            return quary.OrderByDescending(x => x.ProductItemCode)
+                .Select(x => new ProductItemViewModel
             {
                 Id = x.Id,
                 Name = x.Product.Name,
                 ProductItemCode = x.ProductItemCode,
-            }).OrderByDescending(x => x.ProductItemCode).ToList();
+            }).ToList();
         }
 
         public List<ProductItemViewModel> GetAllBy(int productId)
@@ -146,15 +167,21 @@ namespace ERP.Application.Service
             }).OrderByDescending(x => x.ProductItemCode).ToList();
         }
 
-        public List<ProductItemViewModel> GetIAlltemsInWarehouse()
+        public List<ProductItemViewModel> GetIAlltemsInWarehouse(FilterParamsDto filterParams)
         {
             var quary = _repositoryProductItem.GetAll()
                 .Where(x => x.ProductItemStatus == ProductItemStatuses.Testing
                     || x.ProductItemStatus == ProductItemStatuses.Approved
                     || x.ProductItemStatus == ProductItemStatuses.Unsellable
-                    || x.ProductItemStatus == ProductItemStatuses.WaitingOrder);
+                    || x.ProductItemStatus == ProductItemStatuses.WaitingOrder).AsQueryable();
 
-            return quary.Select(x => new ProductItemViewModel
+            if (!string.IsNullOrWhiteSpace(filterParams.Subject))
+                quary = quary.Where(x => x.Product.Name.Contains(filterParams.Subject));
+
+            return quary.OrderByDescending(x => x.ProductItemCode)
+                .Skip(filterParams.Skip)
+                .Take(filterParams.Take)
+                .Select(x => new ProductItemViewModel
             {
                 Id = x.Id,
                 Name = x.Product.Name,
@@ -162,7 +189,7 @@ namespace ERP.Application.Service
                 ProductId = x.ProductId,
                 ProductItemCode = x.ProductItemCode,
                 Price = x.Price,
-            }).OrderByDescending(x => x.ProductItemCode).ToList();
+            }).ToList();
         }
 
         public EditProductItemDto GetForEdit(long id)
@@ -179,7 +206,31 @@ namespace ERP.Application.Service
                 }
             };
         }
-        
+
+        public int GetCount(string? subject = null)
+        {
+            var customers = _repositoryProductItem.GetAll().AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(subject))
+                customers = customers.Where(x => x.Product.Name.Contains(subject));
+
+            return customers.Count();
+        }
+
+        public int GetCountInWarehouse(string? subject = null)
+        {
+            var customers = _repositoryProductItem.GetAll()
+                .Where(x => x.ProductItemStatus == ProductItemStatuses.Testing
+                    || x.ProductItemStatus == ProductItemStatuses.Approved
+                    || x.ProductItemStatus == ProductItemStatuses.Unsellable
+                    || x.ProductItemStatus == ProductItemStatuses.WaitingOrder).AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(subject))
+                customers = customers.Where(x => x.Product.Name.Contains(subject));
+
+            return customers.Count();
+        }
+
         public void ChangeStatus(long id, ProductItemStatuses status)
         {
             var quary = _repositoryProductItem.GetBy(id);

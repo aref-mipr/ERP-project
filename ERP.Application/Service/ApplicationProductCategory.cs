@@ -1,7 +1,9 @@
-﻿using ERP.Application.Contract.ProductCategoryAgg;
+﻿using ERP.Application.Contract.FilterAgg;
+using ERP.Application.Contract.ProductCategoryAgg;
 using ERP.Domain.Criteria;
 using ERP.Domain.Entity;
 using ERP.Domain.Interface.Repository;
+using System.Globalization;
 
 namespace ERP.Application.Service
 {
@@ -32,14 +34,50 @@ namespace ERP.Application.Service
 
         public List<ProductCategoryViewModel> GetAll()
         {
-            return _repositoryProductCategory.GetAll().Select(x => new ProductCategoryViewModel
+            var categories = _repositoryProductCategory.GetAll();
+            var persianDate = new PersianCalendar();
+
+            return categories.OrderByDescending(x => x.ProductCategoryCode)
+                .Select(x => new ProductCategoryViewModel
+                {
+                    Id = x.Id,
+                    IsActive = x.IsActive,
+                    CreationTime =
+                        $"{x.CreationTime:HH:mm} , " +
+                        $"{persianDate.GetYear(x.CreationTime):0000}/" +
+                        $"{persianDate.GetMonth(x.CreationTime):00}/" +
+                        $"{persianDate.GetDayOfMonth(x.CreationTime):00}",
+                    Name = x.Name,
+                    ProductCategoryCode = x.ProductCategoryCode,
+                }).ToList();
+        }
+
+        public List<ProductCategoryViewModel> GetAll(FilterParamsDto filterParams)
+        {
+            var categories = _repositoryProductCategory.GetAll().AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(filterParams.Subject))
+                categories = categories
+                    .Where(x => x.Name.Contains(filterParams.Subject) ||
+                    x.ProductCategoryCode.ToString().Contains(filterParams.Subject));
+
+            var persianDate = new PersianCalendar();
+
+            return categories.OrderByDescending(x => x.ProductCategoryCode)
+                .Skip(filterParams.Skip)
+                .Take(filterParams.Take)
+                .Select(x => new ProductCategoryViewModel
             {
                 Id = x.Id,
                 IsActive = x.IsActive,
-                CreationTime = x.CreationTime.ToString("mm : HH , yyyy/MM/dd"),
-                Name = x.Name,
+                CreationTime =
+                    $"{x.CreationTime:HH:mm} , " +
+                    $"{persianDate.GetYear(x.CreationTime):0000}/" +
+                    $"{persianDate.GetMonth(x.CreationTime):00}/" +
+                    $"{persianDate.GetDayOfMonth(x.CreationTime):00}",
+                    Name = x.Name,
                 ProductCategoryCode = x.ProductCategoryCode,
-            }).OrderByDescending(x => x.ProductCategoryCode).ToList();
+            }).ToList();
         }
 
         public EditProductCategoryDto GetForEdit(int id)
@@ -53,6 +91,18 @@ namespace ERP.Application.Service
                 Id = productCategory.Id,
                 ProductCategoryCriterias = new ProductCategoryCriteria { Name = productCategory.Name, }
             };
+        }
+
+        public int GetCount(string? subject = null)
+        {
+            var categories = _repositoryProductCategory.GetAll().AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(subject))
+                categories = categories
+                    .Where(x => x.Name.Contains(subject) ||
+                    x.ProductCategoryCode.ToString().Contains(subject));
+
+            return categories.Count();
         }
 
         public void Remove(int id)

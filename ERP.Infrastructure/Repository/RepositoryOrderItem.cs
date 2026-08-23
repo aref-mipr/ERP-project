@@ -31,7 +31,7 @@ namespace ERP.Infrastructure.Repository
         }
         public List<OrderItemModel> GetAllBy(int orderId)
         {
-            return _context.OrderItems.AsNoTracking().Include(x => x.ProductItem).Include(x => x.ProductItem.Product)
+            return _context.OrderItems.Include(x => x.ProductItem).Include(x => x.ProductItem.Product)
                 .Where(x => x.OrderId == orderId).ToList();
         }
         public List<OrderItemModel> GetAllWaitingOrderBy(int orderId)

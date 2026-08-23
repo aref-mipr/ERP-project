@@ -1,0 +1,31 @@
+﻿@model ERP.Application.Contract.FilterAgg.SearchViewModel
+@{
+}
+<form method="get" style="width: 320px;">
+
+    <div class="input-group shadow-sm rounded-3">
+
+        @if (TempData["AnotherParam"] != null)
+            {
+                @foreach (var parameter in Model.AdditionalParameters)
+                {
+                    foreach (var value in parameter.Value)
+                    {
+                        <input type="hidden"
+                               name="@parameter.Key"
+                               value="@value" />
+                    }
+                }
+            }
+
+        <button class="input-group-text bg-white">
+            <i class="bi bi-search text-muted"></i>
+        </button>
+
+        <input asp-for="@Model.FilterParams.Subject" type="text"
+               name="search"
+               class="form-control"
+               placeholder="جستجوی @TempData["Subject"] ...">
+    </div>
+
+</form>

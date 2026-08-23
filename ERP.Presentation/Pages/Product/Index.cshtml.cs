@@ -1,3 +1,4 @@
+using ERP.Application.Contract.FilterAgg;
 using ERP.Application.Contract.ProductAgg;
 using ERP.Application.Contract.ProductItemAgg;
 using Microsoft.AspNetCore.Authorization;
@@ -18,12 +19,46 @@ namespace ERP.Presentation.Pages.Product
         }
 
         public List<ProductViewModel> Products { get; set; }
-        public void OnGet()
+
+        public FilterParamsDto FilterParams  { get; set; }
+        public SearchViewModel Search { get; set; }
+        public void OnGet(int pageId = 1, string? search = "")
         {
             ViewData["PageTitle"] = "مدیریت محصولات";
             ViewData["ProductActive"] = "active";
-            Products = _applicationProduct.GetAll();
-            TempData["NumberItems"] = Products.Count;
+            TempData["Subject"] = "نام محصول";
+
+            const int take = 15;
+
+            var count = _applicationProduct.GetCount(search);
+
+            var pageCount = (int)Math.Ceiling((double)count / take);
+
+            if (pageCount < 1)
+                pageCount = 1;
+
+            if (pageId < 1)
+                pageId = 1;
+
+            if (pageId > pageCount)
+                pageId = pageCount;
+
+            var filterParamsCriteria = new FilterParamsCriteria
+            {
+                Take = take,
+                PageCount = pageCount,
+                PageId = pageId,
+                Subject = search
+            };
+            
+            FilterParams = new FilterParamsDto(filterParamsCriteria);
+            Search = new SearchViewModel
+            {
+                FilterParams = FilterParams
+            };
+            Products = _applicationProduct.GetAll(FilterParams);
+
+            TempData["NumberItems"] = _applicationProduct.GetCount();
         }
 
         public async Task<JsonResult> OnGetItemsByProductId(int productId)

@@ -1,4 +1,5 @@
 using ERP.Application.Contract.EmployeeAgg;
+using ERP.Application.Contract.FilterAgg;
 using ERP.Domain.Interface.Repository;
 using ERP.Domain.Interface.Utility;
 using Microsoft.AspNetCore.Authorization;
@@ -33,14 +34,15 @@ namespace ERP.Presentation.Pages.Employee
         public EmployeeStatuses Status { get; set; }
         public SelectList StatusesList { get; set; }
         public SelectList ReEmploymentStatus { get; set; }
+        public FilterParamsDto FilterParams { get; set; }
+        public SearchViewModel Search { get; set; }
 
 
-        public void OnGet()
+        public void OnGet(int pageId = 1, string? search = "")
         {
             ViewData["PageTitle"] = "مدیریت کارمندان";
             ViewData["EmployeeActive"] = "active";
             _applicationEmployee.CheckSalaryStatus();
-            Employees = _applicationEmployee.GetAll();
 
             var allsStatuses = _applicationEmployee.CreateStatuses()
                 .Where(x => x.Text != _enumExtension.EmployeeStatusesToPersianString(EmployeeStatuses.ReEmployment) &&
@@ -55,7 +57,35 @@ namespace ERP.Presentation.Pages.Employee
 
             TempData["Active"] = _enumExtension.EmployeeStatusesToPersianString(EmployeeStatuses.Active);
             TempData["ReEmployment"] = _enumExtension.EmployeeStatusesToPersianString(EmployeeStatuses.ReEmployment);
-            TempData["NumberItems"] = _applicationEmployee.GetAll().Count();
+
+            const int take = 15;
+            int count = _applicationEmployee.GetCount(search);
+            int pageCount = (int)Math.Ceiling((double)count / take);
+
+            if (pageCount < 1)
+                pageCount = 1;
+
+            if (pageId < 1)
+                pageId = 1;
+
+            if (pageId > pageCount)
+                pageId = pageCount;
+
+            var filterParamsCriteria = new FilterParamsCriteria
+            {
+                Take = take,
+                PageCount = pageCount,
+                PageId = pageId,
+                Subject = search
+            };
+
+            FilterParams = new FilterParamsDto(filterParamsCriteria);
+            Search = new SearchViewModel
+            {
+                FilterParams = FilterParams
+            };
+            Employees = _applicationEmployee.GetAll(FilterParams);
+            TempData["NumberItems"] = _applicationEmployee.GetCount();
         }
 
         public RedirectToPageResult OnPost(int id)

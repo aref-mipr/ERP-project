@@ -1,3 +1,5 @@
+using Azure;
+using ERP.Application.Contract.FilterAgg;
 using ERP.Application.Contract.OrderItemAgg;
 using ERP.Application.Contract.ProductItemAgg;
 using ERP.Domain.Interface.Utility;
@@ -24,25 +26,20 @@ namespace ERP.Presentation.Pages.Order
 
         public List<ProductItemViewModel> ProductItems { get; set; }
 
-        [BindProperty]
-        public List<long> ProductItemIds { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public List<long> ProductItemIds { get; set; } = new();
 
         [BindProperty]
         public int Id { get; set; }
+        public FilterParamsDto FilterParams { get; set; }
+        public SearchViewModel Search { get; set; }
 
-        public void OnGet(int id)
+        public void OnGet(int id, int pageId = 1, string? search = "")
         {
             ViewData["PageTitle"] = "مدیریت سفارش ها";
             ViewData["OrderActive"] = "active";
-            ProductItems = _applicationProductItem.GetAllReadyToSell();
             Id = id;
-            var orderItems = _applicationOrderItem.GetAllWaitingOrderBy(id);
-            List<ProductItemViewModel> editProductItems = new List<ProductItemViewModel>();
-            foreach (var orderItem in orderItems)
-            {
-                editProductItems.Add(_applicationProductItem.GetBy(orderItem.ProductItemId));
-            }
-            ProductItems.AddRange(editProductItems);
+            ProductItems = _applicationProductItem.GetAllReadyToSell(id);
         }
 
         public IActionResult OnPost(int id)
@@ -50,7 +47,7 @@ namespace ERP.Presentation.Pages.Order
             if (!ProductItemIds.Any())
             {
                 TempData["Message"] = _resultMessage.Error("حداقل یک آیتم را انتخاب کنید!");
-                return RedirectToPage();
+                return RedirectToPage(new {id});
             }
             return RedirectToPage(
                 "/Order/SelectCustomer",

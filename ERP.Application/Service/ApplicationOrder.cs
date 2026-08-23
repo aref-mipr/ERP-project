@@ -1,4 +1,5 @@
 ﻿using ERP.Application.Contract.BudgetAgg;
+using ERP.Application.Contract.FilterAgg;
 using ERP.Application.Contract.FinancialTransactionAgg;
 using ERP.Application.Contract.OrderAgg;
 using ERP.Application.Contract.OrderItemAgg;
@@ -7,6 +8,7 @@ using ERP.Domain.Criteria;
 using ERP.Domain.Entity;
 using ERP.Domain.Interface.Repository;
 using ERP.Domain.Interface.Utility;
+using System.Globalization;
 using static ERP.Domain.Entity.FinancialTransactionModel;
 using static ERP.Domain.Entity.OrderModel;
 using static ERP.Domain.Entity.ProductItemModel;
@@ -45,7 +47,7 @@ namespace ERP.Application.Service
         {
             int baseOrderCode = _repositoryOrder.GetAll().Count();
 
-            var items = _applicationProductItem.GetAllReadyToSell()
+            var items = _applicationProductItem.GetAll()
                .Where(x => command.ProductItemIds.Contains(x.Id)).ToList();
 
             var orderCriteria = new OrderCriteria();
@@ -83,10 +85,17 @@ namespace ERP.Application.Service
             var productItems = _repositoryProductItem.GetAll()
                 .Where(x => command.ProductItemIds.Contains(x.Id));
 
-            var lastProductItems = _repositoryProductItem.GetAll()
-                .Where(x => !command.ProductItemIds.Contains(x.Id) && x.ProductItemStatus == ProductItemStatuses.WaitingOrder);
-
             var lastOrderItems = _repositoryOrderItem.GetAllBy(command.Id);
+
+            var currentProductItemIds = new List<long>();
+            foreach (var orderItem in lastOrderItems)
+            {
+                currentProductItemIds.Add(orderItem.ProductItemId);
+            }
+
+            var lastProductItems = _repositoryProductItem.GetAll()
+                .Where(x => currentProductItemIds.Contains(x.Id) && !command.ProductItemIds.Contains(x.Id));
+
 
             var orderCriteria = new OrderCriteria();
             orderCriteria.CustomerId = command.OrdersCriteria.CustomerId;
@@ -120,6 +129,7 @@ namespace ERP.Application.Service
         public OrderViewModel GetBy(int id)
         {
             var order = _repositoryOrder.GetBy(id);
+            var persianDate = new PersianCalendar();
             return new OrderViewModel
             {
                 Id = order.Id,
@@ -129,31 +139,78 @@ namespace ERP.Application.Service
                 FinalAmount = order.FinalAmount,
                 CustomerFullName = $"{order.Customer.FirstName} {order.Customer.LastName}",
                 CustomerCode = order.Customer.SubscriptionCode,
-                CreationTime = order.CreationTime.ToString("mm : HH , yyyy/MM/dd"),
+                CreationTime =
+                    $"{order.CreationTime:HH:mm} , " +
+                    $"{persianDate.GetYear(order.CreationTime):0000}/" +
+                    $"{persianDate.GetMonth(order.CreationTime):00}/" +
+                    $"{persianDate.GetDayOfMonth(order.CreationTime):00}",
                 OrderCode = order.OrderCode,
             };
         }
 
         public List<OrderViewModel> GetAll()
         {
-            return _repositoryOrder.GetAll().Select(x => new OrderViewModel
+            var orders = _repositoryOrder.GetAll().AsQueryable();
+            var persianDate = new PersianCalendar();
+
+            return orders.OrderByDescending(x => x.OrderCode)
+                .Select(x => new OrderViewModel
+                {
+                    Id = x.Id,
+                    CreationTime =
+                        $"{x.CreationTime:HH:mm} , " +
+                        $"{persianDate.GetYear(x.CreationTime):0000}/" +
+                        $"{persianDate.GetMonth(x.CreationTime):00}/" +
+                        $"{persianDate.GetDayOfMonth(x.CreationTime):00}",
+                    CustomerFullName = $"{x.Customer.FirstName} {x.Customer.LastName}",
+                    OrderStatus = _enumExtension.OrderStatusesToPersianString(x.OrderStatus),
+                    OrderCode = x.OrderCode,
+                    FinalAmount = x.FinalAmount,
+                }).ToList();
+        }
+
+        public List<OrderViewModel> GetAll(FilterParamsDto filterParams)
+        {
+            var orders = _repositoryOrder.GetAll().AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(filterParams.Subject))
+                orders = orders
+                    .Where(x => x.Customer.FirstName.Contains(filterParams.Subject) ||
+                    x.Customer.LastName.Contains(filterParams.Subject) ||
+                    x.OrderCode.ToString().Contains(filterParams.Subject));
+
+            var persianDate = new PersianCalendar();
+
+            return orders.OrderByDescending(x => x.OrderCode)
+                .Skip(filterParams.Skip)
+                .Take(filterParams.Take)
+                .Select(x => new OrderViewModel
             {
                 Id = x.Id,
-                CreationTime = x.CreationTime.ToString("mm : HH , yyyy/MM/dd"),
-                CustomerFullName = $"{x.Customer.FirstName} {x.Customer.LastName}",
+                CreationTime =
+                    $"{x.CreationTime:HH:mm} , " +
+                    $"{persianDate.GetYear(x.CreationTime):0000}/" +
+                    $"{persianDate.GetMonth(x.CreationTime):00}/" +
+                    $"{persianDate.GetDayOfMonth(x.CreationTime):00}",
+                    CustomerFullName = $"{x.Customer.FirstName} {x.Customer.LastName}",
                 OrderStatus = _enumExtension.OrderStatusesToPersianString(x.OrderStatus),
                 OrderCode = x.OrderCode,
                 FinalAmount = x.FinalAmount,
-            }).OrderByDescending(x => x.OrderCode).ToList();
+            }).ToList();
         }
 
         public List<OrderViewModel> GetAllBy(int customerId)
         {
             var quary = _repositoryOrder.GetAll().Where(x => x.CustomerId == customerId);
+            var persianDate = new PersianCalendar();
             return quary.Select(x => new OrderViewModel
             {
                 Id = x.Id,
-                CreationTime = x.CreationTime.ToString("mm : HH , yyyy/MM/dd"),
+                CreationTime =
+                    $"{x.CreationTime:HH:mm} , " +
+                    $"{persianDate.GetYear(x.CreationTime):0000}/" +
+                    $"{persianDate.GetMonth(x.CreationTime):00}/" +
+                    $"{persianDate.GetDayOfMonth(x.CreationTime):00}",
                 CustomerFullName = $"{x.Customer.FirstName} {x.Customer.LastName}",
                 OrderStatus = _enumExtension.OrderStatusesToPersianString(x.OrderStatus),
                 OrderCode = x.OrderCode,
@@ -167,6 +224,19 @@ namespace ERP.Application.Service
                 .Where(x => x.OrderStatus == OrderStatuses.Approved)
                 .Select(x => new OrderViewModel { }).ToList();
         }
+
+        public int GetCount(string? subject = null)
+        {
+            var orders = _repositoryOrder.GetAll().AsQueryable();
+            if (!string.IsNullOrWhiteSpace(subject))
+                orders = orders
+                    .Where(x => x.Customer.FirstName.Contains(subject) ||
+                    x.Customer.LastName.Contains(subject) ||
+                    x.OrderCode.ToString().Contains(subject));
+
+            return orders.Count();
+        }
+
         public List<OrderStatusViewModel> CreateStatuses()
         {
             var statuses = new List<OrderStatusViewModel>();

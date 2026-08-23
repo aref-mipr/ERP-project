@@ -1,3 +1,4 @@
+using ERP.Application.Contract.FilterAgg;
 using ERP.Application.Contract.ProductAgg;
 using ERP.Application.Contract.ProductCategoryAgg;
 using ERP.Domain.Interface.Utility;
@@ -21,13 +22,43 @@ namespace ERP.Presentation.Pages.ProductCategory
         }
 
         public List<ProductCategoryViewModel> ProductCategories { get; set; }
+        public FilterParamsDto FilterParams { get; set; }
+        public SearchViewModel Search { get; set; }
 
-        public void OnGet()
+        public void OnGet(int pageId = 1, string? search = "")
         {
             ViewData["PageTitle"] = "مدیریت دسته بندی ها";
             ViewData["ProductCategoryActive"] = "active";
-            ProductCategories = _applicationProductCategory.GetAll();
-            TempData["NumberItems"] = _applicationProductCategory.GetAll().Count();
+            const int take = 15;
+
+            var count = _applicationProduct.GetCount(search);
+
+            var pageCount = (int)Math.Ceiling((double)count / take);
+
+            if (pageCount < 1)
+                pageCount = 1;
+
+            if (pageId < 1)
+                pageId = 1;
+
+            if (pageId > pageCount)
+                pageId = pageCount;
+
+            var filterParamsCriteria = new FilterParamsCriteria
+            {
+                Take = take,
+                PageCount = pageCount,
+                PageId = pageId,
+                Subject = search
+            };
+
+            FilterParams = new FilterParamsDto(filterParamsCriteria);
+            Search = new SearchViewModel
+            {
+                FilterParams = FilterParams
+            };
+            ProductCategories = _applicationProductCategory.GetAll(FilterParams);
+            TempData["NumberItems"] = _applicationProductCategory.GetCount();
         }
 
         public RedirectToPageResult OnGetRemove(int id)

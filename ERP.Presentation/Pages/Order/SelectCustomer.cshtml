@@ -17,6 +17,11 @@
                 <div class="card-header bg-white border-0 p-4">
                     <h4 class="fw-bold mb-0">انتخاب مشتری</h4>
                 </div>
+                <div class="d-flex justify-content-start mb-4">
+
+                    <partial name="_Search" model="Model.Search" />
+
+                </div>
 
                 <div class="card-body p-4">
 
@@ -71,4 +76,5 @@
 
         </div>
     </div>
+    <partial name="_Pagination" model="Model.Search" />
 </div>
