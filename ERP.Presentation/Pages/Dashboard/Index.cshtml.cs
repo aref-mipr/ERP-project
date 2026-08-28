@@ -84,7 +84,7 @@ namespace ERP.Presentation.Pages.Dashboard
             TotalBudget = _applicationBudget.GetTotalBudget();
             Orders = _applicationOrder.GetAllApproved();
             TempData["NumberOfOrders"] = Orders.Count();
-            LastOrders = _applicationOrder.GetAll().Take(5).ToList();
+            LastOrders = _applicationOrder.GetAll().Take(4).ToList();
             TempData["ApprovedOrder"] = _enumExtension.OrderStatusesToPersianString(OrderStatuses.Approved);
             TempData["ApprovedOrderStyle"] = "approved";
             TempData["CanceledOrder"] = _enumExtension.OrderStatusesToPersianString(OrderStatuses.Canceled);
@@ -113,7 +113,11 @@ namespace ERP.Presentation.Pages.Dashboard
             Weeks = _applicationBudget.WeeksForChart();
             Capitals = _applicationBudget.CapitalOfWeek();
             MaxCapital = Capitals.Max();
-            MinCapital = Capitals.Where(amount => amount > 0).Min();
+            if (Capitals.Any(x => x > 0))
+                MinCapital = Capitals.Where(amount => amount > 0).Min();
+            else
+                MinCapital = 0;
+
             Middle = Capitals.Max()/2;
 
             TotalIncomeLastMonth = _applicationFinancialTransaction.CalculateTotalIncomeLastMonth();
@@ -125,23 +129,23 @@ namespace ERP.Presentation.Pages.Dashboard
             TotalExpenseLastYear = _applicationFinancialTransaction.CalculateTotalExpenseLastYear();
             TotalExpenseAllTime = _applicationFinancialTransaction.CalculateTotalExpenseAllTime();
 
-            if (TempData["Date"] != null)
+            if (TempData["EnumDate"] != null)
             {
-                if ((int)TempData["Date"] == (int)FinancialSummaryDates.LastWeek)
+                if ((int)TempData["EnumDate"] == (int)FinancialSummaryDates.LastWeek)
                 {
                     TempData["IncomeAmount"] = (TotalIncomeLastWeek / 10).ToString("N0");
                     TempData["ExpenceAmount"] = (TotalExpenseLastWeek / 10).ToString("N0");
                     TempData["ProfitAmount"] = (TotalIncomeLastWeek / 10 - TotalExpenseLastWeek / 10).ToString("N0");
                     TempData["Date"] = "هفت روز اخیر";
                 }
-                else if ((int)TempData["Date"] == (int)FinancialSummaryDates.LastYear)
+                else if ((int)TempData["EnumDate"] == (int)FinancialSummaryDates.LastYear)
                 {
                     TempData["IncomeAmount"] = (TotalIncomeLastYear / 10).ToString("N0");
                     TempData["ExpenceAmount"] = (TotalExpenseLastYear / 10).ToString("N0");
                     TempData["ProfitAmount"] = (TotalIncomeLastYear / 10 - TotalExpenseLastYear / 10).ToString("N0");
                     TempData["Date"] = "سال اخیر";
                 }
-                else if ((int)TempData["Date"] == (int)FinancialSummaryDates.AllTime)
+                else if ((int)TempData["EnumDate"] == (int)FinancialSummaryDates.AllTime)
                 {
                     TempData["IncomeAmount"] = (TotalIncomeAllTime / 10).ToString("N0");
                     TempData["ExpenceAmount"] = (TotalExpenseAllTime / 10).ToString("N0");
@@ -168,7 +172,7 @@ namespace ERP.Presentation.Pages.Dashboard
 
         public IActionResult OnPost()
         {
-            TempData["Date"] = Date;
+            TempData["EnumDate"] = Date;
             return RedirectToPage();
         }
     }

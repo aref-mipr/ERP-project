@@ -48,7 +48,7 @@ namespace ERP.Presentation.Pages.User
                 }
 
                 _authenticationService.SignIn(user.Id.ToString(), user.FullName);
-                TempData["Message"] = _resultMessage.Success($"خوش آمدید {user.FullName}");
+                TempData["Wellcome"] = _resultMessage.Success($"خوش آمدید {user.FullName}");
                 return RedirectToPage("/Dashboard/Index");
             }
         }

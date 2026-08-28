@@ -3,8 +3,40 @@
   "WorkspaceRootPath": "D:\\projects\\ERP-v01\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{6585705D-B7BC-42D5-8064-A2EC9C29D51E}|ERP.Domain\\ERP.Domain.csproj|d:\\projects\\erp-v01\\erp.domain\\entity\\employeemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6585705D-B7BC-42D5-8064-A2EC9C29D51E}|ERP.Domain\\ERP.Domain.csproj|solutionrelative:erp.domain\\entity\\employeemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{268595BA-A9BF-6267-90A3-9A6EFBAA12B0}|ERP.Presentation\\ERP.Presentation.csproj|d:\\projects\\erp-v01\\erp.presentation\\pages\\shared\\_search.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{268595BA-A9BF-6267-90A3-9A6EFBAA12B0}|ERP.Presentation\\ERP.Presentation.csproj|solutionrelative:erp.presentation\\pages\\shared\\_search.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{268595BA-A9BF-6267-90A3-9A6EFBAA12B0}|ERP.Presentation\\ERP.Presentation.csproj|d:\\projects\\erp-v01\\erp.presentation\\pages\\dashboard\\index.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{268595BA-A9BF-6267-90A3-9A6EFBAA12B0}|ERP.Presentation\\ERP.Presentation.csproj|solutionrelative:erp.presentation\\pages\\dashboard\\index.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{268595BA-A9BF-6267-90A3-9A6EFBAA12B0}|ERP.Presentation\\ERP.Presentation.csproj|d:\\projects\\erp-v01\\erp.presentation\\pages\\dashboard\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{268595BA-A9BF-6267-90A3-9A6EFBAA12B0}|ERP.Presentation\\ERP.Presentation.csproj|solutionrelative:erp.presentation\\pages\\dashboard\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{268595BA-A9BF-6267-90A3-9A6EFBAA12B0}|ERP.Presentation\\ERP.Presentation.csproj|d:\\projects\\erp-v01\\erp.presentation\\pages\\user\\login.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{268595BA-A9BF-6267-90A3-9A6EFBAA12B0}|ERP.Presentation\\ERP.Presentation.csproj|solutionrelative:erp.presentation\\pages\\user\\login.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{268595BA-A9BF-6267-90A3-9A6EFBAA12B0}|ERP.Presentation\\ERP.Presentation.csproj|d:\\projects\\erp-v01\\erp.presentation\\pages\\user\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{268595BA-A9BF-6267-90A3-9A6EFBAA12B0}|ERP.Presentation\\ERP.Presentation.csproj|solutionrelative:erp.presentation\\pages\\user\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{268595BA-A9BF-6267-90A3-9A6EFBAA12B0}|ERP.Presentation\\ERP.Presentation.csproj|d:\\projects\\erp-v01\\erp.presentation\\pages\\shared\\components\\header\\header.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{268595BA-A9BF-6267-90A3-9A6EFBAA12B0}|ERP.Presentation\\ERP.Presentation.csproj|solutionrelative:erp.presentation\\pages\\shared\\components\\header\\header.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{268595BA-A9BF-6267-90A3-9A6EFBAA12B0}|ERP.Presentation\\ERP.Presentation.csproj|d:\\projects\\erp-v01\\erp.presentation\\viewcomponents\\headerviewcomponent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{268595BA-A9BF-6267-90A3-9A6EFBAA12B0}|ERP.Presentation\\ERP.Presentation.csproj|solutionrelative:erp.presentation\\viewcomponents\\headerviewcomponent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{268595BA-A9BF-6267-90A3-9A6EFBAA12B0}|ERP.Presentation\\ERP.Presentation.csproj|d:\\projects\\erp-v01\\erp.presentation\\viewmodels\\headerviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{268595BA-A9BF-6267-90A3-9A6EFBAA12B0}|ERP.Presentation\\ERP.Presentation.csproj|solutionrelative:erp.presentation\\viewmodels\\headerviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{43F14A2A-049F-64C5-FCF2-D26208E0764A}|ERP.Application\\ERP.Application.csproj|d:\\projects\\erp-v01\\erp.application\\service\\applicationemployee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43F14A2A-049F-64C5-FCF2-D26208E0764A}|ERP.Application\\ERP.Application.csproj|solutionrelative:erp.application\\service\\applicationemployee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -19,15 +51,112 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "EmployeeModel.cs",
-              "DocumentMoniker": "D:\\projects\\ERP-v01\\ERP.Domain\\Entity\\EmployeeModel.cs",
-              "RelativeDocumentMoniker": "ERP.Domain\\Entity\\EmployeeModel.cs",
-              "ToolTip": "D:\\projects\\ERP-v01\\ERP.Domain\\Entity\\EmployeeModel.cs",
-              "RelativeToolTip": "ERP.Domain\\Entity\\EmployeeModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAA6AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-23T07:17:57.179Z",
+              "Title": "_Search.cshtml",
+              "DocumentMoniker": "D:\\projects\\ERP-v01\\ERP.Presentation\\Pages\\Shared\\_Search.cshtml",
+              "RelativeDocumentMoniker": "ERP.Presentation\\Pages\\Shared\\_Search.cshtml",
+              "ToolTip": "D:\\projects\\ERP-v01\\ERP.Presentation\\Pages\\Shared\\_Search.cshtml",
+              "RelativeToolTip": "ERP.Presentation\\Pages\\Shared\\_Search.cshtml",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAABsAAAA8AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-08-28T14:33:37.015Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Index.cshtml.cs",
+              "DocumentMoniker": "D:\\projects\\ERP-v01\\ERP.Presentation\\Pages\\Dashboard\\Index.cshtml.cs",
+              "RelativeDocumentMoniker": "ERP.Presentation\\Pages\\Dashboard\\Index.cshtml.cs",
+              "ToolTip": "D:\\projects\\ERP-v01\\ERP.Presentation\\Pages\\Dashboard\\Index.cshtml.cs",
+              "RelativeToolTip": "ERP.Presentation\\Pages\\Dashboard\\Index.cshtml.cs",
+              "ViewState": "AgIAAEsAAAAAAAAAAAAAAF0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-26T14:35:05.224Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Login.cshtml.cs",
+              "DocumentMoniker": "D:\\projects\\ERP-v01\\ERP.Presentation\\Pages\\User\\Login.cshtml.cs",
+              "RelativeDocumentMoniker": "ERP.Presentation\\Pages\\User\\Login.cshtml.cs",
+              "ToolTip": "D:\\projects\\ERP-v01\\ERP.Presentation\\Pages\\User\\Login.cshtml.cs",
+              "RelativeToolTip": "ERP.Presentation\\Pages\\User\\Login.cshtml.cs",
+              "ViewState": "AgIAACEAAAAAAAAAAAAAADAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-26T06:25:20.952Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\projects\\ERP-v01\\ERP.Presentation\\Pages\\Dashboard\\Index.cshtml",
+              "RelativeDocumentMoniker": "ERP.Presentation\\Pages\\Dashboard\\Index.cshtml",
+              "ToolTip": "D:\\projects\\ERP-v01\\ERP.Presentation\\Pages\\Dashboard\\Index.cshtml",
+              "RelativeToolTip": "ERP.Presentation\\Pages\\Dashboard\\Index.cshtml",
+              "ViewState": "AgIAANcBAAAAAAAAAAAAAAoAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-08-26T06:25:02.516Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Login.cshtml",
+              "DocumentMoniker": "D:\\projects\\ERP-v01\\ERP.Presentation\\Pages\\User\\Login.cshtml",
+              "RelativeDocumentMoniker": "ERP.Presentation\\Pages\\User\\Login.cshtml",
+              "ToolTip": "D:\\projects\\ERP-v01\\ERP.Presentation\\Pages\\User\\Login.cshtml",
+              "RelativeToolTip": "ERP.Presentation\\Pages\\User\\Login.cshtml",
+              "ViewState": "AgIAADMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-08-25T14:02:26.782Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "HeaderViewComponent.cs",
+              "DocumentMoniker": "D:\\projects\\ERP-v01\\ERP.Presentation\\ViewComponents\\HeaderViewComponent.cs",
+              "RelativeDocumentMoniker": "ERP.Presentation\\ViewComponents\\HeaderViewComponent.cs",
+              "ToolTip": "D:\\projects\\ERP-v01\\ERP.Presentation\\ViewComponents\\HeaderViewComponent.cs",
+              "RelativeToolTip": "ERP.Presentation\\ViewComponents\\HeaderViewComponent.cs",
+              "ViewState": "AgIAABQAAAAAAAAAAAAAACIAAABFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-25T13:51:54.316Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "HeaderViewModel.cs",
+              "DocumentMoniker": "D:\\projects\\ERP-v01\\ERP.Presentation\\ViewModels\\HeaderViewModel.cs",
+              "RelativeDocumentMoniker": "ERP.Presentation\\ViewModels\\HeaderViewModel.cs",
+              "ToolTip": "D:\\projects\\ERP-v01\\ERP.Presentation\\ViewModels\\HeaderViewModel.cs",
+              "RelativeToolTip": "ERP.Presentation\\ViewModels\\HeaderViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-25T13:51:07.605Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Header.cshtml",
+              "DocumentMoniker": "D:\\projects\\ERP-v01\\ERP.Presentation\\Pages\\Shared\\Components\\Header\\Header.cshtml",
+              "RelativeDocumentMoniker": "ERP.Presentation\\Pages\\Shared\\Components\\Header\\Header.cshtml",
+              "ToolTip": "D:\\projects\\ERP-v01\\ERP.Presentation\\Pages\\Shared\\Components\\Header\\Header.cshtml",
+              "RelativeToolTip": "ERP.Presentation\\Pages\\Shared\\Components\\Header\\Header.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-08-25T13:50:54.944Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "ApplicationEmployee.cs",
+              "DocumentMoniker": "D:\\projects\\ERP-v01\\ERP.Application\\Service\\ApplicationEmployee.cs",
+              "RelativeDocumentMoniker": "ERP.Application\\Service\\ApplicationEmployee.cs",
+              "ToolTip": "D:\\projects\\ERP-v01\\ERP.Application\\Service\\ApplicationEmployee.cs",
+              "RelativeToolTip": "ERP.Application\\Service\\ApplicationEmployee.cs",
+              "ViewState": "AgIAALIAAAAAAAAAAAAAAL8AAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-25T13:48:58.924Z"
             }
           ]
         }

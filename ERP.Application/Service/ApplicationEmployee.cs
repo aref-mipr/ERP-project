@@ -191,9 +191,6 @@ namespace ERP.Application.Service
                 quary.ChangeSalaryPaymentDay();
             }
 
-            if (status != EmployeeStatuses.ReEmployment)
-                throw new Exception();
-
             quary.ChangeStatuses(status);
             _repositoryEmployee.SaveChange();
         }

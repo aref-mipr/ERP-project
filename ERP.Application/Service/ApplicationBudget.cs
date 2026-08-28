@@ -119,6 +119,10 @@ namespace ERP.Application.Service
 
         public decimal GetTotalBudget()
         {
+            var budget = _repositoryBudget.GetLast();
+            if (budget == null)
+                return 0;
+
             return _repositoryBudget.GetLast().TotalBudget;
         }
 
